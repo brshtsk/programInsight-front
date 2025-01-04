@@ -1,0 +1,485 @@
+
+
+/*
+This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
+It is supposed to be strictly declarative and only uses a subset of QML. If you edit
+this file manually, you might introduce QML code that is not supported by Qt Design Studio.
+Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
+*/
+import QtQuick
+import QtQuick.Controls
+import FirstPython
+import QtQuick.Studio.DesignEffects
+
+Rectangle {
+    width: 1440
+    height: 810
+    color: "#ffffff"
+
+    Text {
+        width: 375
+        height: 100
+        color: "#000000"
+        text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Tw Cen MT'; font-size:24pt; color:#000000;\">Program Insight</span></p></body></html>"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        textFormat: Text.RichText
+        font.family: "Tahoma"
+        anchors.verticalCenterOffset: -347
+        anchors.horizontalCenterOffset: 1
+        font.pointSize: 22
+        anchors.centerIn: parent
+    }
+
+    Rectangle {
+        id: rectangle
+        x: 50
+        y: 230
+        width: 340
+        height: 530
+        color: "#ffffff"
+        radius: 10
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#196a83"
+            }
+
+            GradientStop {
+                position: 1
+                color: "#50a7c2"
+            }
+            orientation: Gradient.Vertical
+        }
+
+        ScrollView {
+            id: scrollView
+            anchors.fill: parent
+            wheelEnabled: true
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+            clip: true // Ограничение содержимого прокрутки границами ScrollView
+
+            Column {
+                id: column
+                visible: true
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 10
+                anchors.rightMargin: -40
+                anchors.topMargin: 15
+                spacing: 10 // Можно добавить для красивого расстояния между элементами
+
+                Rectangle {
+                    id: rectangle1
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    TextArea {
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.pointSize: 12
+                        readOnly: true
+                        id: textArea
+                        color: "#000000"
+                        text: "Программная инженерия\nНИУ ВШЭ"
+                    }
+
+                    MouseArea {
+                        id: mouseArea1
+                        x: 0
+                        y: 320
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                }
+
+                Rectangle {
+                    id: rectangle2
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea1
+                        color: "#000000"
+                        text: "Прикладная математика и\nинформатика\nНИУ ВШЭ"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea2
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle3
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea2
+                        color: "#000000"
+                        text: "Прикладная математика и\nинформатика\nМФТИ"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea3
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle4
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea3
+                        color: "#000000"
+                        text: "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea4
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle5
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea4
+                        color: "#000000"
+                        text: "🫡🫡🫡"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea5
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle6
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea5
+                        color: "#000000"
+                        text: "o((>ω< ))o"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea6
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle7
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea6
+                        color: "#000000"
+                        text: "^_____^"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea7
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle8
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea7
+                        color: "#000000"
+                        text: "OwO"
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea8
+                        x: 0
+                        y: -80
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: rectangle9
+                    width: 290
+                    height: 70
+                    color: "#ffffff"
+                    radius: 10
+                    layer.wrapMode: ShaderEffectSource.ClampToEdge
+                    TextArea {
+                        id: textArea8
+                        color: "#000000"
+                        text: "Текст..."
+                        anchors.fill: parent
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+                        anchors.topMargin: 0
+                        anchors.bottomMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: true
+                        font.pointSize: 12
+                    }
+
+                    MouseArea {
+                        id: mouseArea9
+                        x: 130
+                        y: -640
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                    }
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Rectangle {
+                    id: end_empty_rectangle
+                    width: 200
+                    height: 30
+                    color: "#00ffffff"
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: rectangle10
+        x: 50
+        y: 135
+        width: 340
+        height: 85
+        color: "#ffffff"
+        radius: 10
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#196a83"
+            }
+
+            GradientStop {
+                position: 1
+                color: "#50a7c2"
+            }
+            orientation: Gradient.Vertical
+        }
+
+        Rectangle {
+            id: rectangle11
+            x: 10
+            y: 45
+            width: 320
+            height: 35
+            color: "#b7ffffff"
+            radius: 10
+
+            TextInput {
+                id: textInput
+                x: 8
+                y: 0
+                width: 304
+                height: 35
+                text: ""
+                font.pixelSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                overwriteMode: false
+                cursorVisible: false
+                passwordCharacter: ""
+                inputMask: ""
+            }
+        }
+
+        Button {
+            id: button
+            x: 230
+            y: 6
+            width: 100
+            height: 35
+            text: qsTr("Фильтры")
+            font.pixelSize: 16
+
+            background: Rectangle {
+                color: button.pressed ? "#90caf9" : "#b7ffffff" // Изменение цвета при нажатии
+                radius: 10
+                border.color: "#ffffff"
+                border.width: 2
+                scale: button.hovered ? 1.05 : 1.0 // Увеличение кнопки при наведении
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+            }
+
+            contentItem: Text {
+                color: "#000000"
+                text: "Фильтры"
+                font.pixelSize: 16
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
+            }
+        }
+
+        Text {
+            id: _text
+            x: 20
+            y: 13
+            width: 214
+            height: 22
+            color: "#ffffff"
+            text: qsTr("Поиск ОП")
+            font.pixelSize: 16
+        }
+    }
+
+    ToolSeparator {
+        id: toolSeparator
+        x: 533
+        y: 342
+    }
+}
