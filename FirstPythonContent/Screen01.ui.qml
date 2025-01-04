@@ -1035,4 +1035,119 @@ Rectangle {
             font.pixelSize: 16
         }
     }
+
+    Rectangle {
+        id: rectangle30
+        x: 395
+        y: 135
+        width: 220
+        height: 85
+        color: "#ffffff"
+        radius: 10
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#196a83"
+            }
+
+            GradientStop {
+                position: 1
+                color: "#50a7c2"
+            }
+            orientation: Gradient.Vertical
+        }
+
+        Text {
+            id: _text1
+            x: 8
+            y: 8
+            width: 82
+            height: 69
+            color: "#ffffff"
+            text: qsTr("009")
+            font.pixelSize: 36
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        Text {
+            id: _text2
+            x: 96
+            y: 32
+            width: 98
+            height: 22
+            color: "#ffffff"
+            text: qsTr("ОП найдено")
+            font.pixelSize: 16
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    Rectangle {
+        id: rectangle31
+        x: 654
+        y: 135
+        width: 477
+        height: 625
+        color: "#ffffff"
+        radius: 10
+        border.width: 5
+
+        TextEdit {
+            id: textEdit
+            x: 48
+            y: 257
+            width: 386
+            height: 112
+            text: qsTr("ToDo:\nтут можно бахнуть обзор\nключевых показателей по найденным ОП\nи кнопку перехода к дашбордам по\nрезультатам поиска")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    Rectangle {
+        id: rectangle32
+        x: 1165
+        y: 135
+        width: 245
+        height: 349
+        color: "#ffffff"
+        radius: 10
+        border.width: 5
+        TextEdit {
+            id: textEdit1
+            x: 26
+            y: 119
+            width: 193
+            height: 112
+            text: qsTr("ToDo:\nтут можно поставить\nсписок лучших вузов\nпо Data Science\n(и кнопки, чтобы\nпосмотреть подробнее)")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    Rectangle {
+        id: rectangle33
+        x: 1165
+        y: 490
+        width: 245
+        height: 270
+        color: "#ffffff"
+        radius: 10
+        border.width: 5
+        TextEdit {
+            id: textEdit2
+            x: 26
+            y: 79
+            width: 193
+            height: 112
+            text: qsTr("ToDo:\nтут можно перейти к\nразделу с просмотром\nкластеров (они будут\nготовы заранее)")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
 }
