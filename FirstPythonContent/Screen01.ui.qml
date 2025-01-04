@@ -117,7 +117,7 @@ Rectangle {
                         TextArea {
                             id: textArea9
                             color: "#26b33a"
-                            text: "389\nбаллов ЕГЭ"
+                            text: "289\nбаллов ЕГЭ"
                             anchors.fill: parent
                             anchors.leftMargin: 8
                             anchors.rightMargin: 110
@@ -198,6 +198,68 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                     }
+
+                    Rectangle {
+                        id: rectangle13
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea11
+                            color: "#26b33a"
+                            text: "298\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle16
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea12
+                            color: "#26b33a"
+                            text: "3млрд $\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea11
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -230,6 +292,68 @@ Rectangle {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Rectangle {
+                        id: rectangle14
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea13
+                            color: "#26b33a"
+                            text: "52\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle17
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea14
+                            color: "#26b33a"
+                            text: "560к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea12
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -264,6 +388,68 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                     }
+
+                    Rectangle {
+                        id: rectangle18
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea15
+                            color: "#26b33a"
+                            text: "999\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle19
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea16
+                            color: "#26b33a"
+                            text: "70 ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea13
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -296,6 +482,68 @@ Rectangle {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Rectangle {
+                        id: rectangle20
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea17
+                            color: "#26b33a"
+                            text: "-4\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle21
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea18
+                            color: "#26b33a"
+                            text: "80к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea14
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -330,6 +578,68 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                     }
+
+                    Rectangle {
+                        id: rectangle22
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea19
+                            color: "#26b33a"
+                            text: "25\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle23
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea20
+                            color: "#26b33a"
+                            text: "700к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea15
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -343,7 +653,7 @@ Rectangle {
                     TextArea {
                         id: textArea6
                         color: "#000000"
-                        text: "^_____^"
+                        text: "🐘"
                         anchors.fill: parent
                         anchors.leftMargin: 8
                         anchors.rightMargin: 8
@@ -362,6 +672,68 @@ Rectangle {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Rectangle {
+                        id: rectangle24
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea21
+                            color: "#26b33a"
+                            text: "42\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle25
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea22
+                            color: "#26b33a"
+                            text: "700к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea16
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -396,6 +768,68 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                     }
+
+                    Rectangle {
+                        id: rectangle26
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea23
+                            color: "#26b33a"
+                            text: "0\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle27
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea24
+                            color: "#26b33a"
+                            text: "0 ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea17
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -428,6 +862,68 @@ Rectangle {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Rectangle {
+                        id: rectangle28
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea25
+                            color: "#26b33a"
+                            text: "389\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle29
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea26
+                            color: "#26b33a"
+                            text: "55к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            readOnly: true
+                            font.styleName: "Полужирный"
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea18
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        anchors.horizontalCenterOffset: 260
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
