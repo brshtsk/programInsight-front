@@ -35,7 +35,7 @@ Rectangle {
         id: rectangle
         x: 50
         y: 230
-        width: 340
+        width: 565
         height: 530
         color: "#ffffff"
         radius: 10
@@ -102,6 +102,69 @@ Rectangle {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Rectangle {
+                        id: rectangle12
+                        x: 0
+                        y: 0
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        anchors.horizontalCenterOffset: 260
+                        layer.wrapMode: ShaderEffectSource.ClampToEdge
+                        TextArea {
+                            id: textArea9
+                            color: "#26b33a"
+                            text: "389\nбаллов ЕГЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 110
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.styleName: "Полужирный"
+                            readOnly: true
+                            font.pointSize: 12
+                        }
+
+                        Rectangle {
+                            id: rectangle15
+                            x: 109
+                            y: 10
+                            width: 2
+                            height: 50
+                            color: "#000000"
+                        }
+
+                        TextArea {
+                            id: textArea10
+                            color: "#26b33a"
+                            text: "700к ₽\nстоимость"
+                            anchors.fill: parent
+                            anchors.leftMargin: 110
+                            anchors.rightMargin: 8
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.styleName: "Полужирный"
+                            readOnly: true
+                            font.pointSize: 12
+                        }
+
+                        MouseArea {
+                            id: mouseArea10
+                            x: 0
+                            y: 320
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                        }
+
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
 
@@ -475,11 +538,5 @@ Rectangle {
             text: qsTr("Поиск ОП")
             font.pixelSize: 16
         }
-    }
-
-    ToolSeparator {
-        id: toolSeparator
-        x: 533
-        y: 342
     }
 }
