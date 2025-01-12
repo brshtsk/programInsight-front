@@ -987,6 +987,7 @@ Rectangle {
 
         Button {
             id: button
+            objectName: "button"
             x: 230
             y: 6
             width: 100
@@ -1016,12 +1017,7 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-            }
+            //cursorShape: Qt.PointingHandCursor // Изменение курсора
         }
 
         Text {

@@ -2,11 +2,18 @@ import os
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QObject, Slot
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
 from autogen.settings import url, import_paths
+
+
+class Backend(QObject):
+    @Slot()
+    def button_clicked(self):
+        print('Кнопка нажата!')
+
 
 if __name__ == '__main__':
 
@@ -29,4 +36,17 @@ if __name__ == '__main__':
     engine.load(os.fspath(app_dir / url))
     if not engine.rootObjects():
         sys.exit(-1)
+
+    # Получаем корневой объект
+    root_object = engine.rootObjects()[0]
+
+    # Ищем кнопку и подключаем Python-метод
+    button = root_object.findChild(QObject, 'button')
+    backend = Backend()
+
+    if button:
+        button.clicked.connect(backend.button_clicked)
+    else:
+        print('Кнопка не найдена!')
+
     sys.exit(app.exec())
