@@ -9,7 +9,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from autogen.settings import url, import_paths
 
 
-class Backend(QObject):
+class Frontend(QObject):
     @Slot()
     def button_clicked(self):
         print('Кнопка нажата!')
@@ -42,10 +42,10 @@ if __name__ == '__main__':
 
     # Ищем кнопку и подключаем Python-метод
     button = root_object.findChild(QObject, 'button')
-    backend = Backend()
+    frontend = Frontend()
 
     if button:
-        button.clicked.connect(backend.button_clicked)
+        button.clicked.connect(frontend.button_clicked)
     else:
         print('Кнопка не найдена!')
 
