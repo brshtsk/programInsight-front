@@ -2,21 +2,14 @@ import os
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QObject, Slot
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
 from autogen.settings import url, import_paths
-
-
-class Frontend(QObject):
-    @Slot()
-    def button_clicked(self):
-        print('Кнопка нажата!')
-
+from frontend import Frontend
 
 if __name__ == '__main__':
-
     # Установка политики масштабирования
     os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "0"
     os.environ["QT_FONT_DPI"] = "96"  # Устанавливаем фиксированный DPI для шрифтов
@@ -37,16 +30,7 @@ if __name__ == '__main__':
     if not engine.rootObjects():
         sys.exit(-1)
 
-    # Получаем корневой объект
-    root_object = engine.rootObjects()[0]
-
-    # Ищем кнопку и подключаем Python-метод
-    button = root_object.findChild(QObject, 'button')
-    frontend = Frontend()
-
-    if button:
-        button.clicked.connect(frontend.button_clicked)
-    else:
-        print('Кнопка не найдена!')
+    # Инициализируем фронтенд
+    frontend = Frontend(engine)
 
     sys.exit(app.exec())
