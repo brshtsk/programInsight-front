@@ -8,6 +8,11 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick
 import QtQuick.Controls
+//2.15
+import QtQuick.Window
+//2.15
+import QtQuick.Layouts
+//1.15
 import FirstPython
 import QtQuick.Studio.DesignEffects
 
@@ -32,7 +37,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle
+        id: scrollRectangle
         x: 50
         y: 230
         width: 565
@@ -62,13 +67,8 @@ Rectangle {
             Column {
                 id: column
                 visible: true
+                width: scrollView.width
                 anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.rightMargin: -40
-                anchors.topMargin: 15
                 spacing: 10 // Можно добавить для красивого расстояния между элементами
 
                 Rectangle {
@@ -165,6 +165,58 @@ Rectangle {
                         }
 
                         anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                RowLayout {
+                    id: opRow
+                    width: parent.width
+                    height: 70
+
+                    Item {
+                        Layout.fillWidth: true // Заполнитель между прямоугольниками
+                        //Layout.weight: 2 // Левый заполнитель пошире
+                    }
+
+                    Rectangle {
+                        id: opNameRectangle
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Layout.alignment: Qt.AlignLeft
+
+                        TextArea {
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.pointSize: 12
+                            readOnly: true
+                            id: opTextArea
+                            color: "#000000"
+                            text: "Программная инженерия\nНИУ ВШЭ"
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true // Заполнитель между прямоугольниками
+                        //Layout.weight: 1 // Средний заполнитель поуже
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle
+                        width: 220
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Layout.alignment: Qt.AlignRight
+                    }
+
+                    Item {
+                        Layout.fillWidth: true // Заполнитель между прямоугольниками
+                        //Layout.weight: 2 // Правый заполнитель пошире
                     }
                 }
 
@@ -939,7 +991,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle10
+        id: seaechRectangle
         x: 50
         y: 135
         width: 340
@@ -1033,7 +1085,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle30
+        id: countRectangle
         x: 395
         y: 135
         width: 220
