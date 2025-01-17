@@ -192,17 +192,17 @@ Rectangle {
                         radius: 10
                         Layout.alignment: Qt.AlignLeft
 
-                        TextArea {
+                        Text {
                             anchors.fill: parent
                             anchors.leftMargin: 8
                             anchors.rightMargin: 8
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             font.pointSize: 12
-                            readOnly: true
-                            id: opTextArea
+                            id: opText
                             color: "#000000"
-                            text: "Программная инженерия\nНИУ ВШЭ"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            textFormat: Text.RichText // Для обработки переносов строк
                         }
                     }
 
@@ -224,19 +224,18 @@ Rectangle {
                             width: parent.width
                             height: parent.height
 
-                            // Первый TextArea (слева)
-                            TextArea {
-                                id: info1Area
+                            Text {
+                                id: info1Text
                                 color: "#26b33a"
-                                text: "289\nбаллов ЕГЭ"
+                                text: "289<br/>баллов ЕГЭ"
                                 font.styleName: "Полужирный"
                                 font.pointSize: 12
-                                readOnly: true
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                                 anchors.leftMargin: 8
                                 anchors.rightMargin: 8
                                 Layout.fillWidth: true // Заполнение доступного пространства
+                                textFormat: Text.RichText // Для обработки переносов строк
                             }
 
                             // Разделительная линия
@@ -249,18 +248,18 @@ Rectangle {
                             }
 
                             // Второй TextArea (справа)
-                            TextArea {
-                                id: info2Area
+                            Text {
+                                id: info2Text
                                 color: "#26b33a"
-                                text: "700к ₽\nстоимость"
+                                text: "700к ₽<br/>стоимость"
                                 font.styleName: "Полужирный"
                                 font.pointSize: 12
-                                readOnly: true
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                                 anchors.leftMargin: 8
                                 anchors.rightMargin: 8
                                 Layout.fillWidth: true // Заполнение доступного пространства
+                                textFormat: Text.RichText // Для обработки переносов строк
                             }
                         }
                     }
