@@ -78,100 +78,10 @@ Rectangle {
                 spacing: 10 // Можно добавить для красивого расстояния между элементами
 
                 Rectangle {
-                    id: rectangle1
-                    width: 290
-                    height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    TextArea {
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 12
-                        readOnly: true
-                        id: textArea
-                        color: "#000000"
-                        text: "Программная инженерия\nНИУ ВШЭ"
-                    }
-
-                    MouseArea {
-                        id: mouseArea1
-                        x: 0
-                        y: 320
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                    }
-
-                    Rectangle {
-                        id: rectangle12
-                        x: 0
-                        y: 0
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        anchors.horizontalCenterOffset: 260
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea9
-                            color: "#26b33a"
-                            text: "289\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Полужирный"
-                            readOnly: true
-                            font.pointSize: 12
-                        }
-
-                        Rectangle {
-                            id: rectangle15
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
-
-                        TextArea {
-                            id: textArea10
-                            color: "#26b33a"
-                            text: "700к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "Полужирный"
-                            readOnly: true
-                            font.pointSize: 12
-                        }
-
-                        MouseArea {
-                            id: mouseArea10
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
+                    id: startEmptyRectangle
+                    width: 200
+                    height: 5
+                    color: "#00ffffff"
                 }
 
                 RowLayout {
@@ -270,770 +180,619 @@ Rectangle {
                     }
                 }
 
-                Rectangle {
-                    id: rectangle2
-                    width: 290
+                RowLayout {
+                    id: opRow1
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea1
-                        color: "#000000"
-                        text: "Прикладная математика и\nинформатика\nНИУ ВШЭ"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea2
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle13
-                        x: 0
-                        y: 0
+                        id: opNameRectangle1
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText1
+                            color: "#000000"
+                            text: "Прикладная математика и<br/>информатика<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle1
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea11
-                            color: "#26b33a"
-                            text: "298\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout1
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text1
+                                color: "#26b33a"
+                                text: "298<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle16
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator1
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea12
-                            color: "#26b33a"
-                            text: "3млрд $\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text1
+                                color: "#26b33a"
+                                text: "999к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea11
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle3
-                    width: 290
+                RowLayout {
+                    id: opRow2
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea2
-                        color: "#000000"
-                        text: "Прикладная математика и\nинформатика\nМФТИ"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea3
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle14
-                        x: 0
-                        y: 0
+                        id: opNameRectangle2
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText2
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle2
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea13
-                            color: "#26b33a"
-                            text: "52\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout2
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text2
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle17
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator2
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea14
-                            color: "#26b33a"
-                            text: "560к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text2
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea12
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle4
-                    width: 290
+                RowLayout {
+                    id: opRow3
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea3
-                        color: "#000000"
-                        text: "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea4
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle18
-                        x: 0
-                        y: 0
+                        id: opNameRectangle3
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText3
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle3
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea15
-                            color: "#26b33a"
-                            text: "999\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout3
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text3
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle19
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator3
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea16
-                            color: "#26b33a"
-                            text: "70 ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text3
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea13
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle5
-                    width: 290
+                RowLayout {
+                    id: opRow4
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea4
-                        color: "#000000"
-                        text: "🫡🫡🫡"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea5
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle20
-                        x: 0
-                        y: 0
+                        id: opNameRectangle4
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText4
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle4
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea17
-                            color: "#26b33a"
-                            text: "-4\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout4
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text4
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle21
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator4
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea18
-                            color: "#26b33a"
-                            text: "80к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text4
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea14
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle6
-                    width: 290
+                RowLayout {
+                    id: opRow5
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea5
-                        color: "#000000"
-                        text: "o((>ω< ))o"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea6
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle22
-                        x: 0
-                        y: 0
+                        id: opNameRectangle5
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText5
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle5
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea19
-                            color: "#26b33a"
-                            text: "25\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout5
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text5
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle23
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator5
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea20
-                            color: "#26b33a"
-                            text: "700к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text5
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea15
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle7
-                    width: 290
+                RowLayout {
+                    id: opRow6
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea6
-                        color: "#000000"
-                        text: "🐘"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea7
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle24
-                        x: 0
-                        y: 0
+                        id: opNameRectangle6
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText6
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle6
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea21
-                            color: "#26b33a"
-                            text: "42\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout6
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text6
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle25
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator6
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea22
-                            color: "#26b33a"
-                            text: "700к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text6
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea16
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Rectangle {
-                    id: rectangle8
-                    width: 290
+                RowLayout {
+                    id: opRow7
+                    width: parent.width
                     height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea7
-                        color: "#000000"
-                        text: "OwO"
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea8
-                        x: 0
-                        y: -80
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
+                    Item {
+                        Layout.fillWidth: true
                     }
 
                     Rectangle {
-                        id: rectangle26
-                        x: 0
-                        y: 0
+                        id: opNameRectangle7
+                        width: 290
+                        height: 70
+                        color: "#ffffff"
+                        radius: 10
+                        Text {
+                            id: opText7
+                            color: "#000000"
+                            text: "Программная инженерия<br/>НИУ ВШЭ"
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            textFormat: Text.RichText
+                            font.pointSize: 12
+                        }
+                        Layout.alignment: Qt.AlignLeft
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: opInfoRectangle7
                         width: 220
                         height: 70
                         color: "#ffffff"
                         radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea23
-                            color: "#26b33a"
-                            text: "0\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
+                        RowLayout {
+                            id: opInfoLayout7
+                            width: parent.width
+                            height: parent.height
+                            Text {
+                                id: info1Text7
+                                color: "#26b33a"
+                                text: "289<br/>баллов ЕГЭ"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            id: rectangle27
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
+                            Rectangle {
+                                id: separator7
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
 
-                        TextArea {
-                            id: textArea24
-                            color: "#26b33a"
-                            text: "0 ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
+                            Text {
+                                id: info2Text7
+                                color: "#26b33a"
+                                text: "700к ₽<br/>стоимость"
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                textFormat: Text.RichText
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                Layout.fillWidth: true
+                            }
                         }
-
-                        MouseArea {
-                            id: mouseArea17
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignRight
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
                 }
 
                 Rectangle {
-                    id: rectangle9
-                    width: 290
-                    height: 70
-                    color: "#ffffff"
-                    radius: 10
-                    layer.wrapMode: ShaderEffectSource.ClampToEdge
-                    TextArea {
-                        id: textArea8
-                        color: "#000000"
-                        text: "Текст..."
-                        anchors.fill: parent
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-                        anchors.topMargin: 0
-                        anchors.bottomMargin: 0
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        readOnly: true
-                        font.pointSize: 12
-                    }
-
-                    MouseArea {
-                        id: mouseArea9
-                        x: 130
-                        y: -640
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                    }
-
-                    Rectangle {
-                        id: rectangle28
-                        x: 0
-                        y: 0
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        layer.wrapMode: ShaderEffectSource.ClampToEdge
-                        TextArea {
-                            id: textArea25
-                            color: "#26b33a"
-                            text: "389\nбаллов ЕГЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 110
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
-
-                        Rectangle {
-                            id: rectangle29
-                            x: 109
-                            y: 10
-                            width: 2
-                            height: 50
-                            color: "#000000"
-                        }
-
-                        TextArea {
-                            id: textArea26
-                            color: "#26b33a"
-                            text: "55к ₽\nстоимость"
-                            anchors.fill: parent
-                            anchors.leftMargin: 110
-                            anchors.rightMargin: 8
-                            anchors.topMargin: 0
-                            anchors.bottomMargin: 0
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            readOnly: true
-                            font.styleName: "Полужирный"
-                            font.pointSize: 12
-                        }
-
-                        MouseArea {
-                            id: mouseArea18
-                            x: 0
-                            y: 320
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                        }
-                        anchors.horizontalCenterOffset: 260
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
-                Rectangle {
-                    id: end_empty_rectangle
+                    id: endEmptyRectangle
                     width: 200
-                    height: 30
+                    height: 5
                     color: "#00ffffff"
                 }
             }
