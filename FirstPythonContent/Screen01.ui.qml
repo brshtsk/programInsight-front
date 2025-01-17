@@ -59,7 +59,13 @@ Rectangle {
 
         ScrollView {
             id: scrollView
-            anchors.fill: parent
+            //anchors.fill: parent
+            width: parent.width
+            height: parent.height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10 // Отступ слева
+            anchors.rightMargin: 10 // Отступ справа
             wheelEnabled: true
             ScrollBar.vertical.policy: ScrollBar.AlwaysOff
             clip: true // Ограничение содержимого прокрутки границами ScrollView
@@ -212,6 +218,51 @@ Rectangle {
                         color: "#ffffff"
                         radius: 10
                         Layout.alignment: Qt.AlignRight
+
+                        RowLayout {
+                            id: opInfoLayout
+                            width: parent.width
+                            height: parent.height
+
+                            // Первый TextArea (слева)
+                            TextArea {
+                                id: info1Area
+                                color: "#26b33a"
+                                text: "289\nбаллов ЕГЭ"
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                readOnly: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                Layout.fillWidth: true // Заполнение доступного пространства
+                            }
+
+                            // Разделительная линия
+                            Rectangle {
+                                id: separator
+                                width: 2
+                                height: 50
+                                color: "#000000"
+                                Layout.preferredWidth: 2
+                            }
+
+                            // Второй TextArea (справа)
+                            TextArea {
+                                id: info2Area
+                                color: "#26b33a"
+                                text: "700к ₽\nстоимость"
+                                font.styleName: "Полужирный"
+                                font.pointSize: 12
+                                readOnly: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                Layout.fillWidth: true // Заполнение доступного пространства
+                            }
+                        }
                     }
 
                     Item {
