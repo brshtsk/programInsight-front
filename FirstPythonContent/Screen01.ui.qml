@@ -70,730 +70,158 @@ Rectangle {
             ScrollBar.vertical.policy: ScrollBar.AlwaysOff
             clip: true // Ограничение содержимого прокрутки границами ScrollView
 
-            Column {
-                id: column
-                visible: true
-                width: scrollView.width
-                anchors.left: parent.left
-                spacing: 10 // Можно добавить для красивого расстояния между элементами
-
-                Rectangle {
-                    id: startEmptyRectangle
-                    width: 200
-                    height: 5
+            ListView {
+                id: listView
+                anchors.fill: parent
+                // Добавляем отступ перед первым элементом
+                header: Rectangle {
+                    width: listView.width
+                    height: 15
                     color: "#00ffffff"
                 }
 
-                RowLayout {
-                    id: opRow
-                    width: parent.width
-                    height: 70
-
-                    Item {
-                        Layout.fillWidth: true // Заполнитель между прямоугольниками
-                        //Layout.weight: 2 // Левый заполнитель пошире
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Layout.alignment: Qt.AlignLeft
-
-                        Text {
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.pointSize: 12
-                            id: opText
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            textFormat: Text.RichText // Для обработки переносов строк
-                        }
-                    }
-
-                    Item {
-                        Layout.fillWidth: true // Заполнитель между прямоугольниками
-                        //Layout.weight: 1 // Средний заполнитель поуже
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Layout.alignment: Qt.AlignRight
-
-                        RowLayout {
-                            id: opInfoLayout
-                            width: parent.width
-                            height: parent.height
-
-                            Text {
-                                id: info1Text
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                Layout.fillWidth: true // Заполнение доступного пространства
-                                textFormat: Text.RichText // Для обработки переносов строк
-                            }
-
-                            // Разделительная линия
-                            Rectangle {
-                                id: separator
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            // Второй TextArea (справа)
-                            Text {
-                                id: info2Text
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                Layout.fillWidth: true // Заполнение доступного пространства
-                                textFormat: Text.RichText // Для обработки переносов строк
-                            }
-                        }
-                    }
-
-                    Item {
-                        Layout.fillWidth: true // Заполнитель между прямоугольниками
-                        //Layout.weight: 2 // Правый заполнитель пошире
-                    }
-                }
-
-                RowLayout {
-                    id: opRow1
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle1
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText1
-                            color: "#000000"
-                            text: "Прикладная математика и<br/>информатика<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle1
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout1
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text1
-                                color: "#26b33a"
-                                text: "298<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator1
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text1
-                                color: "#26b33a"
-                                text: "999к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow2
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle2
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText2
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle2
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout2
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text2
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator2
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text2
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow3
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle3
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText3
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle3
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout3
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text3
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator3
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text3
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow4
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle4
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText4
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle4
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout4
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text4
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator4
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text4
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow5
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle5
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText5
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle5
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout5
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text5
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator5
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text5
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow6
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle6
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText6
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle6
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout6
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text6
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator6
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text6
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                RowLayout {
-                    id: opRow7
-                    width: parent.width
-                    height: 70
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opNameRectangle7
-                        width: 290
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        Text {
-                            id: opText7
-                            color: "#000000"
-                            text: "Программная инженерия<br/>НИУ ВШЭ"
-                            anchors.fill: parent
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            textFormat: Text.RichText
-                            font.pointSize: 12
-                        }
-                        Layout.alignment: Qt.AlignLeft
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        id: opInfoRectangle7
-                        width: 220
-                        height: 70
-                        color: "#ffffff"
-                        radius: 10
-                        RowLayout {
-                            id: opInfoLayout7
-                            width: parent.width
-                            height: parent.height
-                            Text {
-                                id: info1Text7
-                                color: "#26b33a"
-                                text: "289<br/>баллов ЕГЭ"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-
-                            Rectangle {
-                                id: separator7
-                                width: 2
-                                height: 50
-                                color: "#000000"
-                                Layout.preferredWidth: 2
-                            }
-
-                            Text {
-                                id: info2Text7
-                                color: "#26b33a"
-                                text: "700к ₽<br/>стоимость"
-                                anchors.leftMargin: 8
-                                anchors.rightMargin: 8
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                textFormat: Text.RichText
-                                font.styleName: "Полужирный"
-                                font.pointSize: 12
-                                Layout.fillWidth: true
-                            }
-                        }
-                        Layout.alignment: Qt.AlignRight
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-                Rectangle {
-                    id: endEmptyRectangle
-                    width: 200
-                    height: 5
+                // Добавляем отступ после последнего элемента
+                footer: Rectangle {
+                    width: listView.width
+                    height: 15
                     color: "#00ffffff"
+                }
+                model: ListModel {
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Прикладная математика и<br/>информатика<br/>НИУ ВШЭ"
+                        info1Text: "298<br/>баллов ЕГЭ"
+                        info2Text: "999к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                    ListElement {
+                        opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        info1Text: "289<br/>баллов ЕГЭ"
+                        info2Text: "700к ₽<br/>стоимость"
+                    }
+                }
+                delegate: Item {
+                    width: listView.width
+                    height: 80
+
+                    RowLayout {
+                        id: opRow
+                        width: parent.width
+                        height: parent.height
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Rectangle {
+                            id: opNameRectangle
+                            width: 290
+                            height: 70
+                            color: "#ffffff"
+                            radius: 10
+                            Layout.alignment: Qt.AlignLeft
+
+                            Text {
+                                anchors.fill: parent
+                                anchors.leftMargin: 8
+                                anchors.rightMargin: 8
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.pointSize: 12
+                                id: opText
+                                color: "#000000"
+                                text: model.opText
+                                textFormat: Text.RichText
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Rectangle {
+                            id: opInfoRectangle
+                            width: 220
+                            height: 70
+                            color: "#ffffff"
+                            radius: 10
+                            Layout.alignment: Qt.AlignRight
+
+                            RowLayout {
+                                id: opInfoLayout
+                                width: parent.width
+                                height: parent.height
+
+                                Text {
+                                    id: info1Text
+                                    color: "#26b33a"
+                                    text: model.info1Text
+                                    font.styleName: "Полужирный"
+                                    font.pointSize: 12
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    anchors.leftMargin: 8
+                                    anchors.rightMargin: 8
+                                    Layout.fillWidth: true
+                                    textFormat: Text.RichText
+                                }
+
+                                Rectangle {
+                                    id: separator
+                                    width: 2
+                                    height: 50
+                                    color: "#000000"
+                                    Layout.preferredWidth: 2
+                                }
+
+                                Text {
+                                    id: info2Text
+                                    color: "#26b33a"
+                                    text: model.info2Text
+                                    font.styleName: "Полужирный"
+                                    font.pointSize: 12
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    anchors.leftMargin: 8
+                                    anchors.rightMargin: 8
+                                    Layout.fillWidth: true
+                                    textFormat: Text.RichText
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+                    }
                 }
             }
         }
