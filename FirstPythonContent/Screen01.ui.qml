@@ -86,48 +86,7 @@ Rectangle {
                     height: 15
                     color: "#00ffffff"
                 }
-                model: ListModel {
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Прикладная математика и<br/>информатика<br/>НИУ ВШЭ"
-                        info1Text: "298<br/>баллов ЕГЭ"
-                        info2Text: "999к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                    ListElement {
-                        opText: "Программная инженерия<br/>НИУ ВШЭ"
-                        info1Text: "289<br/>баллов ЕГЭ"
-                        info2Text: "700к ₽<br/>стоимость"
-                    }
-                }
+                model: customModel
                 delegate: Item {
                     width: listView.width
                     height: 80
