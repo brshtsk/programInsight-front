@@ -19,6 +19,8 @@ def resource_path(relative_path):
 
 
 if __name__ == '__main__':
+    # Кнопки не в стиле Windows
+    os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
     # Установка политики масштабирования через переменные окружения
     os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "0"
     os.environ["QT_FONT_DPI"] = "96"
