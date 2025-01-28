@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Python/deployment/main_patch.dist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deploy_folder.dist" vcs="Git" />
   </component>
 </project>
