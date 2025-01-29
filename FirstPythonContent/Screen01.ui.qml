@@ -73,56 +73,54 @@ Rectangle {
                         color: "#00ffffff"
                     }
                     spacing: 15 // Добавляем отступ между элементами
-                    model: customModel
-                    // // Тестовая модель
-                    // model: ListModel {
-                    //     ListElement {
-                    //         opNameText: "Программная<br>инженерия"
-                    //         info1Text: "289"
-                    //         info2Text: "700к ₽"
-                    //         universityNameText: "НИУ ВШЭ"
-                    //         opCodeText: "09.03.04"
-                    //         imageSource: "resources/hselogo.svg"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Прикладная математика<br>и информатика"
-                    //         info1Text: "300"
-                    //         info2Text: "720к ₽"
-                    //         universityNameText: "НИУ ВШЭ"
-                    //         opCodeText: "01.03.02"
-                    //         imageSource: "resources/hselogo.svg"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Анализ данных<br>в экономике"
-                    //         info1Text: "272"
-                    //         info2Text: "470к ₽"
-                    //         universityNameText: "МФТИ"
-                    //         opCodeText: "38.03.01"
-                    //         imageSource: "resources/mfti-logo.png"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Физика<br>и нанотехнологии"
-                    //         info1Text: "280"
-                    //         info2Text: "500к ₽"
-                    //         universityNameText: "МФТИ"
-                    //         opCodeText: "16.03.01"
-                    //         imageSource: "resources/mfti-logo.png"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Информационная<br>безопасность"
-                    //         info1Text: "260"
-                    //         info2Text: "450к ₽"
-                    //         universityNameText: "МИРЭА"
-                    //         opCodeText: "10.03.01"
-                    //         imageSource: "resources/other-logo.svg"
-                    //     }
-                    // }
+                    // model: customModel
+                    // Тестовая модель
+                    model: ListModel {
+                        ListElement {
+                            opNameText: "Программная<br>инженерия"
+                            info1Text: "289"
+                            info2Text: "700к ₽"
+                            universityNameText: "НИУ ВШЭ"
+                            opCodeText: "09.03.04"
+                            imageSource: "resources/hselogo.svg"
+                        }
+                        ListElement {
+                            opNameText: "Прикладная математика<br>и информатика"
+                            info1Text: "300"
+                            info2Text: "720к ₽"
+                            universityNameText: "НИУ ВШЭ"
+                            opCodeText: "01.03.02"
+                            imageSource: "resources/hselogo.svg"
+                        }
+                        ListElement {
+                            opNameText: "Анализ данных<br>в экономике"
+                            info1Text: "272"
+                            info2Text: "470к ₽"
+                            universityNameText: "МФТИ"
+                            opCodeText: "38.03.01"
+                            imageSource: "resources/mfti-logo.png"
+                        }
+                        ListElement {
+                            opNameText: "Физика<br>и нанотехнологии"
+                            info1Text: "280"
+                            info2Text: "500к ₽"
+                            universityNameText: "МФТИ"
+                            opCodeText: "16.03.01"
+                            imageSource: "resources/mfti-logo.png"
+                        }
+                        ListElement {
+                            opNameText: "Информационная<br>безопасность"
+                            info1Text: "260"
+                            info2Text: "450к ₽"
+                            universityNameText: "МИРЭА"
+                            opCodeText: "10.03.01"
+                            imageSource: "resources/other-logo.svg"
+                        }
+                    }
                     delegate: Rectangle {
                         id: opRowRectangle
-                        x: 260
-                        y: 165
                         width: 420
-                        height: 170
+                        height: 150
                         color: "#53b93f"
                         radius: 10
                         anchors.horizontalCenter: parent.horizontalCenter // Центрируем
@@ -131,8 +129,8 @@ Rectangle {
                             id: universityImage
                             x: 15
                             y: 80
-                            width: 75
-                            height: 75
+                            width: 50
+                            height: 50
                             source: model.imageSource
                             fillMode: Image.PreserveAspectFit
                         }
@@ -152,13 +150,13 @@ Rectangle {
 
                         Text {
                             id: universityNameText
-                            x: 95
+                            x: 75
                             y: 80
                             width: 120
-                            height: 35
+                            height: 23
                             color: "#ffffff"
                             text: model.universityNameText
-                            font.pixelSize: 18
+                            font.pixelSize: 15
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignBottom
                             textFormat: Text.RichText
@@ -167,13 +165,13 @@ Rectangle {
 
                         Text {
                             id: opCodeText
-                            x: 96
-                            y: 120
+                            x: 75
+                            y: 107
                             width: 120
-                            height: 35
+                            height: 23
                             color: "#ffffff"
                             text: model.opCodeText
-                            font.pixelSize: 18
+                            font.pixelSize: 15
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignTop
                             textFormat: Text.RichText
@@ -185,7 +183,7 @@ Rectangle {
                             x: 251
                             y: 80
                             width: 72
-                            height: 48
+                            height: 40
                             color: "#ffffff"
                             radius: 10
 
@@ -211,7 +209,7 @@ Rectangle {
                             x: 333
                             y: 80
                             width: 72
-                            height: 48
+                            height: 40
                             color: "#ffffff"
                             radius: 10
 
@@ -235,7 +233,7 @@ Rectangle {
                         Text {
                             id: typeInfo1Text
                             x: 251
-                            y: 130
+                            y: 122
                             width: 72
                             height: 16
                             color: "#ffffff"
@@ -248,7 +246,7 @@ Rectangle {
                         Text {
                             id: typeInfo2Text
                             x: 333
-                            y: 130
+                            y: 122
                             width: 72
                             height: 16
                             color: "#ffffff"
