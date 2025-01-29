@@ -72,25 +72,24 @@ Rectangle {
                         height: 15
                         color: "#00ffffff"
                     }
-                    model: customModel
-                    // // Тестовая модель
-                    // model: ListModel {
-                    //     ListElement {
-                    //         opText: "Программная инженерия<br/>НИУ ВШЭ"
-                    //         info1Text: "289<br/>баллов ЕГЭ"
-                    //         info2Text: "700к ₽<br/>стоимость"
-                    //     }
-                    //     ListElement {
-                    //         opText: "Операция 2"
-                    //         info1Text: "Инфо 2.1"
-                    //         info2Text: "Инфо 2.2"
-                    //     }
-                    //     ListElement {
-                    //         opText: "Операция 3"
-                    //         info1Text: "Инфо 3.1"
-                    //         info2Text: "Инфо 3.2"
-                    //     }
-                    // }
+                    // model: customModel
+                    // Тестовая модель
+                    model: ListModel {// ListElement {
+                        //     opText: "Программная инженерия<br/>НИУ ВШЭ"
+                        //     info1Text: "289<br/>баллов ЕГЭ"
+                        //     info2Text: "700к ₽<br/>стоимость"
+                        // }
+                        // ListElement {
+                        //     opText: "Операция 2"
+                        //     info1Text: "Инфо 2.1"
+                        //     info2Text: "Инфо 2.2"
+                        // }
+                        // ListElement {
+                        //     opText: "Операция 3"
+                        //     info1Text: "Инфо 3.1"
+                        //     info2Text: "Инфо 3.2"
+                        // }
+                    }
                     delegate: Item {
                         width: listView.width
                         height: 80
@@ -231,24 +230,166 @@ Rectangle {
 
                 Text {
                     id: searchOpText
-                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Bahnschrift SemiBold'; font-size:28pt;\">Поиск ОП</span></p></body></html>"
-                    font.pixelSize: 24
+                    text: "Поиск ОП"
+                    font.pixelSize: 36
                     textFormat: Text.RichText
-                    font.family: "Tahoma"
+                    font.family: "Bahnschrift SemiBold"
                     anchors.left: parent.left
                     anchors.top: parent.top
                 }
 
                 Text {
-                    id: searchOpText1
-                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Bahnschrift Light SemiCondensed'; font-size:14pt; color:#343434;\">Получено 009 результатов</span></p></body></html>"
+                    id: resultAmountText
+                    color: "#373737"
+                    text: "Получено 009 результатов"
                     anchors.left: parent.left
-                    font.pixelSize: 24
+                    font.pixelSize: 18
                     textFormat: Text.RichText
-                    font.family: "Tahoma"
+                    font.family: "Bahnschrift Light SemiCondensed"
                     anchors.bottom: parent.bottom
                 }
             }
+        }
+    }
+
+    Rectangle {
+        id: opDataRectangle
+        x: 260
+        y: 165
+        width: 420
+        height: 170
+        color: "#53b93f"
+        radius: 10
+
+        Image {
+            id: opImage
+            x: 15
+            y: 80
+            width: 75
+            height: 75
+            source: "resources/hselogo.svg"
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Text {
+            id: opNameText
+            x: 15
+            y: 15
+            width: parent.width - 30
+            height: 65
+            color: "#ffffff"
+            text: "Программная<br/>инженерия"
+            font.pixelSize: 24
+            textFormat: Text.RichText
+            font.family: "Bahnschrift SemiBold"
+        }
+
+        Text {
+            id: universityText
+            x: 95
+            y: 80
+            width: 120
+            height: 35
+            color: "#ffffff"
+            text: "НИУ ВШЭ"
+            font.pixelSize: 18
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignBottom
+            textFormat: Text.RichText
+            font.family: "Bahnschrift SemiBold"
+        }
+
+        Text {
+            id: opNumText
+            x: 96
+            y: 120
+            width: 120
+            height: 35
+            color: "#ffffff"
+            text: "09.03.04"
+            font.pixelSize: 18
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignTop
+            textFormat: Text.RichText
+            font.family: "Bahnschrift SemiBold"
+        }
+
+        Rectangle {
+            id: opInfo1Rectangle
+            x: 251
+            y: 80
+            width: 72
+            height: 48
+            color: "#ffffff"
+            radius: 10
+
+            Text {
+                id: opInfo1Text
+                text: qsTr("289")
+                font.pixelSize: 20
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: "Bahnschrift SemiBold"
+                width: parent.width
+                height: parent.height
+                color: "#53b93f"
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 10 // Отступ слева
+                anchors.rightMargin: 10 // Отступ справа
+            }
+        }
+
+        Rectangle {
+            id: opInfo2Rectangle
+            x: 333
+            y: 80
+            width: 72
+            height: 48
+            color: "#ffffff"
+            radius: 10
+
+            Text {
+                id: opInfo2Text
+                text: qsTr("700к ₽")
+                font.pixelSize: 20
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: "Bahnschrift SemiBold"
+                width: parent.width
+                height: parent.height
+                color: "#53b93f"
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 10 // Отступ слева
+                anchors.rightMargin: 10 // Отступ справа
+            }
+        }
+
+        Text {
+            id: typeInfo1Text
+            x: 251
+            y: 130
+            width: 72
+            height: 16
+            color: "#ffffff"
+            text: qsTr("Баллов ЕГЭ")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        Text {
+            id: typeInfo1Text1
+            x: 333
+            y: 130
+            width: 72
+            height: 16
+            color: "#ffffff"
+            text: qsTr("Стоимость")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
 }
