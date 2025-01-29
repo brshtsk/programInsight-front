@@ -40,48 +40,43 @@ class CustomListModel(QAbstractListModel):
 # Пример данных
 data = [
     {
-        'opText': "Программная инженерия<br/>НИУ ВШЭ",
-        'info1Text': "289<br/>баллов ЕГЭ",
-        'info2Text': "700к ₽<br/>стоимость"
+        "opNameText": "Программная<br>инженерия",
+        "info1Text": "289",
+        "info2Text": "700к ₽",
+        "universityNameText": "НИУ ВШЭ",
+        "opCodeText": "09.03.04",
+        "imageSource": "resources/hselogo.svg"
     },
     {
-        'opText': "Прикладная математика и<br/>информатика<br/>НИУ ВШЭ",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
+        "opNameText": "Прикладная математика<br>и информатика",
+        "info1Text": "300",
+        "info2Text": "720к ₽",
+        "universityNameText": "НИУ ВШЭ",
+        "opCodeText": "01.03.02",
+        "imageSource": "resources/hselogo.svg"
     },
     {
-        'opText': "Егооооор",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
+        "opNameText": "Анализ данных<br>в экономике",
+        "info1Text": "272",
+        "info2Text": "470к ₽",
+        "universityNameText": "МФТИ",
+        "opCodeText": "38.03.01",
+        "imageSource": "resources/mfti-logo.png"
     },
     {
-        'opText': "У меня получилось",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
+        "opNameText": "Физика<br>и нанотехнологии",
+        "info1Text": "280",
+        "info2Text": "500к ₽",
+        "universityNameText": "МФТИ",
+        "opCodeText": "16.03.01",
+        "imageSource": "resources/mfti-logo.png"
     },
     {
-        'opText': "Добавлять эти данные",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
-    },
-    {
-        'opText': "Через питон",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
-    },
-    {
-        'opText': "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
-        'info1Text': "298<br/>баллов ЕГЭ",
-        'info2Text': "999к ₽<br/>стоимость"
-    },
-    {
-        'opText': "Добавляю новую<br/>строку",
-        'info1Text': "000<br/>баллов ЕГЭ",
-        'info2Text': "55к ₽<br/>стоимость"
-    },
-    {
-        'opText': "Приветик<br/>пистолетик",
-        'info1Text': "000<br/>баллов ЕГЭ",
-        'info2Text': "55к ₽<br/>стоимость"
+        "opNameText": "Информационная<br>безопасность",
+        "info1Text": "260",
+        "info2Text": "450к ₽",
+        "universityNameText": "МИРЭА",
+        "opCodeText": "10.03.01",
+        "imageSource": "resources/other-logo.svg"
     }
 ]
