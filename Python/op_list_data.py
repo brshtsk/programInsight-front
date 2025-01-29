@@ -2,10 +2,13 @@ from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
 
 class CustomListModel(QAbstractListModel):
-    # Роли модели
-    OpTextRole = Qt.UserRole + 1
+    # Определяем роли модели для всех полей
+    OpNameRole = Qt.UserRole + 1
     Info1TextRole = Qt.UserRole + 2
     Info2TextRole = Qt.UserRole + 3
+    UniversityNameRole = Qt.UserRole + 4
+    OpCodeRole = Qt.UserRole + 5
+    ImageSourceRole = Qt.UserRole + 6
 
     def __init__(self, data=None):
         super().__init__()
@@ -20,24 +23,33 @@ class CustomListModel(QAbstractListModel):
 
         item = self._data[index.row()]
 
-        if role == self.OpTextRole:
-            return item['opText']
+        if role == self.OpNameRole:
+            return item["opNameText"]
         elif role == self.Info1TextRole:
-            return item['info1Text']
+            return item["info1Text"]
         elif role == self.Info2TextRole:
-            return item['info2Text']
+            return item["info2Text"]
+        elif role == self.UniversityNameRole:
+            return item["universityNameText"]
+        elif role == self.OpCodeRole:
+            return item["opCodeText"]
+        elif role == self.ImageSourceRole:
+            return item["imageSource"]
 
         return None
 
     def roleNames(self):
         return {
-            self.OpTextRole: b'opText',
-            self.Info1TextRole: b'info1Text',
-            self.Info2TextRole: b'info2Text'
+            self.OpNameRole: b"opNameText",
+            self.Info1TextRole: b"info1Text",
+            self.Info2TextRole: b"info2Text",
+            self.UniversityNameRole: b"universityNameText",
+            self.OpCodeRole: b"opCodeText",
+            self.ImageSourceRole: b"imageSource",
         }
 
 
-# Пример данных
+# Данные для списка ОП
 data = [
     {
         "opNameText": "Программная<br>инженерия",
