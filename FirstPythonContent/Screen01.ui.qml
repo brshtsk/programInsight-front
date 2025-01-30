@@ -17,7 +17,7 @@ import FirstPython
 import QtQuick.Studio.DesignEffects
 
 Rectangle {
-    width: 1360
+    width: 1310
     height: 810
     color: "#ffffff"
 
@@ -318,6 +318,76 @@ Rectangle {
                     textFormat: Text.RichText
                     font.family: "Bahnschrift Light SemiCondensed"
                     anchors.bottom: parent.bottom
+                }
+            }
+        }
+    }
+
+    Item {
+        id: rezultZoneItem
+        x: 770
+        y: 40
+        width: 520
+        height: 770
+
+        Item {
+            id: userZoneItem
+            x: 0
+            y: 0
+            width: parent.width
+            height: 80
+
+            Button {
+                id: favouriteButton
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                width: 40
+                height: 40
+                icon.height: 32
+                icon.width: 32
+                wheelEnabled: true
+                icon.color: hovered ? "#ff0707" : "#d5d5d5"
+                icon.source: "resources/heart-gray.svg"
+                background: Rectangle {
+                    color: "#00FFFFFF"
+                }
+                Behavior on icon.color {
+                    // Анимация изменения цвета
+                    ColorAnimation {
+                        duration: 200 // Длительность в миллисекундах
+                    }
+                }
+            }
+
+            Item {
+                id: userAccountItem
+                width: 200
+                height: parent.height
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+
+                Button {
+                    id: userCabinetButton
+                    x: 152
+                    y: 349
+                    width: 48
+                    height: 48
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    font.pixelSize: 16
+                    objectName: "button"
+                    icon.source: "resources/user-icon.svg"
+                    icon.color: "#ffffff"
+                    background: Rectangle {
+                        color: userCabinetButton.pressed ? "#7dd96b" : "#d5d5d5"
+                        radius: 10
+                        scale: userCabinetButton.hovered ? 1.05 : 1.0
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+                    }
                 }
             }
         }

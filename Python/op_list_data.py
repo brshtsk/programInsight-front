@@ -52,6 +52,14 @@ class CustomListModel(QAbstractListModel):
 # Данные для списка ОП
 data = [
     {
+        "opNameText": "Дизайн и разработка<br>информационных продуктов",
+        "info1Text": "268",
+        "info2Text": "740к ₽",
+        "universityNameText": "НИУ ВШЭ",
+        "opCodeText": "26.01.04",
+        "imageSource": "resources/hselogo.svg"
+    },
+    {
         "opNameText": "Программная<br>инженерия",
         "info1Text": "289",
         "info2Text": "700к ₽",
