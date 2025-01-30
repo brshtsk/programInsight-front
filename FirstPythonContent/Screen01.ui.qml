@@ -289,6 +289,11 @@ Rectangle {
                             duration: 100
                         }
                     }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
                 }
             }
 
@@ -346,15 +351,26 @@ Rectangle {
                 icon.height: 32
                 icon.width: 32
                 wheelEnabled: true
-                icon.color: hovered ? "#ff0707" : "#d5d5d5"
+                icon.color: pressed ? "#ff8a8a" : (hovered ? "#ff0707" : "#d5d5d5") // Бледно-красный при нажатии
                 icon.source: "resources/heart-gray.svg"
                 background: Rectangle {
                     color: "#00FFFFFF"
                 }
+
+                // Увеличение размера иконки при наведении
+                scale: hovered ? 1.05 : 1.0
+
+                // Плавная анимация увеличения
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+
                 Behavior on icon.color {
-                    // Анимация изменения цвета
                     ColorAnimation {
-                        duration: 200 // Длительность в миллисекундах
+                        duration: 200
                     }
                 }
             }
@@ -379,12 +395,17 @@ Rectangle {
                     icon.source: "resources/user-icon.svg"
                     icon.color: "#ffffff"
                     background: Rectangle {
-                        color: userCabinetButton.pressed ? "#7dd96b" : "#d5d5d5"
+                        color: userCabinetButton.pressed ? "#e5e5e5" : "#d5d5d5"
                         radius: 10
                         scale: userCabinetButton.hovered ? 1.05 : 1.0
                         Behavior on scale {
                             NumberAnimation {
                                 duration: 100
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
                             }
                         }
                     }
