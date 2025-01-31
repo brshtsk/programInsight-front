@@ -60,5 +60,11 @@ statistics_data = [
         "imageSource": "resources/people.png",
         "statisticProgressText": "76",
         "progress": 1.0
+    },
+    {
+        "statisticTypeText": "С бюджетными местами",
+        "imageSource": "resources/cap.svg",
+        "statisticProgressText": "57%",
+        "progress": 0.57
     }
 ]

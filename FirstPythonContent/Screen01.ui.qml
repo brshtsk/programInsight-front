@@ -435,7 +435,7 @@ Rectangle {
             x: 0
             y: 90
             width: parent.width
-            height: 230
+            height: 300
 
             Text {
                 id: statisticHeaderText
@@ -450,7 +450,7 @@ Rectangle {
             ListView {
                 id: statisticListView
                 width: parent.width
-                height: 200
+                height: 270
                 anchors.bottom: parent.bottom
                 spacing: 10
                 model: statisticsModel // Используем Python-модель
@@ -475,6 +475,13 @@ Rectangle {
                 //         imageSource: "resources/people.png"
                 //         statisticProgressText: "105"
                 //         progress: 1.0
+                //     }
+
+                //     ListElement {
+                //         statisticTypeText: "С бюджетными местами"
+                //         imageSource: "resources/cap.svg"
+                //         statisticProgressText: "57%"
+                //         progress: 0.57
                 //     }
                 // }
                 delegate: Item {
