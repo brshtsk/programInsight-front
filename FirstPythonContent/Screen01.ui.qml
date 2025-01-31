@@ -435,7 +435,7 @@ Rectangle {
             x: 0
             y: 90
             width: parent.width
-            height: 300
+            height: 230
 
             Text {
                 id: statisticHeaderText
@@ -452,20 +452,27 @@ Rectangle {
                 width: parent.width
                 height: 200
                 anchors.bottom: parent.bottom
+                spacing: 10
                 model: ListModel {
                     ListElement {
-                        name: "Red"
-                        colorCode: "red"
+                        statisticTypeText: "Средний балл ЕГЭ"
+                        imageSource: "resources/pencil-plain.png"
+                        statisticProgressText: "78"
+                        progress: 0.78
                     }
 
                     ListElement {
-                        name: "Green"
-                        colorCode: "green"
+                        statisticTypeText: "Средняя стоимоть (тыс. ₽)"
+                        imageSource: "resources/money.png"
+                        statisticProgressText: "242"
+                        progress: 1.0
                     }
 
                     ListElement {
-                        name: "Blue"
-                        colorCode: "blue"
+                        statisticTypeText: "Среднее количество мест"
+                        imageSource: "resources/people.png"
+                        statisticProgressText: "105"
+                        progress: 1.0
                     }
                 }
                 delegate: Item {
@@ -488,9 +495,9 @@ Rectangle {
 
                         Image {
                             id: statisticTypeImage
-                            width: 36
-                            height: 36
-                            source: "resources/exam.svg"
+                            width: 30
+                            height: 30
+                            source: model.imageSource
                             fillMode: Image.PreserveAspectFit
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -501,10 +508,10 @@ Rectangle {
                         id: statisticTypeText
                         x: 58
                         width: 220
-                        height: 35
+                        height: 28
                         color: "#000000"
-                        text: "Средний балл ЕГЭ"
-                        font.pixelSize: 24
+                        text: model.statisticTypeText
+                        font.pixelSize: 20
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignBottom
                         textFormat: Text.RichText
@@ -516,7 +523,7 @@ Rectangle {
                         id: statisticProgressBar
                         width: 40
                         height: 40
-                        progress: 0.75 // Установите значение прогресса
+                        progress: model.progress
                         progressColor: "#53b93f"
                         backgroundColor: "#d0d0d0"
                         strokeWidth: 4
@@ -528,15 +535,16 @@ Rectangle {
                             font.pixelSize: 18
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            font.family: "Bahnschrift SemiBold"
+                            font.family: "Bahnschrift Light SemiCondensed"
                             width: parent.width
-                            height: parent.height
+                            height: 20
+                            anchors.verticalCenter: parent.verticalCenter
                             color: "#53b93f"
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.leftMargin: 10 // Отступ слева
                             anchors.rightMargin: 10 // Отступ справа
-                            text: "75"
+                            text: model.statisticProgressText
                         }
                     }
                 }
