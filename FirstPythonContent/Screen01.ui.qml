@@ -13,11 +13,12 @@ import QtQuick.Window
 //2.15
 import QtQuick.Layouts
 //1.15
+import QtQuick.Shapes
 import FirstPython
 import QtQuick.Studio.DesignEffects
 
 Rectangle {
-    width: 1310
+    width: 1280
     height: 810
     color: "#ffffff"
 
@@ -332,7 +333,7 @@ Rectangle {
         id: rezultZoneItem
         x: 770
         y: 40
-        width: 520
+        width: 490
         height: 770
 
         Item {
@@ -377,7 +378,7 @@ Rectangle {
 
             Item {
                 id: userAccountItem
-                width: 200
+                width: 165
                 height: parent.height
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
@@ -386,8 +387,8 @@ Rectangle {
                     id: userCabinetButton
                     x: 152
                     y: 349
-                    width: 48
-                    height: 48
+                    width: 40
+                    height: 40
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     font.pixelSize: 16
@@ -409,6 +410,124 @@ Rectangle {
                             }
                         }
                     }
+                }
+                Text {
+                    id: userNameText
+                    width: 120
+                    height: 48
+                    color: "#696969"
+                    text: "Митя<br>Бершицкий"
+                    anchors.left: parent.left
+                    font.pixelSize: 18
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    textFormat: Text.RichText
+                    font.family: "Bahnschrift Light"
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+        }
+
+        Item {
+            id: statisticsZoneItem
+            x: 0
+            y: 90
+            width: parent.width
+            height: 200
+
+            Text {
+                id: statisticHeaderText
+                color: "#373737"
+                text: "Статистика по результатам"
+                anchors.left: parent.left
+                font.pixelSize: 18
+                textFormat: Text.RichText
+                font.family: "Bahnschrift Light SemiCondensed"
+                anchors.top: parent.top
+            }
+            ListView {
+                id: statisticListView
+                width: parent.width
+                height: 80
+                anchors.bottom: parent.bottom
+                model: ListModel {
+                    ListElement {
+                        name: "Red"
+                        colorCode: "red"
+                    }
+
+                    ListElement {
+                        name: "Green"
+                        colorCode: "green"
+                    }
+
+                    ListElement {
+                        name: "Blue"
+                        colorCode: "blue"
+                    }
+
+                    ListElement {
+                        name: "White"
+                        colorCode: "white"
+                    }
+                }
+                delegate: Row {
+                    spacing: 5
+                    Rectangle {
+                        width: 100
+                        height: 20
+                        color: colorCode
+                    }
+
+                    Text {
+                        width: 100
+                        text: name
+                    }
+                }
+            }
+
+            Item {
+                id: statisticRowItem
+                x: 0
+                y: 40
+                width: parent.width
+                height: 60
+
+                Rectangle {
+                    id: statisticTypeRectangle
+                    color: "#00d5d5d5"
+                    width: 48
+                    height: 48
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    radius: 10
+                    border.color: "#d5d5d5"
+                    border.width: 2
+
+                    Image {
+                        id: statisticTypeImage
+                        width: 36
+                        height: 36
+                        source: "resources/exam.svg"
+                        fillMode: Image.PreserveAspectFit
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                Text {
+                    id: statisticTypeText
+                    x: 58
+                    width: 220
+                    height: 35
+                    color: "#000000"
+                    text: "Средний балл ЕГЭ"
+                    font.pixelSize: 24
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    textFormat: Text.RichText
+                    font.family: "Bahnschrift SemiBold"
+                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
         }
