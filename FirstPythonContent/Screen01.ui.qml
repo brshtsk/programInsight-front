@@ -435,7 +435,7 @@ Rectangle {
             x: 0
             y: 90
             width: parent.width
-            height: 200
+            height: 300
 
             Text {
                 id: statisticHeaderText
@@ -450,7 +450,7 @@ Rectangle {
             ListView {
                 id: statisticListView
                 width: parent.width
-                height: 80
+                height: 200
                 anchors.bottom: parent.bottom
                 model: ListModel {
                     ListElement {
@@ -467,81 +467,78 @@ Rectangle {
                         name: "Blue"
                         colorCode: "blue"
                     }
-
-                    ListElement {
-                        name: "White"
-                        colorCode: "white"
-                    }
                 }
-                delegate: Row {
-                    spacing: 5
+                delegate: Item {
+                    id: statisticRowItem
+                    x: 0
+                    y: 40
+                    width: parent.width
+                    height: 60
+
                     Rectangle {
-                        width: 100
-                        height: 20
-                        color: colorCode
+                        id: statisticTypeRectangle
+                        color: "#00d5d5d5"
+                        width: 48
+                        height: 48
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        radius: 10
+                        border.color: "#dde9db"
+                        border.width: 4
+
+                        Image {
+                            id: statisticTypeImage
+                            width: 36
+                            height: 36
+                            source: "resources/exam.svg"
+                            fillMode: Image.PreserveAspectFit
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
                     }
 
                     Text {
-                        width: 100
-                        text: name
-                    }
-                }
-            }
-
-            Item {
-                id: statisticRowItem
-                x: 0
-                y: 40
-                width: parent.width
-                height: 60
-
-                Rectangle {
-                    id: statisticTypeRectangle
-                    color: "#00d5d5d5"
-                    width: 48
-                    height: 48
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    radius: 10
-                    border.color: "#d5d5d5"
-                    border.width: 2
-
-                    Image {
-                        id: statisticTypeImage
-                        width: 36
-                        height: 36
-                        source: "resources/exam.svg"
-                        fillMode: Image.PreserveAspectFit
+                        id: statisticTypeText
+                        x: 58
+                        width: 220
+                        height: 35
+                        color: "#000000"
+                        text: "Средний балл ЕГЭ"
+                        font.pixelSize: 24
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignBottom
+                        textFormat: Text.RichText
+                        font.family: "Bahnschrift SemiBold"
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
                     }
-                }
 
-                Text {
-                    id: statisticTypeText
-                    x: 58
-                    width: 220
-                    height: 35
-                    color: "#000000"
-                    text: "Средний балл ЕГЭ"
-                    font.pixelSize: 24
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignBottom
-                    textFormat: Text.RichText
-                    font.family: "Bahnschrift SemiBold"
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                    CircularProgressBar {
+                        id: statisticProgressBar
+                        width: 40
+                        height: 40
+                        progress: 0.75 // Установите значение прогресса
+                        progressColor: "#53b93f"
+                        backgroundColor: "#d0d0d0"
+                        strokeWidth: 4
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
 
-                CircularProgressBar {
-                    id: progressBar
-                    width: 40
-                    height: 40
-                    progress: 0.75 // Установите значение прогресса
-                    progressColor: "#53b93f"
-                    backgroundColor: "#d0d0d0"
-                    strokeWidth: 4
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
+                        Text {
+                            id: statisticProgressText
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.family: "Bahnschrift SemiBold"
+                            width: parent.width
+                            height: parent.height
+                            color: "#53b93f"
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.leftMargin: 10 // Отступ слева
+                            anchors.rightMargin: 10 // Отступ справа
+                            text: "75"
+                        }
+                    }
                 }
             }
         }
