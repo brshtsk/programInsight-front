@@ -1,7 +1,7 @@
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
 
-class CustomListModel(QAbstractListModel):
+class opListModel(QAbstractListModel):
     # Определяем роли модели для всех полей
     OpNameRole = Qt.UserRole + 1
     Info1TextRole = Qt.UserRole + 2

@@ -1,12 +1,12 @@
 from PySide6.QtCore import QObject, Slot
-from op_list_data import CustomListModel, data  # Импорт модели и данных
+from op_list_data import opListModel, data  # Импорт модели и данных
 
 
 class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.model = CustomListModel(data)  # Создаём модель
+        self.model = opListModel(data)  # Создаём модель
         self.setup_connections()
 
     def setup_connections(self):
