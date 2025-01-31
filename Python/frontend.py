@@ -1,12 +1,14 @@
 from PySide6.QtCore import QObject, Slot
-from op_list_data import opListModel, data  # Импорт модели и данных
+from op_model import opListModel, data
+from statistics_model import StatisticsListModel, statistics_data  # Импорт новой модели
 
 
 class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.model = opListModel(data)  # Создаём модель
+        self.op_model = opListModel(data)  # Создаём модель
+        self.statistics_model = StatisticsListModel(statistics_data)
         self.setup_connections()
 
     def setup_connections(self):
@@ -15,7 +17,8 @@ class Frontend(QObject):
 
         # Передаём модель в контекст QML
         context = self.engine.rootContext()
-        context.setContextProperty("customModel", self.model)
+        context.setContextProperty("opModel", self.op_model)
+        context.setContextProperty("statisticsModel", self.statistics_model)
 
         # Ищем кнопку и подключаем Python-метод
         button = root_object.findChild(QObject, 'button')

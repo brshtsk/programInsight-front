@@ -20,7 +20,7 @@ import "components"
 
 // Убедитесь, что путь правильный
 Rectangle {
-    width: 1190
+    width: 1200
     height: 810
     color: "#ffffff"
 
@@ -76,50 +76,50 @@ Rectangle {
                         color: "#00ffffff"
                     }
                     spacing: 15 // Добавляем отступ между элементами
-                    // model: customModel
-                    // Тестовая модель
-                    model: ListModel {
-                        ListElement {
-                            opNameText: "Программная<br>инженерия"
-                            info1Text: "289"
-                            info2Text: "700к ₽"
-                            universityNameText: "НИУ ВШЭ"
-                            opCodeText: "09.03.04"
-                            imageSource: "resources/hselogo.svg"
-                        }
-                        ListElement {
-                            opNameText: "Прикладная математика<br>и информатика"
-                            info1Text: "300"
-                            info2Text: "720к ₽"
-                            universityNameText: "НИУ ВШЭ"
-                            opCodeText: "01.03.02"
-                            imageSource: "resources/hselogo.svg"
-                        }
-                        ListElement {
-                            opNameText: "Анализ данных<br>в экономике"
-                            info1Text: "272"
-                            info2Text: "470к ₽"
-                            universityNameText: "МФТИ"
-                            opCodeText: "38.03.01"
-                            imageSource: "resources/mfti-logo.png"
-                        }
-                        ListElement {
-                            opNameText: "Физика<br>и нанотехнологии"
-                            info1Text: "280"
-                            info2Text: "500к ₽"
-                            universityNameText: "МФТИ"
-                            opCodeText: "16.03.01"
-                            imageSource: "resources/mfti-logo.png"
-                        }
-                        ListElement {
-                            opNameText: "Информационная<br>безопасность"
-                            info1Text: "260"
-                            info2Text: "450к ₽"
-                            universityNameText: "МИРЭА"
-                            opCodeText: "10.03.01"
-                            imageSource: "resources/other-logo.svg"
-                        }
-                    }
+                    model: opModel
+                    // // Тестовая модель
+                    // model: ListModel {
+                    //     ListElement {
+                    //         opNameText: "Программная<br>инженерия"
+                    //         info1Text: "289"
+                    //         info2Text: "700к ₽"
+                    //         universityNameText: "НИУ ВШЭ"
+                    //         opCodeText: "09.03.04"
+                    //         imageSource: "resources/hselogo.svg"
+                    //     }
+                    //     ListElement {
+                    //         opNameText: "Прикладная математика<br>и информатика"
+                    //         info1Text: "300"
+                    //         info2Text: "720к ₽"
+                    //         universityNameText: "НИУ ВШЭ"
+                    //         opCodeText: "01.03.02"
+                    //         imageSource: "resources/hselogo.svg"
+                    //     }
+                    //     ListElement {
+                    //         opNameText: "Анализ данных<br>в экономике"
+                    //         info1Text: "272"
+                    //         info2Text: "470к ₽"
+                    //         universityNameText: "МФТИ"
+                    //         opCodeText: "38.03.01"
+                    //         imageSource: "resources/mfti-logo.png"
+                    //     }
+                    //     ListElement {
+                    //         opNameText: "Физика<br>и нанотехнологии"
+                    //         info1Text: "280"
+                    //         info2Text: "500к ₽"
+                    //         universityNameText: "МФТИ"
+                    //         opCodeText: "16.03.01"
+                    //         imageSource: "resources/mfti-logo.png"
+                    //     }
+                    //     ListElement {
+                    //         opNameText: "Информационная<br>безопасность"
+                    //         info1Text: "260"
+                    //         info2Text: "450к ₽"
+                    //         universityNameText: "МИРЭА"
+                    //         opCodeText: "10.03.01"
+                    //         imageSource: "resources/other-logo.svg"
+                    //     }
+                    // }
                     delegate: Rectangle {
                         id: opRowRectangle
                         width: 420
@@ -453,28 +453,30 @@ Rectangle {
                 height: 200
                 anchors.bottom: parent.bottom
                 spacing: 10
-                model: ListModel {
-                    ListElement {
-                        statisticTypeText: "Средний балл ЕГЭ"
-                        imageSource: "resources/pencil-plain.png"
-                        statisticProgressText: "78"
-                        progress: 0.78
-                    }
+                model: statisticsModel // Используем Python-модель
+                // // Ниже тестовая модель
+                // model: ListModel {
+                //     ListElement {
+                //         statisticTypeText: "Средний балл ЕГЭ"
+                //         imageSource: "resources/pencil-plain.png"
+                //         statisticProgressText: "78"
+                //         progress: 0.78
+                //     }
 
-                    ListElement {
-                        statisticTypeText: "Средняя стоимоть (тыс. ₽)"
-                        imageSource: "resources/money.png"
-                        statisticProgressText: "242"
-                        progress: 1.0
-                    }
+                //     ListElement {
+                //         statisticTypeText: "Средняя стоимоть (тыс. ₽)"
+                //         imageSource: "resources/money.png"
+                //         statisticProgressText: "242"
+                //         progress: 1.0
+                //     }
 
-                    ListElement {
-                        statisticTypeText: "Среднее количество мест"
-                        imageSource: "resources/people.png"
-                        statisticProgressText: "105"
-                        progress: 1.0
-                    }
-                }
+                //     ListElement {
+                //         statisticTypeText: "Среднее количество мест"
+                //         imageSource: "resources/people.png"
+                //         statisticProgressText: "105"
+                //         progress: 1.0
+                //     }
+                // }
                 delegate: Item {
                     id: statisticRowItem
                     x: 0
