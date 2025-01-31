@@ -16,9 +16,11 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import FirstPython
 import QtQuick.Studio.DesignEffects
+import "components"
 
+// Убедитесь, что путь правильный
 Rectangle {
-    width: 1280
+    width: 1190
     height: 810
     color: "#ffffff"
 
@@ -333,7 +335,7 @@ Rectangle {
         id: rezultZoneItem
         x: 770
         y: 40
-        width: 490
+        width: 400
         height: 770
 
         Item {
@@ -528,6 +530,18 @@ Rectangle {
                     textFormat: Text.RichText
                     font.family: "Bahnschrift SemiBold"
                     anchors.verticalCenter: parent.verticalCenter
+                }
+
+                CircularProgressBar {
+                    id: progressBar
+                    width: 40
+                    height: 40
+                    progress: 0.75 // Установите значение прогресса
+                    progressColor: "#53b93f"
+                    backgroundColor: "#d0d0d0"
+                    strokeWidth: 4
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
                 }
             }
         }
