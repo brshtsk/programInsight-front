@@ -336,7 +336,7 @@ Rectangle {
         x: 770
         y: 40
         width: 400
-        height: 770
+        height: 750
 
         Item {
             id: userZoneItem
@@ -541,7 +541,7 @@ Rectangle {
 
                         Text {
                             id: statisticProgressText
-                            font.pixelSize: 18
+                            font.pixelSize: 16
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             font.family: "Bahnschrift Light SemiCondensed"
@@ -555,6 +555,52 @@ Rectangle {
                             anchors.rightMargin: 10 // Отступ справа
                             text: model.statisticProgressText
                         }
+                    }
+                }
+            }
+        }
+
+        Image {
+            id: graphicImage
+            x: 0
+            y: 429
+            width: parent.width
+            height: 234
+            source: "resources/example-plot.png"
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Button {
+            id: clusterButton
+            x: 0
+            width: parent.width
+            height: 48
+            text: "К дашбордам"
+            anchors.bottom: parent.bottom
+
+            font.pixelSize: 20 // Увеличенный размер шрифта
+            font.family: "Bahnschrift SemiBold" // Шрифт Bahnschrift SemiBold
+
+            contentItem: Text {
+                text: clusterButton.text
+                font: clusterButton.font
+                color: "#FFFFFF" // Белый цвет текста
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                color: clusterButton.pressed ? "#7dd96b" : "#53b93f"
+                radius: 10
+                scale: clusterButton.hovered ? 1.05 : 1.0
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
                     }
                 }
             }
