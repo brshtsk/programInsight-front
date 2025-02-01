@@ -301,7 +301,7 @@ Rectangle {
             }
 
             Item {
-                id: _item
+                id: searchInfoZoneItem
                 width: 200
                 height: 70
                 anchors.left: parent.left
@@ -602,6 +602,101 @@ Rectangle {
                     ColorAnimation {
                         duration: 200
                     }
+                }
+            }
+        }
+    }
+
+    Item {
+        id: leftMenuItem
+        x: 30
+        y: 40
+        width: 180
+        height: 750
+
+        Item {
+            id: upperLogoItem
+            x: 0
+            y: 0
+            width: parent.width
+            height: 80
+
+            Text {
+                id: projectNameText
+                x: 0
+                y: 0
+                color: "#53b93f"
+                text: "ProgramInsight"
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 18
+                textFormat: Text.RichText
+                font.family: "Bahnschrift SemiBold"
+            }
+
+            Image {
+                id: image
+                width: 40
+                height: 40
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                source: "resources/near-logo.svg"
+                fillMode: Image.PreserveAspectFit
+            }
+        }
+
+        ListView {
+            id: menuBarListView
+            width: parent.width
+            height: 200
+            y: 95
+            spacing: 25
+            model: ListModel {
+                ListElement {
+                    text: "Лучшие вузы"
+                }
+
+                ListElement {
+                    text: "Кластеры"
+                }
+
+                ListElement {
+                    text: "Экспорт"
+                }
+
+                ListElement {
+                    text: "Настройки"
+                }
+            }
+            delegate: Button {
+                id: menuRowButton
+                width: 120
+                height: 20
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                contentItem: Text {
+                    font.pixelSize: 18 // Увеличенный размер шрифта
+                    font.family: "Bahnschrift SemiBold" // Шрифт Bahnschrift SemiBold
+                    text: model.text
+                    // icon.color: pressed ? "#ff8a8a" : (hovered ? "#ff0707" : "#d5d5d5") // Бледно-красный при нажатии
+                    color: menuRowButton.pressed ? "#7dd96b" : (menuRowButton.hovered ? "53b93f" : "#696969")
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    scale: menuRowButton.hovered ? 1.05 : 1.0
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
+                }
+
+                background: Rectangle {
+                    color: "#00FFFFFF"
                 }
             }
         }
