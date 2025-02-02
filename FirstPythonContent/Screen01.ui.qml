@@ -18,8 +18,8 @@ import FirstPython
 import QtQuick.Studio.DesignEffects
 import "components"
 
-// Убедитесь, что путь правильный
 Rectangle {
+    id: mainWindowContent
     width: 1200
     height: 810
     color: "#ffffff"
