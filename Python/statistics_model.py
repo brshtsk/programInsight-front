@@ -42,29 +42,29 @@ class StatisticsListModel(QAbstractListModel):
 
 
 # Данные для модели
-statistics_data = [
-    {
-        "statisticTypeText": "Средний балл ЕГЭ",
-        "imageSource": "resources/pencil-plain.png",
-        "statisticProgressText": "87.2",
-        "progress": 0.872
-    },
-    {
-        "statisticTypeText": "Средняя стоимость (тыс. ₽)",
-        "imageSource": "resources/money.png",
-        "statisticProgressText": "624",
-        "progress": 1.0
-    },
-    {
-        "statisticTypeText": "Среднее количество мест",
-        "imageSource": "resources/people.png",
-        "statisticProgressText": "76",
-        "progress": 1.0
-    },
-    {
-        "statisticTypeText": "С бюджетными местами",
-        "imageSource": "resources/cap.svg",
-        "statisticProgressText": "57%",
-        "progress": 0.57
-    }
-]
+# statistics_data = [
+#     {
+#         "statisticTypeText": "Средний балл ЕГЭ",
+#         "imageSource": "resources/pencil-plain.png",
+#         "statisticProgressText": "87.2",
+#         "progress": 0.872
+#     },
+#     {
+#         "statisticTypeText": "Средняя стоимость (тыс. ₽)",
+#         "imageSource": "resources/money.png",
+#         "statisticProgressText": "624",
+#         "progress": 1.0
+#     },
+#     {
+#         "statisticTypeText": "Среднее количество мест",
+#         "imageSource": "resources/people.png",
+#         "statisticProgressText": "76",
+#         "progress": 1.0
+#     },
+#     {
+#         "statisticTypeText": "С бюджетными местами",
+#         "imageSource": "resources/cap.svg",
+#         "statisticProgressText": "57%",
+#         "progress": 0.57
+#     }
+# ]

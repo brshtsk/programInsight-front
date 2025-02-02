@@ -51,8 +51,6 @@ class opListModel(QAbstractListModel):
 
 
 # Данные для списка ОП
-data = get_op_model_data('op_data.json')
-
 # data = [
 #     {
 #         "opNameText": "Дизайн и разработка<br>информационных продуктов",

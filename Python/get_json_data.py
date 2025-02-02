@@ -4,7 +4,7 @@ from functools import lru_cache
 
 def get_op_data(file_name: str) -> list[dict]:
     """
-    Формат вывода: [{'Название': 'Программная инженерия', 'Университет': 'ВШЭ',
+    Формат вывода: [{'Название': 'Программная инженерия', 'Университет': 'ВШЭ', 'Количество предметов ЕГЭ': 3,
     'Квалификация': 'Бакалавриат'/'Специалитет'/'Магистратура', 'Балл бюджет': 234/None, 'Мест бюджет': 50/None,
     'Балл платное': 123, 'Мест платное': 40/None, 'Стоимость': 730000, 'Город': 'Москва'}, ...]
     :param file_name: json-файл
@@ -23,6 +23,7 @@ def get_op_data(file_name: str) -> list[dict]:
                 parced_data = {'Название': op_name, 'Университет': university, 'Квалификация': op_data['Квалификация']}
 
                 if parced_data['Квалификация'] in ['Бакалавриат', 'Специалитет']:
+                    parced_data['Количество предметов ЕГЭ'] = len(op_data['Предметы ЕГЭ 1'])
                     for postup_data in op_data['Варианты поступления'].values():
                         if 'нет' in postup_data['Бюджет']:
                             parced_data['Балл бюджет'] = None
@@ -72,11 +73,11 @@ def get_image_source(university_name: str) -> str:
     return default
 
 
-def split_op_name(op_name: str) -> str:
+def split_line(op_name: str) -> str:
     """
     Добавляет html-перенос строки для 2 и более слов
     :param op_name: название ОП в 1 строку
-    :return: название ОП с переносом через <br>
+    :return: название с переносом через <br>
     """
     op_split = op_name.split()
     if len(op_split) == 1:
@@ -111,17 +112,83 @@ def split_op_name(op_name: str) -> str:
     return ' '.join(op_split)
 
 
-def get_op_model_data(file_name: str) -> list[dict]:
+@lru_cache
+def cut_extra(university_name: str) -> str:
+    """
+    Добавляет на конец '...', чтобы название университета уместилось в 20 символов
+    :param university_name: полная строка
+    :return: название длиной не более 35 символов (лишние слова справа удалены)
+    """
+    name_split = university_name.split()
+    idx = -1
+    while sum(map(len, name_split[:idx])) > 20 and idx > 1:
+        idx -= 1
+    return ' '.join(name_split[:idx]) + '...'
+
+
+def get_op_model_data(file_name: str) -> (list[dict], list[dict]):
+    """
+    Получает данные из json для загрузки в модели
+    :param file_name: json для получения данных
+    :param need_statistics: нужен ли список для statistics_model
+    :return: данные для op_model, statistics_model
+    """
     op_list = get_op_data(file_name)
     result_model_list = []
+    have_budget = 0
+    sum_price = 0
+    sum_budget_places = 0
+    sum_paid_places = 0
+    sum_budget_ege_scores = 0
+    sum_paid_ege_scores = 0
+    sum_budget_ege_subjects = 0
+    sum_paid_ege_subjects = 0
     for op in op_list:
         op_dict = {
-            "opNameText": split_op_name(op['Название']),
+            "opNameText": split_line(op['Название']),
             "info1Text": str(op['Балл бюджет']),
             "info2Text": f"{op['Стоимость'] // 1000}к ₽",
-            "universityNameText": op['Университет'],
+            "universityNameText": op['Университет'] if len(op['Университет']) <= 20 else cut_extra(op['Университет']),
             "opCodeText": op['Квалификация'],
             "imageSource": get_image_source(op['Университет'])
         }
         result_model_list.append(op_dict)
-    return result_model_list
+
+        if op['Балл бюджет']:
+            have_budget += 1
+            sum_budget_places += op['Мест бюджет']
+            sum_budget_ege_scores += op['Балл бюджет']
+            sum_budget_ege_subjects += op['Количество предметов ЕГЭ']
+        sum_price += op['Стоимость']
+        sum_paid_places += op['Мест платное']
+        sum_paid_ege_scores += op['Балл платное']
+        sum_paid_ege_subjects += op['Количество предметов ЕГЭ']
+
+    statistics_data = [
+        {
+            "statisticTypeText": "Средний балл ЕГЭ",
+            "imageSource": "resources/pencil-plain.png",
+            "statisticProgressText": str(round(sum_budget_ege_scores / sum_budget_ege_subjects, 1)),
+            "progress": sum_budget_ege_scores / sum_budget_ege_subjects / 100
+        },
+        {
+            "statisticTypeText": "Средняя стоимость (тыс. ₽)",
+            "imageSource": "resources/money.png",
+            "statisticProgressText": str(round(sum_price / len(op_list) / 1000)),
+            "progress": 1.0
+        },
+        {
+            "statisticTypeText": "Среднее количество мест",
+            "imageSource": "resources/people.png",
+            "statisticProgressText": str(round(sum_budget_places / have_budget)),
+            "progress": 1.0
+        },
+        {
+            "statisticTypeText": "С бюджетными местами",
+            "imageSource": "resources/cap.svg",
+            "statisticProgressText": f"{round(have_budget / len(op_list) * 100)}%",
+            "progress": have_budget / len(op_list)
+        }
+    ]
+
+    return result_model_list, statistics_data

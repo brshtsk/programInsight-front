@@ -1,13 +1,15 @@
 from PySide6.QtCore import QObject, Slot
-from op_model import opListModel, data
-from statistics_model import StatisticsListModel, statistics_data  # Импорт новой модели
+from op_model import opListModel
+from statistics_model import StatisticsListModel  # Импорт новой модели
+from get_json_data import get_op_model_data
 
 
 class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_model = opListModel(data)  # Создаём модель
+        op_data, statistics_data = get_op_model_data('op_data.json')
+        self.op_model = opListModel(op_data)  # Создаём модель
         self.statistics_model = StatisticsListModel(statistics_data)
         self.setup_connections()
 
