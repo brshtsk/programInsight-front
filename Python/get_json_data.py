@@ -82,13 +82,32 @@ def split_op_name(op_name: str) -> str:
     if len(op_split) == 1:
         return op_name
     med_idx = len(op_split) // 2
-    # Исключим перенос после союзов
-    if len(op_split) % 2 == 0 and len(op_split[med_idx - 1]) <= 2:
-        op_split[med_idx - 1] = '<br>' + op_split[med_idx - 1]
-    elif len(op_split) % 2 == 1 and len(op_split[med_idx + 1]) <= 2:
-        op_split[med_idx + 1] = '<br>' + op_split[med_idx + 1]
+    # Если строка не слишком длинная
+    if len(op_name) < 35:
+        # Исключим перенос после союзов
+        if len(op_split) % 2 == 0 and len(op_split[med_idx - 1]) <= 2:
+            med_idx -= 1
+        elif len(op_split) % 2 == 1 and len(op_split[med_idx + 1]) <= 2:
+            med_idx += 1
+    # Если строка длинная
     else:
-        op_split[med_idx] = '<br>' + op_split[med_idx]
+        left_ln = sum(map(len, op_split[:med_idx]))
+        right_ln = sum(map(len, op_split[med_idx:]))
+        k = 3
+        while abs(right_ln - left_ln) > 8 and k != 0:
+            if med_idx < 2 or med_idx > len(op_split) - 2:
+                break
+            if right_ln > left_ln:
+                med_idx += 1
+                left_ln = sum(map(len, op_split[:med_idx]))
+                right_ln = sum(map(len, op_split[med_idx:]))
+            else:
+                med_idx -= 1
+                left_ln = sum(map(len, op_split[:med_idx]))
+                right_ln = sum(map(len, op_split[med_idx:]))
+            k -= 1
+
+    op_split[med_idx] = '<br>' + op_split[med_idx]
     return ' '.join(op_split)
 
 

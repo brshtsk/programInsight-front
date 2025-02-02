@@ -76,50 +76,50 @@ Rectangle {
                         color: "#00ffffff"
                     }
                     spacing: 15 // Добавляем отступ между элементами
-                    model: opModel
-                    // // Тестовая модель
-                    // model: ListModel {
-                    //     ListElement {
-                    //         opNameText: "Программная<br>инженерия"
-                    //         info1Text: "289"
-                    //         info2Text: "700к ₽"
-                    //         universityNameText: "НИУ ВШЭ"
-                    //         opCodeText: "09.03.04"
-                    //         imageSource: "resources/hselogo.svg"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Прикладная математика<br>и информатика"
-                    //         info1Text: "300"
-                    //         info2Text: "720к ₽"
-                    //         universityNameText: "НИУ ВШЭ"
-                    //         opCodeText: "01.03.02"
-                    //         imageSource: "resources/hselogo.svg"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Анализ данных<br>в экономике"
-                    //         info1Text: "272"
-                    //         info2Text: "470к ₽"
-                    //         universityNameText: "МФТИ"
-                    //         opCodeText: "38.03.01"
-                    //         imageSource: "resources/mfti-logo.png"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Физика<br>и нанотехнологии"
-                    //         info1Text: "280"
-                    //         info2Text: "500к ₽"
-                    //         universityNameText: "МФТИ"
-                    //         opCodeText: "16.03.01"
-                    //         imageSource: "resources/mfti-logo.png"
-                    //     }
-                    //     ListElement {
-                    //         opNameText: "Информационная<br>безопасность"
-                    //         info1Text: "260"
-                    //         info2Text: "450к ₽"
-                    //         universityNameText: "МИРЭА"
-                    //         opCodeText: "10.03.01"
-                    //         imageSource: "resources/other-logo.svg"
-                    //     }
-                    // }
+                    // model: opModel
+                    // Тестовая модель
+                    model: ListModel {
+                        ListElement {
+                            opNameText: "Программная<br>инженерия"
+                            info1Text: "289"
+                            info2Text: "700к ₽"
+                            universityNameText: "НИУ ВШЭ"
+                            opCodeText: "09.03.04"
+                            imageSource: "resources/hselogo.svg"
+                        }
+                        ListElement {
+                            opNameText: "Прикладная математика<br>и информатика"
+                            info1Text: "300"
+                            info2Text: "720к ₽"
+                            universityNameText: "НИУ ВШЭ"
+                            opCodeText: "01.03.02"
+                            imageSource: "resources/hselogo.svg"
+                        }
+                        ListElement {
+                            opNameText: "Анализ данных<br>в экономике"
+                            info1Text: "272"
+                            info2Text: "470к ₽"
+                            universityNameText: "МФТИ"
+                            opCodeText: "38.03.01"
+                            imageSource: "resources/mfti-logo.png"
+                        }
+                        ListElement {
+                            opNameText: "Физика<br>и нанотехнологии"
+                            info1Text: "280"
+                            info2Text: "500к ₽"
+                            universityNameText: "МФТИ"
+                            opCodeText: "16.03.01"
+                            imageSource: "resources/mfti-logo.png"
+                        }
+                        ListElement {
+                            opNameText: "Информационная<br>безопасность"
+                            info1Text: "260"
+                            info2Text: "450к ₽"
+                            universityNameText: "МИРЭА"
+                            opCodeText: "10.03.01"
+                            imageSource: "resources/other-logo.svg"
+                        }
+                    }
                     delegate: Rectangle {
                         id: opRowRectangle
                         width: 420
@@ -143,10 +143,10 @@ Rectangle {
                             x: 15
                             y: 15
                             width: parent.width - 30
-                            height: 65
+                            height: 55
                             color: "#ffffff"
                             text: model.opNameText
-                            font.pixelSize: 24
+                            font.pixelSize: 20
                             textFormat: Text.RichText
                             font.family: "Bahnschrift SemiBold"
                         }
