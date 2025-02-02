@@ -1,4 +1,5 @@
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
+from get_json_data import get_op_model_data
 
 
 class opListModel(QAbstractListModel):
@@ -50,53 +51,55 @@ class opListModel(QAbstractListModel):
 
 
 # Данные для списка ОП
-data = [
-    {
-        "opNameText": "Дизайн и разработка<br>информационных продуктов",
-        "info1Text": "268",
-        "info2Text": "740к ₽",
-        "universityNameText": "НИУ ВШЭ",
-        "opCodeText": "26.01.04",
-        "imageSource": "resources/hselogo.svg"
-    },
-    {
-        "opNameText": "Программная<br>инженерия",
-        "info1Text": "289",
-        "info2Text": "700к ₽",
-        "universityNameText": "НИУ ВШЭ",
-        "opCodeText": "09.03.04",
-        "imageSource": "resources/hselogo.svg"
-    },
-    {
-        "opNameText": "Прикладная математика<br>и информатика",
-        "info1Text": "300",
-        "info2Text": "720к ₽",
-        "universityNameText": "НИУ ВШЭ",
-        "opCodeText": "01.03.02",
-        "imageSource": "resources/hselogo.svg"
-    },
-    {
-        "opNameText": "Анализ данных<br>в экономике",
-        "info1Text": "272",
-        "info2Text": "470к ₽",
-        "universityNameText": "МФТИ",
-        "opCodeText": "38.03.01",
-        "imageSource": "resources/mfti-logo.png"
-    },
-    {
-        "opNameText": "Физика<br>и нанотехнологии",
-        "info1Text": "280",
-        "info2Text": "500к ₽",
-        "universityNameText": "МФТИ",
-        "opCodeText": "16.03.01",
-        "imageSource": "resources/mfti-logo.png"
-    },
-    {
-        "opNameText": "Информационная<br>безопасность",
-        "info1Text": "260",
-        "info2Text": "450к ₽",
-        "universityNameText": "МИРЭА",
-        "opCodeText": "10.03.01",
-        "imageSource": "resources/other-logo.svg"
-    }
-]
+data = get_op_model_data('op_data.json')
+
+# data = [
+#     {
+#         "opNameText": "Дизайн и разработка<br>информационных продуктов",
+#         "info1Text": "268",
+#         "info2Text": "740к ₽",
+#         "universityNameText": "НИУ ВШЭ",
+#         "opCodeText": "26.01.04",
+#         "imageSource": "resources/hselogo.svg"
+#     },
+#     {
+#         "opNameText": "Программная<br>инженерия",
+#         "info1Text": "289",
+#         "info2Text": "700к ₽",
+#         "universityNameText": "НИУ ВШЭ",
+#         "opCodeText": "09.03.04",
+#         "imageSource": "resources/hselogo.svg"
+#     },
+#     {
+#         "opNameText": "Прикладная математика<br>и информатика",
+#         "info1Text": "300",
+#         "info2Text": "720к ₽",
+#         "universityNameText": "НИУ ВШЭ",
+#         "opCodeText": "01.03.02",
+#         "imageSource": "resources/hselogo.svg"
+#     },
+#     {
+#         "opNameText": "Анализ данных<br>в экономике",
+#         "info1Text": "272",
+#         "info2Text": "470к ₽",
+#         "universityNameText": "МФТИ",
+#         "opCodeText": "38.03.01",
+#         "imageSource": "resources/mfti-logo.png"
+#     },
+#     {
+#         "opNameText": "Физика<br>и нанотехнологии",
+#         "info1Text": "280",
+#         "info2Text": "500к ₽",
+#         "universityNameText": "МФТИ",
+#         "opCodeText": "16.03.01",
+#         "imageSource": "resources/mfti-logo.png"
+#     },
+#     {
+#         "opNameText": "Информационная<br>безопасность",
+#         "info1Text": "260",
+#         "info2Text": "450к ₽",
+#         "universityNameText": "МИРЭА",
+#         "opCodeText": "10.03.01",
+#         "imageSource": "resources/other-logo.svg"
+#     }
+# ]
