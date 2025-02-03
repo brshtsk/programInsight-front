@@ -1,4 +1,5 @@
 from data_manipulations import split_line, cut_extra, get_image_source
+from search_settings import Settings
 
 
 class Op:
@@ -19,14 +20,23 @@ class Op:
         self.cost = cost  # Стоимость обучения 730000/None
         self.city = city  # Город, где находится университет 'Москва'/None
 
-    def to_model_dict(self) -> dict:
+    def to_model_dict(self, settings=Settings()) -> dict:
         """
         Создает словарь с информацией об объекте для op_model
         :return:
         """
+
+        show_budget_score = settings.show_budget_score
+
+        def score_to_str(score):
+            if score is None:
+                return '-'
+            return str(score)
+
         op_dict = {
             "opNameText": split_line(self.name),
-            "info1Text": str(self.budget_ege_score),
+            "info1Text": score_to_str(self.budget_ege_score) if show_budget_score else score_to_str(
+                self.paid_ege_score),
             "info2Text": f"{self.cost // 1000}к ₽",
             "universityNameText": self.university if len(self.university) <= 20 else cut_extra(self.university),
             "opCodeText": self.op_type,
@@ -67,17 +77,25 @@ class Statistics:
         self.sum_paid_ege_scores += op.paid_ege_score
         self.sum_paid_ege_subjects += op.exams_amount
 
-    def to_model_dict(self) -> dict:
+    def to_model_dict(self, settings=Settings()) -> dict:
         """
         Создает словарь с информацией о статистике для statistics_model
         :return:
         """
+
+        show_budget_score = settings.show_budget_score
+
+        def get_average_score():
+            if show_budget_score:
+                return self.sum_budget_ege_scores / self.sum_budget_ege_subjects
+            return self.sum_paid_ege_scores / self.sum_paid_ege_subjects
+
         statistics_data = [
             {
                 "statisticTypeText": "Средний балл ЕГЭ",
                 "imageSource": "resources/pencil-plain.png",
-                "statisticProgressText": str(round(self.sum_budget_ege_scores / self.sum_budget_ege_subjects, 1)),
-                "progress": self.sum_budget_ege_scores / self.sum_budget_ege_subjects / 100
+                "statisticProgressText": str(round(get_average_score(), 1)),
+                "progress": get_average_score() / 100
             },
             {
                 "statisticTypeText": "Средняя стоимость (тыс. ₽)",

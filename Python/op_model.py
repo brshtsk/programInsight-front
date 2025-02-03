@@ -1,5 +1,4 @@
 from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
-from get_json_data import get_op_model_data
 
 
 class opListModel(QAbstractListModel):

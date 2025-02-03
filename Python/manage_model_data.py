@@ -1,13 +1,13 @@
 import json
-from functools import lru_cache
 from op_statistics_class import Op, Statistics
+from search_settings import Settings
 
 
 def get_op_data(file_name: str) -> list[Op]:
     """
     Получение объектов ОП из файла
     :param file_name: json-файл
-    :return: список словарей с объектами ОП
+    :return: список с объектами ОП
     """
     with open(file_name, encoding='utf-8') as json_file:
         json_data = json.load(json_file)
@@ -57,20 +57,34 @@ def get_op_data(file_name: str) -> list[Op]:
     return data
 
 
-def get_op_model_data(file_name: str) -> (list[dict], list[dict]):
+def load_op_and_statistics(file_name: str) -> (list[Op], Statistics):
     """
-    Получает данные из json для загрузки в модели
-    :param file_name: json для получения данных
-    :param need_statistics: нужен ли список для statistics_model
-    :return: данные для op_model, statistics_model
+    Загружает данные из json и создает объекты ОП и статистику
+    :param file_name: json-файл
+    :return: список с объектами ОП, объект статистики
     """
     op_list = get_op_data(file_name)
-    result_model_list = []
     statistics = Statistics()
     for op in op_list:
-        result_model_list.append(op.to_model_dict())
         statistics.add(op)
 
-    statistics_data = statistics.to_model_dict()
+    return op_list, statistics
 
-    return result_model_list, statistics_data
+
+def get_op_model_data(op_list: list[Op], statistics: Statistics, settings=Settings()) -> (list[dict], list[dict]):
+    """
+    Создает данные для модели ОП и статистики
+    :param op_list: список с объектами ОП
+    :param statistics: объект статистики
+    :param settings: объект настроек
+    :return: данные для модели ОП, данные для модели статистики
+    """
+    show_budget_score = settings.show_budget_score
+
+    op_model_data = []
+    for op in op_list:
+        op_model_data.append(op.to_model_dict(settings))
+
+    statistics_model_data = statistics.to_model_dict(settings)
+
+    return op_model_data, statistics_model_data
