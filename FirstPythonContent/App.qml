@@ -9,7 +9,7 @@ Window {
     height: mainScreen.height
 
     visible: true
-    title: "FirstPython"
+    title: "ProgramInsight"
 
     Screen01 {
         id: mainScreen

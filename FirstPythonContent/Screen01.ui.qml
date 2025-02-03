@@ -274,7 +274,7 @@ Rectangle {
 
             Button {
                 id: searchSettingsButton
-                objectName: "button"
+                objectName: "searchSettingsButton"
                 width: 48
                 height: 72
                 font.pixelSize: 16

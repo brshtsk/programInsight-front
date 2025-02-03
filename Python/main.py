@@ -6,17 +6,7 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from autogen.settings import url, import_paths
 from frontend import Frontend
-
-
-def resource_path(relative_path):
-    """Возвращает абсолютный путь к ресурсу, работает как в режиме разработки, так и в собранном .exe"""
-    try:
-        # PyInstaller временно создает папку и сохраняет путь в _MEIPASS
-        base_path = Path(sys._MEIPASS)
-    except AttributeError:
-        base_path = Path(__file__).parent.parent
-    return base_path / relative_path
-
+from utils import resource_path  # Импортируем функцию resource_path
 
 if __name__ == '__main__':
     # Кнопки не в стиле Windows
