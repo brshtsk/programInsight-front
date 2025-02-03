@@ -12,7 +12,7 @@ class Frontend(QObject):
         self.engine = engine
 
         # Загрузка данных моделей
-        op_data, statistics_data = get_op_model_data('op_data.json')
+        op_data, statistics_data = get_op_model_data(resource_path('Python\op_data.json'))
         self.op_model = opListModel(op_data)
         self.statistics_model = StatisticsListModel(statistics_data)
 
