@@ -1,4 +1,4 @@
-from data_manipulations import split_line, cut_extra, get_image_source
+from data_manipulations import DataManipulations
 from search_settings import Settings
 
 
@@ -34,13 +34,14 @@ class Op:
             return str(score)
 
         op_dict = {
-            "opNameText": split_line(self.name),
+            "opNameText": DataManipulations.split_line(self.name),
             "info1Text": score_to_str(self.budget_ege_score) if show_budget_score else score_to_str(
                 self.paid_ege_score),
             "info2Text": f"{self.cost // 1000}к ₽",
-            "universityNameText": self.university if len(self.university) <= 20 else cut_extra(self.university),
+            "universityNameText": self.university if len(self.university) <= 20 else DataManipulations.cut_extra(
+                self.university),
             "opCodeText": self.op_type,
-            "imageSource": get_image_source(self.university)
+            "imageSource": DataManipulations.get_image_source(self.university)
         }
         return op_dict
 

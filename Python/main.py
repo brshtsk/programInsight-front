@@ -5,7 +5,7 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from autogen.settings import url, import_paths
 from frontend import Frontend
-from utils import resource_path  # Импортируем функцию resource_path
+from utils import Utils
 
 if __name__ == '__main__':
     # Кнопки не в стиле Windows
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     engine = QQmlApplicationEngine()
 
     # Определяем базовый путь
-    app_dir = resource_path("")
+    app_dir = Utils.resource_path("")
     print(f"Base Directory: {app_dir}")  # Отладочный вывод
 
     # Добавляем пути для импорта QML
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         engine.addImportPath(str(full_path))
 
     # Загружаем основной QML файл
-    main_qml = resource_path(url)
+    main_qml = Utils.resource_path(url)
     print(f"Loading QML File: {main_qml}")  # Отладочный вывод
     engine.load(str(main_qml))
 

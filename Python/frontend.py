@@ -2,8 +2,8 @@ from PySide6.QtCore import QObject, Slot, QUrl
 from PySide6.QtQml import QQmlComponent
 from op_model import opListModel
 from statistics_model import StatisticsListModel
-from manage_model_data import get_op_model_data, get_op_data
-from utils import resource_path
+from manage_model_data import ModelDataManagement
+from utils import Utils
 from search_settings import Settings
 
 
@@ -11,7 +11,7 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list = get_op_data(resource_path('Python/op_data.json'))
+        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/op_data.json'))
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
@@ -21,7 +21,7 @@ class Frontend(QObject):
 
     def setup_models(self):
         # Получаем данные для модели
-        op_model_data, statistics_model_data = get_op_model_data(self.op_list, self.settings)
+        op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings)
         self.op_model = opListModel(op_model_data)
         self.statistics_model = StatisticsListModel(statistics_model_data)
 
@@ -53,7 +53,7 @@ class Frontend(QObject):
             return
 
         print('Кнопка настроек поиска нажата!')
-        settings_qml_path = resource_path('FirstPythonContent/SearchSettings.qml')
+        settings_qml_path = Utils.resource_path('FirstPythonContent/SearchSettings.qml')
         component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(settings_qml_path)))
         if component.status() == QQmlComponent.Ready:
             self.search_settings_window = component.create()  # Создаем окно и сохраняем ссылку
