@@ -57,33 +57,20 @@ def get_op_data(file_name: str) -> list[Op]:
     return data
 
 
-def load_op_and_statistics(file_name: str) -> (list[Op], Statistics):
-    """
-    Загружает данные из json и создает объекты ОП и статистику
-    :param file_name: json-файл
-    :return: список с объектами ОП, объект статистики
-    """
-    op_list = get_op_data(file_name)
-    statistics = Statistics()
-    for op in op_list:
-        statistics.add(op)
-
-    return op_list, statistics
-
-
-def get_op_model_data(op_list: list[Op], statistics: Statistics, settings=Settings()) -> (list[dict], list[dict]):
+def get_op_model_data(op_list: list[Op], settings=Settings()) -> (list[dict], list[dict]):
     """
     Создает данные для модели ОП и статистики
     :param op_list: список с объектами ОП
-    :param statistics: объект статистики
     :param settings: объект настроек
     :return: данные для модели ОП, данные для модели статистики
     """
-    show_budget_score = settings.show_budget_score
+    statistics = Statistics()
 
     op_model_data = []
     for op in op_list:
-        op_model_data.append(op.to_model_dict(settings))
+        if op.suits(settings):
+            op_model_data.append(op.to_model_dict(settings))
+            statistics.add(op)
 
     statistics_model_data = statistics.to_model_dict(settings)
 

@@ -44,6 +44,21 @@ class Op:
         }
         return op_dict
 
+    def suits(self, settings=Settings()) -> bool:
+        """
+        Показывает, нужно ли отображать данное ОП при указанных настройках
+        :param settings:
+        :return:
+        """
+        if settings.show_op_only_with_budget:
+            if self.budget_ege_score:
+                pass
+            else:
+                return False
+        if settings.filter_by_price and settings.price_range_is_ok():
+            return settings.min_price <= self.cost <= settings.max_price
+        return True
+
 
 class Statistics:
     def __init__(self):
@@ -90,6 +105,11 @@ class Statistics:
                 return self.sum_budget_ege_scores / self.sum_budget_ege_subjects
             return self.sum_paid_ege_scores / self.sum_paid_ege_subjects
 
+        def get_average_places_amount():
+            if show_budget_score:
+                return self.sum_budget_places / self.have_budget
+            return self.sum_paid_places / self.op_amount
+
         statistics_data = [
             {
                 "statisticTypeText": "Средний балл ЕГЭ",
@@ -106,7 +126,7 @@ class Statistics:
             {
                 "statisticTypeText": "Среднее количество мест",
                 "imageSource": "resources/people.png",
-                "statisticProgressText": str(round(self.sum_budget_places / self.have_budget)),
+                "statisticProgressText": str(round(get_average_places_amount())),
                 "progress": 1.0
             },
             {

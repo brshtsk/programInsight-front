@@ -319,6 +319,7 @@ Rectangle {
 
                 Text {
                     id: resultAmountText
+                    objectName: "resultAmountText"
                     color: "#373737"
                     text: "Получено 009 результатов"
                     anchors.left: parent.left
