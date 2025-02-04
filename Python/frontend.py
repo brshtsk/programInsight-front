@@ -12,10 +12,11 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list, self.statistics = load_op_and_statistics(resource_path('Python\op_data.json'))
+        self.op_list, self.statistics = load_op_and_statistics(resource_path('Python/op_data.json'))
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
+        self.search_settings_window = None  # Ссылка на окно настроек
         self.setup_models()
         self.setup_connections()
 
@@ -37,14 +38,23 @@ class Frontend(QObject):
 
     @Slot()
     def button_clicked(self):
+        # Если окно уже открыто, выходим из метода
+        if self.search_settings_window is not None:
+            return
+
         print('Кнопка настроек поиска нажата!')
         settings_qml_path = resource_path('FirstPythonContent/SearchSettings.qml')
         component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(settings_qml_path)))
         if component.status() == QQmlComponent.Ready:
-            settings_window = component.create()  # Сохраняем ссылку на окно
-            if settings_window:
-                settings_window.show()
-                self.connect_to_search_settings(settings_window)
+            self.search_settings_window = component.create()  # Создаем окно и сохраняем ссылку
+            if self.search_settings_window:
+                self.search_settings_window.show()
+                self.connect_to_search_settings(self.search_settings_window)
+                # Подключаем пользовательский сигнал закрытия из QML
+                try:
+                    self.search_settings_window.windowClosed.connect(self.on_search_settings_closed)
+                except Exception as e:
+                    print("Не удалось подключить сигнал windowClosed:", e)
             else:
                 print("Не удалось создать окно настроек.")
         else:
@@ -68,3 +78,11 @@ class Frontend(QObject):
             self.setup_models()
         else:
             print("sender() не найден")
+
+    @Slot()
+    def on_search_settings_closed(self):
+        """Слот, вызываемый при закрытии окна настроек, чтобы очистить ссылку."""
+        print("Окно настроек закрыто")
+        self.search_settings_window = None
+        # ToDo: сохранять настройки, чтобы при следующем открытии окна поля не сбрасывались
+

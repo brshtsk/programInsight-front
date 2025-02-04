@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import FirstPython
 
 Window {
@@ -7,6 +8,15 @@ Window {
 
     visible: true
     title: "Settings"
+
+    signal windowClosed()  // Пользовательский сигнал закрытия
+
+    // Отслеживаем изменение свойства visible:
+    onVisibleChanged: {
+        if (!visible) {
+            windowClosed()
+        }
+    }
 
     SearchSettingsScreen {
         id: settingsScreen
