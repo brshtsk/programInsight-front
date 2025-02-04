@@ -1,5 +1,6 @@
 import json
-from op_statistics_class import Op, Statistics
+from statistics import Statistics
+from op import Op
 from search_settings import Settings
 
 

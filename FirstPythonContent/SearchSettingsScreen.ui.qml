@@ -301,7 +301,7 @@ Rectangle {
                     objectName: "maxPriceTextField"
                     width: 65
                     height: 35 // Увеличьте высоту
-                    placeholderText: "min"
+                    placeholderText: "max"
                     font.pixelSize: 16
                     selectionColor: "#53b93f"
                     anchors.verticalCenter: parent.verticalCenter

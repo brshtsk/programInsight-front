@@ -41,7 +41,7 @@ class StatisticsListModel(QAbstractListModel):
         }
 
 
-# Данные для модели
+# Данные для модели. Пример
 # statistics_data = [
 #     {
 #         "statisticTypeText": "Средний балл ЕГЭ",

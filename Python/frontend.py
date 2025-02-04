@@ -4,7 +4,6 @@ from op_model import opListModel
 from statistics_model import StatisticsListModel
 from manage_model_data import get_op_model_data, get_op_data
 from utils import resource_path
-from op_statistics_class import Statistics, Op
 from search_settings import Settings
 
 
@@ -157,7 +156,8 @@ class Frontend(QObject):
             if self.settings.filter_by_price and self.settings.price_range_is_ok():
                 self.setup_models()
         except:
-            print(f"Минимальная цена {min_price} не может быть задана!")
+            print(f"Минимальная цена {min_price} не может быть задана! Сбросим до 0")
+            self.settings.min_price = 0
 
 
     @Slot()
@@ -170,4 +170,7 @@ class Frontend(QObject):
             if self.settings.filter_by_price and self.settings.price_range_is_ok():
                 self.setup_models()
         except:
-            print(f"Максимальная цена {max_price} не может быть задана!")
+            print(f"Максимальная цена {max_price} не может быть задана! Сбросим до 100000000")
+            self.settings.max_price = 100000000
+            if self.settings.filter_by_price and self.settings.price_range_is_ok():
+                self.setup_models()
