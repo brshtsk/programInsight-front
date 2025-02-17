@@ -572,7 +572,8 @@ Rectangle {
         }
 
         Button {
-            id: clusterButton
+            id: dashboardButton
+            objectName: "dashboardButton"
             x: 0
             width: parent.width
             height: 48
@@ -583,17 +584,17 @@ Rectangle {
             font.family: "Bahnschrift SemiBold" // Шрифт Bahnschrift SemiBold
 
             contentItem: Text {
-                text: clusterButton.text
-                font: clusterButton.font
+                text: dashboardButton.text
+                font: dashboardButton.font
                 color: "#FFFFFF" // Белый цвет текста
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
 
             background: Rectangle {
-                color: clusterButton.pressed ? "#7dd96b" : "#53b93f"
+                color: dashboardButton.pressed ? "#7dd96b" : "#53b93f"
                 radius: 10
-                scale: clusterButton.hovered ? 1.05 : 1.0
+                scale: dashboardButton.hovered ? 1.05 : 1.0
                 Behavior on scale {
                     NumberAnimation {
                         duration: 100

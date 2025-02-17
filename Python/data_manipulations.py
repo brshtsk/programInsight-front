@@ -40,7 +40,6 @@ class DataManipulations:
         op_split[med_idx] = '<br>' + op_split[med_idx]
         return ' '.join(op_split)
 
-
     @lru_cache
     def cut_extra(university_name: str) -> str:
         """
@@ -53,7 +52,6 @@ class DataManipulations:
         while sum(map(len, name_split[:idx])) > 20 and idx > 1:
             idx -= 1
         return ' '.join(name_split[:idx]) + '...'
-
 
     @lru_cache
     def get_image_source(university_name: str) -> str:

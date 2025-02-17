@@ -127,7 +127,7 @@ Rectangle {
                     width: 320
                     height: 30
                     color: "#373737"
-                    text: "Только ОП с бюджетными местами"
+                    text: "Только бюджет"
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom

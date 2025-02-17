@@ -11,7 +11,7 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/op_data.json'))
+        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/op_data.json'))[::-1]
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
@@ -40,14 +40,23 @@ class Frontend(QObject):
 
     def setup_connections(self):
         root_object = self.engine.rootObjects()[0]
+
+        # Кнопка настроек
         button = root_object.findChild(QObject, 'searchSettingsButton')
         if button:
-            button.clicked.connect(self.button_clicked)
+            button.clicked.connect(self.search_button_clicked)
         else:
             print('Кнопка не найдена!')
 
+        # Кнопка дашбордов
+        dashboard_button = root_object.findChild(QObject, 'dashboardButton')
+        if dashboard_button:
+            dashboard_button.clicked.connect(self.dashboard_button_clicked)
+        else:
+            print('Кнопка дашбордов не найдена!')
+
     @Slot()
-    def button_clicked(self):
+    def search_button_clicked(self):
         # Если окно уже открыто, выходим из метода
         if self.search_settings_window is not None:
             return
@@ -69,6 +78,20 @@ class Frontend(QObject):
                 print("Не удалось создать окно настроек.")
         else:
             print("Ошибка при загрузке SearchSettings.qml:", component.errorString())
+
+    @Slot()
+    def dashboard_button_clicked(self):
+        print('Кнопка дашбордов нажата!')
+        dashboard_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
+        component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(dashboard_qml_path)))
+        if component.status() == QQmlComponent.Ready:
+            dashboard_window = component.create()
+            if dashboard_window:
+                dashboard_window.show()
+            else:
+                print("Не удалось создать окно дашбордов.")
+        else:
+            print("Ошибка при загрузке Dashboard.qml:", component.errorString())
 
     def connect_to_search_settings(self, settings_window):
         # Показывать баллы на бюджет или платное
@@ -158,6 +181,8 @@ class Frontend(QObject):
         except:
             print(f"Минимальная цена {min_price} не может быть задана! Сбросим до 0")
             self.settings.min_price = 0
+            if self.settings.filter_by_price and self.settings.price_range_is_ok():
+                self.setup_models()
 
 
     @Slot()
