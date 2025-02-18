@@ -43,14 +43,20 @@ class Statistics:
         show_budget_score = settings.show_budget_score
 
         def get_average_score():
-            if show_budget_score:
-                return self.sum_budget_ege_scores / self.sum_budget_ege_subjects
-            return self.sum_paid_ege_scores / self.sum_paid_ege_subjects
+            try:
+                if show_budget_score:
+                    return self.sum_budget_ege_scores / self.sum_budget_ege_subjects
+                return self.sum_paid_ege_scores / self.sum_paid_ege_subjects
+            except ZeroDivisionError:
+                return 0
 
         def get_average_places_amount():
-            if show_budget_score:
-                return self.sum_budget_places / self.have_budget
-            return self.sum_paid_places / self.op_amount
+            try:
+                if show_budget_score:
+                    return self.sum_budget_places / self.have_budget
+                return self.sum_paid_places / self.op_amount
+            except ZeroDivisionError:
+                return 0
 
         statistics_data = [
             {
