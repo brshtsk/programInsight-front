@@ -1,7 +1,8 @@
 // SettingsDialog.ui.qml
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Controls.Material
+import QtQuick.Studio.Application
+import FirstPython
 
 Rectangle {
     id: settingsContent
@@ -27,7 +28,8 @@ Rectangle {
             width: parent.width
             height: 30
             textFormat: Text.RichText
-            font.family: "Bahnschrift SemiBold"
+            font.family: Constants.font.family
+            font.styleName: "SemiBold"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
         }
@@ -62,7 +64,8 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                     anchors.left: parent.left
                 }
 
@@ -92,7 +95,8 @@ Rectangle {
                             color: "#ffffff"
                             anchors.centerIn: parent
                             font.pixelSize: 18
-                            font.family: "Bahnschrift SemiBold"
+                            font.family: Constants.font.family
+                            font.styleName: "SemiBold"
                         }
                     }
                     // Кастомизация индикатора (стрелочки)
@@ -132,7 +136,8 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                     anchors.right: parent.right
                 }
 
@@ -204,7 +209,8 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                 }
 
                 CheckBox {
@@ -254,12 +260,13 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                 }
 
                 TextField {
                     id: minPriceTextField
-                    x: 130
+                    x: 135
                     objectName: "minPriceTextField"
                     width: 65
                     height: 35 // Увеличьте высоту
@@ -282,7 +289,7 @@ Rectangle {
 
                 Text {
                     id: toText
-                    x: 200
+                    x: 203
                     y: 5
                     width: 20
                     height: 30
@@ -292,7 +299,8 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                 }
 
                 TextField {
@@ -330,7 +338,8 @@ Rectangle {
                     font.pixelSize: 20
                     verticalAlignment: Text.AlignBottom
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                 }
             }
         }

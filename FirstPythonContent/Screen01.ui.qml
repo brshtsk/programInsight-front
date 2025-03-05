@@ -17,6 +17,7 @@ import QtQuick.Shapes
 import FirstPython
 import QtQuick.Studio.DesignEffects
 import "components"
+import QtQuick.Studio.Application
 
 Rectangle {
     id: mainWindowContent
@@ -148,7 +149,8 @@ Rectangle {
                             text: model.opNameText
                             font.pixelSize: 20
                             textFormat: Text.RichText
-                            font.family: "Bahnschrift SemiBold"
+                            font.family: Constants.font.family
+                            font.styleName: "SemiBold"
                         }
 
                         Text {
@@ -163,7 +165,8 @@ Rectangle {
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignBottom
                             textFormat: Text.RichText
-                            font.family: "Bahnschrift SemiBold"
+                            font.family: Constants.font.family
+                            font.styleName: "SemiBold"
                         }
 
                         Text {
@@ -178,7 +181,8 @@ Rectangle {
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignTop
                             textFormat: Text.RichText
-                            font.family: "Bahnschrift SemiBold"
+                            font.family: Constants.font.family
+                            font.styleName: "SemiBold"
                         }
 
                         Rectangle {
@@ -195,7 +199,8 @@ Rectangle {
                                 font.pixelSize: 20
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
-                                font.family: "Bahnschrift SemiBold"
+                                font.family: Constants.font.family
+                                font.styleName: "SemiBold"
                                 width: parent.width
                                 height: parent.height
                                 color: "#53b93f"
@@ -221,7 +226,8 @@ Rectangle {
                                 font.pixelSize: 20
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
-                                font.family: "Bahnschrift SemiBold"
+                                font.family: Constants.font.family
+                                font.styleName: "SemiBold"
                                 width: parent.width
                                 height: parent.height
                                 color: "#53b93f"
@@ -244,6 +250,7 @@ Rectangle {
                             font.pixelSize: 12
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
+                            font.family: Constants.font.family
                         }
 
                         Text {
@@ -257,6 +264,7 @@ Rectangle {
                             font.pixelSize: 12
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
+                            font.family: Constants.font.family
                         }
                     }
                 }
@@ -279,9 +287,23 @@ Rectangle {
                 height: 72
                 font.pixelSize: 16
                 icon.color: "#ffffff"
-                icon.source: "resources/icons8-настройки-48.png"
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
+
+                contentItem: Image {
+                    scale: searchSettingsButton.hovered ? 1.05 : 1.0
+                    id: searchSettingsImage
+                    source: "resources/icons8-настройки-48.png"
+                    width: 35
+                    height: 35
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectFit // опционально, если нужно сохранить пропорции
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                }
 
                 background: Rectangle {
                     color: searchSettingsButton.pressed ? "#7dd96b" : "#53b93f" // Изменение цвета при нажатии
@@ -312,7 +334,8 @@ Rectangle {
                     text: "Поиск ОП"
                     font.pixelSize: 36
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift SemiBold"
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                     anchors.left: parent.left
                     anchors.top: parent.top
                 }
@@ -325,7 +348,8 @@ Rectangle {
                     anchors.left: parent.left
                     font.pixelSize: 18
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light SemiCondensed"
+                    font.family: Constants.font.family
+                    font.styleName: "Condensed SemiBold"
                     anchors.bottom: parent.bottom
                 }
             }
@@ -423,9 +447,10 @@ Rectangle {
                     anchors.left: parent.left
                     font.pixelSize: 18
                     horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignBottom
+                    verticalAlignment: Text.AlignVCenter
                     textFormat: Text.RichText
-                    font.family: "Bahnschrift Light"
+                    font.family: Constants.font.family
+                    font.styleName: "Condensed SemiBold"
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -444,8 +469,9 @@ Rectangle {
                 text: "Статистика по результатам"
                 anchors.left: parent.left
                 font.pixelSize: 18
+                font.styleName: "Condensed SemiBold"
                 textFormat: Text.RichText
-                font.family: "Bahnschrift Light SemiCondensed"
+                font.family: Constants.font.family
                 anchors.top: parent.top
             }
             ListView {
@@ -525,14 +551,15 @@ Rectangle {
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignBottom
                         textFormat: Text.RichText
-                        font.family: "Bahnschrift SemiBold"
+                        font.family: Constants.font.family
+                        font.styleName: "SemiBold"
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     CircularProgressBar {
                         id: statisticProgressBar
-                        width: 40
-                        height: 40
+                        width: 45
+                        height: 45
                         progress: model.progress
                         progressColor: "#53b93f"
                         backgroundColor: "#d0d0d0"
@@ -545,7 +572,8 @@ Rectangle {
                             font.pixelSize: 16
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            font.family: "Bahnschrift Light SemiCondensed"
+                            font.family: Constants.font.family
+                            font.styleName: "SemiBold"
                             width: parent.width
                             height: 20
                             anchors.verticalCenter: parent.verticalCenter
@@ -581,14 +609,21 @@ Rectangle {
             anchors.bottom: parent.bottom
 
             font.pixelSize: 20 // Увеличенный размер шрифта
-            font.family: "Bahnschrift SemiBold" // Шрифт Bahnschrift SemiBold
+            font.family: Constants.font.family
+            font.styleName: "SemiBold"
 
             contentItem: Text {
+                scale: dashboardButton.hovered ? 1.05 : 1.0
                 text: dashboardButton.text
                 font: dashboardButton.font
                 color: "#FFFFFF" // Белый цвет текста
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
             }
 
             background: Rectangle {
@@ -633,7 +668,8 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 18
                 textFormat: Text.RichText
-                font.family: "Bahnschrift SemiBold"
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
             }
 
             Image {
@@ -654,9 +690,6 @@ Rectangle {
             y: 95
             spacing: 25
             model: ListModel {
-                ListElement {
-                    text: "Лучшие вузы"
-                }
 
                 ListElement {
                     text: "Кластеры"
@@ -678,7 +711,8 @@ Rectangle {
 
                 contentItem: Text {
                     font.pixelSize: 18 // Увеличенный размер шрифта
-                    font.family: "Bahnschrift SemiBold" // Шрифт Bahnschrift SemiBold
+                    font.family: Constants.font.family
+                    font.styleName: "SemiBold"
                     text: model.text
                     // icon.color: pressed ? "#ff8a8a" : (hovered ? "#ff0707" : "#d5d5d5") // Бледно-красный при нажатии
                     color: menuRowButton.pressed ? "#7dd96b" : (menuRowButton.hovered ? "53b93f" : "#696969")
