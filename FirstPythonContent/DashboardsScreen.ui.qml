@@ -6,14 +6,15 @@ import FirstPython
 
 Rectangle {
     id: dashboardsContent
-    width: 1200
-    height: 690
+    width: 1010
+    height: 680
     color: "#ffffff"
 
     Rectangle {
         id: roundBarRectangle
         x: 20
-        y: 320
+        y: 120
+
         width: 640
         height: 350
         color: "#dde9db"
@@ -45,7 +46,7 @@ Rectangle {
         }
 
         Item {
-            id: circleStatsItem
+            id: circleStatsZoneItem
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
@@ -102,7 +103,7 @@ Rectangle {
                 }
 
                 delegate: Item {
-                    id: circleStatisticItem
+                    id: circleStatisticColumnItem
                     x: 0
                     y: 0
                     width: parent.width
@@ -258,23 +259,10 @@ Rectangle {
         }
     }
 
-    Text {
-        id: headerText
-        x: 20
-        y: 20
-        text: "Дашборды"
-        font.pixelSize: 36
-        font.family: Constants.font.family
-        font.styleName: "SemiBold"
-        width: 200
-        height: 50
-        textFormat: Text.RichText
-    }
-
     Rectangle {
         id: mainStatsRectangle
         x: 20
-        y: 220
+        y: 20
         width: 640
         height: 90
         color: "#53b93f"
@@ -414,7 +402,7 @@ Rectangle {
     Rectangle {
         id: scoreDistributionRectangle
         x: 670
-        y: 405
+        y: 395
         width: 320
         height: 265
         color: "#53b93f"
@@ -453,7 +441,7 @@ Rectangle {
     Rectangle {
         id: priceDistributionRectangle
         x: 670
-        y: 130
+        y: 120
         width: 320
         height: 265
         color: "#dde9db"
@@ -480,6 +468,281 @@ Rectangle {
             anchors.top: parent.top
             anchors.leftMargin: 20
             anchors.topMargin: 10
+            font.pixelSize: 21
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignTop
+            font.styleName: "SemiBold"
+            font.family: Constants.font.family
+        }
+    }
+
+    Item {
+        id: upperLogoItem
+        x: 740
+        y: 25
+        width: 180
+        height: 80
+        Text {
+            id: projectNameText
+            x: 0
+            y: 0
+            color: "#53b93f"
+            text: "ProgramInsight"
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            font.pixelSize: 18
+            textFormat: Text.RichText
+            font.styleName: "SemiBold"
+            font.family: Constants.font.family
+        }
+
+        Image {
+            id: image
+            width: 40
+            height: 40
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            source: "resources/near-logo.svg"
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
+    Rectangle {
+        id: universityDiagramRectangle
+        x: 290
+        y: 480
+        width: 370
+        height: 180
+        color: "#53b93f"
+        radius: 10
+
+        Text {
+            id: universityDistributionText
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: 20
+            anchors.topMargin: 10
+            width: 270
+            height: 30
+            color: "#ffffff"
+            text: "Самые частые ВУЗы"
+            font.pixelSize: 21
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignTop
+            font.styleName: "SemiBold"
+            font.family: Constants.font.family
+        }
+
+        Item {
+            id: universityStatsZoneItem
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 20
+            anchors.rightMargin: 20
+            anchors.bottomMargin: 10
+            height: 130
+
+            // Item {
+            //     id: universityColumnItem
+            //     y: 0
+            //     anchors.left: parent.left
+            //     anchors.right: parent.right
+            //     height: 35
+
+            //     Text {
+            //         id: universityNameText
+            //         width: 130
+            //         height: 20
+            //         color: "#ffffff"
+            //         text: "НИУ ВШЭ"
+            //         anchors.left: parent.left
+            //         anchors.verticalCenter: parent.verticalCenter
+            //         font.pixelSize: 16
+            //         horizontalAlignment: Text.AlignRight
+            //         verticalAlignment: Text.AlignVCenter
+            //         font.styleName: "SemiBold"
+            //         font.family: Constants.font.family
+            //     }
+
+            //     Item {
+            //         id: barZoneItem
+            //         anchors.right: parent.right
+            //         anchors.top: parent.top
+            //         width: 190
+            //         height: parent.height
+
+            //         Rectangle {
+            //             id: frequencyBarRectangle
+            //             anchors.left: parent.left
+            //             anchors.verticalCenter: parent.verticalCenter
+            //             width: 150
+            //             height: 10
+            //             color: "#ffffff"
+            //             radius: 5
+            //         }
+
+            //         Text {
+            //             id: frequencyAmountText
+            //             width: 30
+            //             height: 20
+            //             color: "#ffffff"
+            //             text: "14"
+            //             anchors.left: frequencyBarRectangle.right
+            //             anchors.leftMargin: 5
+            //             anchors.verticalCenter: parent.verticalCenter
+            //             font.pixelSize: 16
+            //             horizontalAlignment: Text.AlignLeft
+            //             verticalAlignment: Text.AlignVCenter
+            //             font.styleName: "SemiBold"
+            //             font.family: Constants.font.family
+            //         }
+            //     }
+            // }
+            ListView {
+                id: diagramStatsListView
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: parent.height
+                anchors.verticalCenter: parent.verticalCenter
+
+                spacing: 10 // Добавляем отступ между элементами
+
+                model: ListModel {
+                    ListElement {
+                        universityNameText: "НИУ ВШЭ"
+                        thisOpAmountStr: "12"
+                        thisOpAmountInt: 12
+                        maxOpAmountInt: 12
+                    }
+
+                    ListElement {
+                        universityNameText: "НИЯУ МИФИ"
+                        thisOpAmountStr: "10"
+                        thisOpAmountInt: 10
+                        maxOpAmountInt: 12
+                    }
+
+                    ListElement {
+                        universityNameText: "МГУ"
+                        thisOpAmountStr: "6"
+                        thisOpAmountInt: 6
+                        maxOpAmountInt: 12
+                    }
+                }
+
+                delegate: Item {
+                    id: universityColumnItem
+                    y: 0
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 35
+
+                    Text {
+                        id: universityNameText
+                        width: 130
+                        height: 20
+                        color: "#ffffff"
+                        text: model.universityNameText
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                        font.styleName: "SemiBold"
+                        font.family: Constants.font.family
+                    }
+
+                    Item {
+                        id: barZoneItem
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        width: 190
+                        height: parent.height
+
+                        Rectangle {
+                            id: frequencyBarRectangle
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 150 * thisOpAmountInt / maxOpAmountInt
+                            height: 10
+                            color: "#ffffff"
+                            radius: 5
+                        }
+
+                        Text {
+                            id: frequencyAmountText
+                            width: 30
+                            height: 20
+                            color: "#ffffff"
+                            text: model.thisOpAmountStr
+                            anchors.left: frequencyBarRectangle.right
+                            anchors.leftMargin: 5
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 16
+                            horizontalAlignment: Text.AlignLeft
+                            verticalAlignment: Text.AlignVCenter
+                            font.styleName: "SemiBold"
+                            font.family: Constants.font.family
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: percentageInfoRectangle
+        x: 20
+        y: 480
+        width: 260
+        height: 180
+        color: "#dde9db"
+        radius: 10
+
+        Text {
+            id: percentageInfoText
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: 20
+            anchors.topMargin: 10
+            width: 220
+            height: 50
+            color: "#000000"
+            text: "По вашим настройкам<br>подходит"
+            font.pixelSize: 21
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignTop
+            font.styleName: "SemiBold"
+            font.family: Constants.font.family
+        }
+
+        Text {
+            id: percentageValueText
+            anchors.left: parent.left
+            anchors.top: percentageInfoText.bottom
+            anchors.leftMargin: 20
+            width: 220
+            height: 75
+            color: "#000000"
+            text: "4,2%"
+            font.pixelSize: 42
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+            font.styleName: "SemiBold"
+            font.family: Constants.font.family
+        }
+
+        Text {
+            id: percentageInfoLowerText
+            anchors.left: parent.left
+            anchors.top: percentageValueText.bottom
+            anchors.leftMargin: 20
+            anchors.bottomMargin: 10
+            width: 220
+            height: 30
+            color: "#000000"
+            text: "из общего числа ОП"
             font.pixelSize: 21
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignTop
