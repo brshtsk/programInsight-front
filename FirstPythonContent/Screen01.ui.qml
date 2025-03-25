@@ -78,6 +78,7 @@ Rectangle {
                     }
                     spacing: 15 // Добавляем отступ между элементами
                     model: opModel
+
                     // // Тестовая модель
                     // model: ListModel {
                     //     ListElement {
@@ -121,152 +122,178 @@ Rectangle {
                     //         imageSource: "resources/other-logo.svg"
                     //     }
                     // }
-                    delegate: Rectangle {
-                        id: opRowRectangle
-                        width: 420
-                        height: 140
-                        color: "#53b93f"
-                        radius: 10
-                        anchors.horizontalCenter: parent.horizontalCenter // Центрируем
 
-                        Image {
-                            id: universityImage
-                            x: 15
-                            y: 70
-                            width: 50
-                            height: 50
-                            source: model.imageSource
-                            fillMode: Image.PreserveAspectFit
-                        }
+                    // delegate: Rectangle {
+                    //     id: opRowRectangle
+                    //     width: 420
+                    //     height: 140
+                    //     color: "#53b93f"
+                    //     radius: 10
+                    //     anchors.horizontalCenter: parent.horizontalCenter // Центрируем
 
-                        Text {
-                            id: opNameText
-                            x: 15
-                            y: 15
-                            width: parent.width - 30
-                            height: 55
-                            color: "#ffffff"
-                            text: model.opNameText
-                            font.pixelSize: 20
-                            textFormat: Text.RichText
-                            font.family: Constants.font.family
-                            font.styleName: "SemiBold"
-                        }
+                    //     Image {
+                    //         id: universityImage
+                    //         x: 15
+                    //         y: 70
+                    //         width: 50
+                    //         height: 50
+                    //         source: model.imageSource
+                    //         fillMode: Image.PreserveAspectFit
+                    //     }
 
-                        Text {
-                            id: universityNameText
-                            x: 75
-                            y: 70
-                            width: 120
-                            height: 23
-                            color: "#ffffff"
-                            text: model.universityNameText
-                            font.pixelSize: 15
-                            horizontalAlignment: Text.AlignLeft
-                            verticalAlignment: Text.AlignBottom
-                            textFormat: Text.RichText
-                            font.family: Constants.font.family
-                            font.styleName: "SemiBold"
-                        }
+                    //     Text {
+                    //         id: opNameText
+                    //         x: 15
+                    //         y: 15
+                    //         width: parent.width - 30
+                    //         height: 55
+                    //         color: "#ffffff"
+                    //         text: model.opNameText
+                    //         font.pixelSize: 20
+                    //         textFormat: Text.RichText
+                    //         font.family: Constants.font.family
+                    //         font.styleName: "SemiBold"
+                    //     }
 
-                        Text {
-                            id: opCodeText
-                            x: 75
-                            y: 97
-                            width: 120
-                            height: 23
-                            color: "#ffffff"
-                            text: model.opCodeText
-                            font.pixelSize: 15
-                            horizontalAlignment: Text.AlignLeft
-                            verticalAlignment: Text.AlignTop
-                            textFormat: Text.RichText
-                            font.family: Constants.font.family
-                            font.styleName: "SemiBold"
-                        }
+                    //     Text {
+                    //         id: universityNameText
+                    //         x: 75
+                    //         y: 70
+                    //         width: 120
+                    //         height: 23
+                    //         color: "#ffffff"
+                    //         text: model.universityNameText
+                    //         font.pixelSize: 15
+                    //         horizontalAlignment: Text.AlignLeft
+                    //         verticalAlignment: Text.AlignBottom
+                    //         textFormat: Text.RichText
+                    //         font.family: Constants.font.family
+                    //         font.styleName: "SemiBold"
+                    //     }
 
-                        Rectangle {
-                            id: info1Rectangle
-                            x: 251
-                            y: 70
-                            width: 72
-                            height: 40
-                            color: "#ffffff"
-                            radius: 10
+                    //     Text {
+                    //         id: opCodeText
+                    //         x: 75
+                    //         y: 97
+                    //         width: 120
+                    //         height: 23
+                    //         color: "#ffffff"
+                    //         text: model.opCodeText
+                    //         font.pixelSize: 15
+                    //         horizontalAlignment: Text.AlignLeft
+                    //         verticalAlignment: Text.AlignTop
+                    //         textFormat: Text.RichText
+                    //         font.family: Constants.font.family
+                    //         font.styleName: "SemiBold"
+                    //     }
 
-                            Text {
-                                id: info1Text
-                                font.pixelSize: 20
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                font.family: Constants.font.family
-                                font.styleName: "SemiBold"
-                                width: parent.width
-                                height: parent.height
-                                color: "#53b93f"
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.leftMargin: 10 // Отступ слева
-                                anchors.rightMargin: 10 // Отступ справа
-                                text: model.info1Text
-                            }
-                        }
+                    //     Rectangle {
+                    //         id: info1Rectangle
+                    //         x: 251
+                    //         y: 70
+                    //         width: 72
+                    //         height: 40
+                    //         color: "#ffffff"
+                    //         radius: 10
 
-                        Rectangle {
-                            id: info2Rectangle
-                            x: 333
-                            y: 70
-                            width: 72
-                            height: 40
-                            color: "#ffffff"
-                            radius: 10
+                    //         Text {
+                    //             id: info1Text
+                    //             font.pixelSize: 20
+                    //             horizontalAlignment: Text.AlignHCenter
+                    //             verticalAlignment: Text.AlignVCenter
+                    //             font.family: Constants.font.family
+                    //             font.styleName: "SemiBold"
+                    //             width: parent.width
+                    //             height: parent.height
+                    //             color: "#53b93f"
+                    //             anchors.left: parent.left
+                    //             anchors.right: parent.right
+                    //             anchors.leftMargin: 10 // Отступ слева
+                    //             anchors.rightMargin: 10 // Отступ справа
+                    //             text: model.info1Text
+                    //         }
+                    //     }
 
-                            Text {
-                                id: info2Text
-                                font.pixelSize: 20
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
-                                font.family: Constants.font.family
-                                font.styleName: "SemiBold"
-                                width: parent.width
-                                height: parent.height
-                                color: "#53b93f"
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.leftMargin: 10 // Отступ слева
-                                anchors.rightMargin: 10 // Отступ справа
-                                text: model.info2Text
-                            }
-                        }
+                    //     Rectangle {
+                    //         id: info2Rectangle
+                    //         x: 333
+                    //         y: 70
+                    //         width: 72
+                    //         height: 40
+                    //         color: "#ffffff"
+                    //         radius: 10
 
-                        Text {
-                            id: typeInfo1Text
-                            x: 251
-                            y: 112
-                            width: 72
-                            height: 16
-                            color: "#ffffff"
-                            text: qsTr("Баллов ЕГЭ")
-                            font.pixelSize: 12
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.family: Constants.font.family
-                        }
+                    //         Text {
+                    //             id: info2Text
+                    //             font.pixelSize: 20
+                    //             horizontalAlignment: Text.AlignHCenter
+                    //             verticalAlignment: Text.AlignVCenter
+                    //             font.family: Constants.font.family
+                    //             font.styleName: "SemiBold"
+                    //             width: parent.width
+                    //             height: parent.height
+                    //             color: "#53b93f"
+                    //             anchors.left: parent.left
+                    //             anchors.right: parent.right
+                    //             anchors.leftMargin: 10 // Отступ слева
+                    //             anchors.rightMargin: 10 // Отступ справа
+                    //             text: model.info2Text
+                    //         }
+                    //     }
 
-                        Text {
-                            id: typeInfo2Text
-                            x: 333
-                            y: 112
-                            width: 72
-                            height: 16
-                            color: "#ffffff"
-                            text: qsTr("Стоимость")
-                            font.pixelSize: 12
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.family: Constants.font.family
-                        }
-                    }
+                    //     Text {
+                    //         id: typeInfo1Text
+                    //         x: 251
+                    //         y: 112
+                    //         width: 72
+                    //         height: 16
+                    //         color: "#ffffff"
+                    //         text: qsTr("Баллов ЕГЭ")
+                    //         font.pixelSize: 12
+                    //         horizontalAlignment: Text.AlignHCenter
+                    //         verticalAlignment: Text.AlignVCenter
+                    //         font.family: Constants.font.family
+                    //     }
+
+                    //     Text {
+                    //         id: typeInfo2Text
+                    //         x: 333
+                    //         y: 112
+                    //         width: 72
+                    //         height: 16
+                    //         color: "#ffffff"
+                    //         text: qsTr("Стоимость")
+                    //         font.pixelSize: 12
+                    //         horizontalAlignment: Text.AlignHCenter
+                    //         verticalAlignment: Text.AlignVCenter
+                    //         font.family: Constants.font.family
+                    //     }
+
+                    //     MouseArea {
+                    //         id: opCardMouseArea
+                    //         objectName: "opCardMouseArea"
+                    //         anchors.fill: parent
+                    //         cursorShape: Qt.PointingHandCursor // Изменяем курсор на "руку"
+                    //         // onClicked: {
+                    //         //     // Используем встроенное свойство index
+                    //         //     listView.cardClicked(index, model.opNameText, model.universityNameText)
+                    //         // }
+                    //     }
+                    // }
+                    delegate: OpListViewCard {}
+
+                    // Connections {
+                    //     target: listView
+                    //     onOpCardClicked: {
+                    //         console.log("Клик по карточке: индекс", index,
+                    //                     "ОП:", opName, "университет:",
+                    //                     universityName)
+
+                    //         // Логика обработки клика, или передача сигнала на Python
+                    //         pyHandler.handleCardClicked(index, opName,
+                    //                                     universityName)
+                    //     }
+                    // }
                 }
             }
         }

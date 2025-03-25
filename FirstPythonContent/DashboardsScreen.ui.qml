@@ -117,7 +117,7 @@ Rectangle {
                         text: model.propertyNameText
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 16
+                        font.pixelSize: 18
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
                         font.styleName: "SemiBold"

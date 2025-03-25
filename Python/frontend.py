@@ -5,6 +5,7 @@ from statistics_model import StatisticsListModel
 from manage_model_data import ModelDataManagement
 from utils import Utils
 from search_settings import Settings
+from handler import PyHandler
 
 
 class Frontend(QObject):
@@ -16,10 +17,16 @@ class Frontend(QObject):
         self.op_model = None
         self.statistics_model = None
         self.search_settings_window = None  # Ссылка на окно настроек
+        self.pyHandler = PyHandler()  # Создаем экземпляр обработчика (для объектов в ListView)
+
         self.setup_models()
         self.setup_connections()
 
     def setup_models(self):
+        # Регистрируем обработчик в QML, чтобы обращаться к нему по имени "pyHandler"
+        context = self.engine.rootContext()
+        context.setContextProperty("pyHandler", self.pyHandler)
+
         # Получаем данные для модели
         op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings)
         self.op_model = opListModel(op_model_data)
@@ -33,7 +40,7 @@ class Frontend(QObject):
         else:
             print("Элемент с objectName 'resultAmountText' не найден")
 
-        # Переадем данные в модель
+        # Передаем данные в модель
         context = self.engine.rootContext()
         context.setContextProperty("opModel", self.op_model)
         context.setContextProperty("statisticsModel", self.statistics_model)

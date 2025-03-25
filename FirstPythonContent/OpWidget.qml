@@ -3,11 +3,11 @@ import QtQuick.Window
 import FirstPython
 
 Window {
-    width: dashboardsScreen.width
-    height: dashboardsScreen.height
+    width: opWidgetScreen.width
+    height: opWidgetScreen.height
 
     visible: true
-    title: "Dashboards"
+    title: "OpWidget"
 
     signal windowClosed()  // Пользовательский сигнал закрытия
 
@@ -18,8 +18,8 @@ Window {
         }
     }
 
-    DashboardsScreen {
-        id: dashboardsScreen
+    OpWidgetScreen {
+        id: opWidgetScreen
     }
 
 }
