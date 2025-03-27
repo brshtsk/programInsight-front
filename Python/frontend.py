@@ -5,7 +5,7 @@ from statistics_model import StatisticsListModel
 from manage_model_data import ModelDataManagement
 from utils import Utils
 from search_settings import Settings
-from handler import PyHandler
+from op_card_handler import PyHandler
 
 
 class Frontend(QObject):
@@ -17,7 +17,8 @@ class Frontend(QObject):
         self.op_model = None
         self.statistics_model = None
         self.search_settings_window = None  # Ссылка на окно настроек
-        self.pyHandler = PyHandler()  # Создаем экземпляр обработчика (для объектов в ListView)
+        self.dashboard_window = None  # Ссылка на окно дашбордов
+        self.pyHandler = PyHandler(engine)  # Создаем экземпляр обработчика (для объектов в ListView)
 
         self.setup_models()
         self.setup_connections()
@@ -66,6 +67,7 @@ class Frontend(QObject):
     def search_button_clicked(self):
         # Если окно уже открыто, выходим из метода
         if self.search_settings_window is not None:
+            print("Окно настроек уже открыто!")
             return
 
         print('Кнопка настроек поиска нажата!')
@@ -88,17 +90,31 @@ class Frontend(QObject):
 
     @Slot()
     def dashboard_button_clicked(self):
+        # Если окно дашбордов уже открыто, выходим из метода
+        if self.dashboard_window is not None:
+            print("Окно дашбордов уже открыто!")
+            return
+
         print('Кнопка дашбордов нажата!')
         dashboard_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
         component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(dashboard_qml_path)))
         if component.status() == QQmlComponent.Ready:
-            dashboard_window = component.create()
-            if dashboard_window:
-                dashboard_window.show()
+            self.dashboard_window = component.create()
+            if self.dashboard_window:
+                self.dashboard_window.show()
+                # Подключаем сигнал закрытия окна, чтобы обнулить ссылку
+                self.dashboard_window.destroyed.connect(self.on_dashboard_closed)
             else:
                 print("Не удалось создать окно дашбордов.")
         else:
             print("Ошибка при загрузке Dashboard.qml:", component.errorString())
+
+    @Slot()
+    def on_dashboard_closed(self):
+        """Слот, вызываемый при закрытии окна дашбордов, чтобы очистить ссылку."""
+        print("Окно дашбордов закрыто")
+        self.dashboard_window = None
+        # ToDo: не дает открыть дашборды во второй раз
 
     def connect_to_search_settings(self, settings_window):
         # Показывать баллы на бюджет или платное
@@ -172,7 +188,11 @@ class Frontend(QObject):
             checked = checkbox.property('checked')
             print(f"Состояние чекбокса 'applyFilterByPriceCheckBox': {checked}")
             self.settings.filter_by_price = checked
-            self.setup_models()
+            try:
+                self.setup_models()
+            except:
+                print("Ошибка при применении фильтра по цене")
+                # ToDo: уведомлять пользователя, если по фильтру ничего не найдено
         else:
             print("sender() не найден")
 
@@ -190,7 +210,6 @@ class Frontend(QObject):
             self.settings.min_price = 0
             if self.settings.filter_by_price and self.settings.price_range_is_ok():
                 self.setup_models()
-
 
     @Slot()
     def on_max_price_changed(self):

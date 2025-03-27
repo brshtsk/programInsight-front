@@ -57,7 +57,7 @@ Rectangle {
                 anchors.leftMargin: 10 // Отступ слева
                 anchors.rightMargin: 10 // Отступ справа
                 wheelEnabled: true
-                ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+                // ScrollBar.vertical.policy: ScrollBar.AlwaysOff
                 clip: true // Ограничение содержимого прокрутки границами ScrollView
 
                 ListView {
