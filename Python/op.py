@@ -4,7 +4,7 @@ from search_settings import Settings
 
 class Op:
     def __init__(self, name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
-                 paid_ege_score, paid_places_amount, cost, city):
+                 paid_ege_score, paid_places_amount, cost, city, length, attendance, exams, raex_position):
         if type(name) is not str:
             raise TypeError("name должно быть строкой")
         self.name = name  # Название образовательной программы
@@ -47,6 +47,22 @@ class Op:
             raise TypeError("city должно быть строкой или None")
         self.city = city  # Город, где находится университет 'Москва'/None
 
+        if type(length) is not str and length is not None:
+            raise TypeError("length должно быть строкой или None")
+        self.length = length # Длина программы ("4 года"/None)
+
+        if type(attendance) is not str and attendance is not None:
+            raise TypeError("attendance должно быть строкой или None")
+        self.attendance = attendance  # Форма обучения ('Очная'/None)
+
+        if type(exams) is not list and exams is not None:
+            raise TypeError("exams должно быть списком или None")
+        self.exams = exams  # Список экзаменов (['математика', ['физика', 'химия'], 'информатика']/None)
+
+        if type(raex_position) is not int and raex_position is not None:
+            raise TypeError("raex_position должно быть целым числом или None")
+        self.raex_position = raex_position  # Позиция в рейтинге RAEX (1/None)
+
     def to_model_dict(self, settings=Settings()) -> dict:
         """
         Создает словарь с информацией об объекте для op_model
@@ -73,7 +89,8 @@ class Op:
             "universityNameText": self.university if len(self.university) <= 20 else DataManipulations.cut_extra(
                 self.university),
             "opCodeText": self.op_type,
-            "imageSource": DataManipulations.get_image_source(self.university)
+            "imageSource": DataManipulations.get_image_source(self.university),
+            "lengthText": self.length
         }
         return op_dict
 

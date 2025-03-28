@@ -16,8 +16,8 @@ class ModelDataManagement:
 
         data = []
 
-        # Памятка по конструированию объекта ОП:     def __init__(self, name, university, exams_amount, op_type,
-        # budget_ege_score, budget_places_amount, paid_ege_score, paid_places_amount, cost, city):
+        # ToDo: парсинг RAEX
+        # ToDo: магистратура
 
         for university in json_data:
             for op_name in json_data[university]['Бакалавриат и специалитет']:
@@ -31,11 +31,25 @@ class ModelDataManagement:
                     paid_places_amount = None
                     cost = None
                     city = None
+                    length = None
+                    attendance = None
+                    exams = None
+                    raex_position = None
 
                     exams_amount = len(op_data['Предметы ЕГЭ 1'])
+                    city = op_data['Город']
+                    length = op_data['Срок обучения']
+                    attendance = op_data['Форма обучения']
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
+
+                    exams = []
+                    for exam_var in op_data['Предметы ЕГЭ 1']:
+                        this_var = []
+                        for exam in exam_var:
+                            this_var.append(exam)
+                        exams.append(this_var)
 
                     for postup_data in op_data['Варианты поступления'].values():
                         if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
@@ -54,7 +68,8 @@ class ModelDataManagement:
                                     cost = postup_data['Платное'][budget_info]
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
-                                   paid_ege_score, paid_places_amount, cost, city))
+                                   paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
+                                   raex_position))
                     # print(f"Получена ОП: {op_name} в {university}")
                 except:
                     print(f"Ошибка при обработке ОП: {op_name} в {university}")

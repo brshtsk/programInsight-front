@@ -10,6 +10,9 @@ Rectangle {
     radius: 10
     anchors.horizontalCenter: parent.horizontalCenter
 
+    // Значения, хранимые для вызовов, но которые не выводятся в UI
+    property string lengthText: model.lengthText
+
     // Элементы дизайна карточки
     Image {
         id: universityImage
@@ -171,7 +174,7 @@ Rectangle {
         }
         onClicked: {
             // Если событие не было обработано Flickable'ом, то кликаем по карточке
-            pyHandler.handleCardClicked(index, opNameText.text, universityNameText.text)
+            pyHandler.handleCardClicked(index, opNameText.text, universityNameText.text, opCodeText.text, lengthText)
         }
     }
 
