@@ -80,6 +80,7 @@ class opListModel(QAbstractListModel):
             self.UniversityNameRole: b"universityNameText",
             self.OpCodeRole: b"opCodeText",
             self.ImageSourceRole: b"imageSource",
+
             self.LengthTextRole: b"lengthText",
             self.LocationTextRole: b"locationText",
             self.AttendanceTextRole: b"attendanceText",
@@ -87,7 +88,10 @@ class opListModel(QAbstractListModel):
             self.BudgetScoreRole: b"budgetScore",
             self.PaidScoreRole: b"paidScore",
             self.BudgetPlacesRole: b"budgetPlaces",
-            self.PaidPlacesRole: b"paidPlaces"
+            self.PaidPlacesRole: b"paidPlaces",
+
+            self.SingleExamsRole: b"singleExams",
+            self.ChoiceExamsRole: b"choiceExams",
         }
 
 # Данные для списка ОП. Пример

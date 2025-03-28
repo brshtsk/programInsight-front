@@ -197,6 +197,8 @@ Rectangle {
                 paidScore,
                 budgetPlaces,
                 paidPlaces,
+                singleExams,
+                choiceExams
             )
         }
     }
