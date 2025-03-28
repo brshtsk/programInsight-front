@@ -9,10 +9,15 @@ class PyHandler(QObject):
         super().__init__()
         self.engine = engine
 
-    @Slot(int, str, str, str, str)
-    def handleCardClicked(self, index, op_name, university_name, op_type, length_text):
-        print(
-            f"Клик по карточке: индекс={index}, ОП: {op_name}, университет: {university_name}, тип: {op_type}, длина: {length_text}")
+    @Slot(int, str, str, str, str, str, str, int, int, int, int, int)
+    def handleCardClicked(self, index, op_name, university_name, op_type, length_text,
+                          location_text, attendance_text, raex_position, budget_score,
+                          paid_score, budget_places, paid_places):
+        print(f"Клик по карточке: индекс={index}, ОП: {op_name}, университет: {university_name}, "
+              f"тип: {op_type}, длина: {length_text}, локация: {location_text}, "
+              f"посещаемость: {attendance_text}, raexPosition: {raex_position}, "
+              f"бюджетный балл: {budget_score}, платный балл: {paid_score}, "
+              f"бюджетных мест: {budget_places}, платных мест: {paid_places}")
 
         # Открываем окно с информацией об ОП
         self.showOpWidget()

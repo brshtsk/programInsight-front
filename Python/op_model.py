@@ -9,7 +9,18 @@ class opListModel(QAbstractListModel):
     UniversityNameRole = Qt.UserRole + 4
     OpCodeRole = Qt.UserRole + 5
     ImageSourceRole = Qt.UserRole + 6
+
     LengthTextRole = Qt.UserRole + 7
+    LocationTextRole = Qt.UserRole + 8
+    AttendanceTextRole = Qt.UserRole + 9
+    RaexPositionRole = Qt.UserRole + 10
+    BudgetScoreRole = Qt.UserRole + 11
+    PaidScoreRole = Qt.UserRole + 12
+    BudgetPlacesRole = Qt.UserRole + 13
+    PaidPlacesRole = Qt.UserRole + 14
+
+    SingleExamsRole = Qt.UserRole + 15
+    ChoiceExamsRole = Qt.UserRole + 16
 
     def __init__(self, data=None):
         super().__init__()
@@ -39,6 +50,26 @@ class opListModel(QAbstractListModel):
         elif role == self.LengthTextRole:
             return item["lengthText"]
 
+        elif role == self.LocationTextRole:
+            return item.get("locationText")
+        elif role == self.AttendanceTextRole:
+            return item.get("attendanceText")
+        elif role == self.RaexPositionRole:
+            return item.get("raexPosition")
+        elif role == self.BudgetScoreRole:
+            return item.get("budgetScore")
+        elif role == self.PaidScoreRole:
+            return item.get("paidScore")
+        elif role == self.BudgetPlacesRole:
+            return item.get("budgetPlaces")
+        elif role == self.PaidPlacesRole:
+            return item.get("paidPlaces")
+
+        elif role == self.SingleExamsRole:
+            return item.get("singleExams")
+        elif role == self.ChoiceExamsRole:
+            return item.get("choiceExams")
+
         return None
 
     def roleNames(self):
@@ -49,7 +80,14 @@ class opListModel(QAbstractListModel):
             self.UniversityNameRole: b"universityNameText",
             self.OpCodeRole: b"opCodeText",
             self.ImageSourceRole: b"imageSource",
-            self.LengthTextRole: b"lengthText"
+            self.LengthTextRole: b"lengthText",
+            self.LocationTextRole: b"locationText",
+            self.AttendanceTextRole: b"attendanceText",
+            self.RaexPositionRole: b"raexPosition",
+            self.BudgetScoreRole: b"budgetScore",
+            self.PaidScoreRole: b"paidScore",
+            self.BudgetPlacesRole: b"budgetPlaces",
+            self.PaidPlacesRole: b"paidPlaces"
         }
 
 # Данные для списка ОП. Пример

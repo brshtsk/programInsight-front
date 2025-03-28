@@ -12,6 +12,16 @@ Rectangle {
 
     // Значения, хранимые для вызовов, но которые не выводятся в UI
     property string lengthText: model.lengthText
+    property string locationText: model.locationText
+    property string attendanceText: model.attendanceText
+    property int raexPosition: model.raexPosition
+    property int budgetScore: model.budgetScore
+    property int paidScore: model.paidScore
+    property int budgetPlaces: model.budgetPlaces
+    property int paidPlaces: model.paidPlaces
+    property var singleExams: model.singleExams
+    property var choiceExams: model.choiceExams
+
 
     // Элементы дизайна карточки
     Image {
@@ -174,7 +184,20 @@ Rectangle {
         }
         onClicked: {
             // Если событие не было обработано Flickable'ом, то кликаем по карточке
-            pyHandler.handleCardClicked(index, opNameText.text, universityNameText.text, opCodeText.text, lengthText)
+            pyHandler.handleCardClicked(
+                index,
+                opNameText.text,
+                universityNameText.text,
+                opCodeText.text,
+                lengthText,
+                locationText,
+                attendanceText,
+                raexPosition,
+                budgetScore,
+                paidScore,
+                budgetPlaces,
+                paidPlaces,
+            )
         }
     }
 

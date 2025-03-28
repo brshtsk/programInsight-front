@@ -49,7 +49,7 @@ class Op:
 
         if type(length) is not str and length is not None:
             raise TypeError("length должно быть строкой или None")
-        self.length = length # Длина программы ("4 года"/None)
+        self.length = length  # Длина программы ("4 года"/None)
 
         if type(attendance) is not str and attendance is not None:
             raise TypeError("attendance должно быть строкой или None")
@@ -57,7 +57,7 @@ class Op:
 
         if type(exams) is not list and exams is not None:
             raise TypeError("exams должно быть списком или None")
-        self.exams = exams  # Список экзаменов (['математика', ['физика', 'химия'], 'информатика']/None)
+        self.exams = exams  # Список экзаменов ([['математика'], ['физика', 'химия'], ['информатика']]/None)
 
         if type(raex_position) is not int and raex_position is not None:
             raise TypeError("raex_position должно быть целым числом или None")
@@ -81,6 +81,15 @@ class Op:
         else:
             cost_text = f"{self.cost // 1000}к ₽"
 
+        single_exams = []
+        choice_exams = []
+
+        for exam in self.exams:
+            if len(exam) == 1:
+                single_exams.append(exam[0])
+            else:
+                choice_exams.append(exam)
+
         op_dict = {
             "opNameText": DataManipulations.split_line(self.name),
             "info1Text": score_to_str(self.budget_ege_score) if show_budget_score else score_to_str(
@@ -90,7 +99,16 @@ class Op:
                 self.university),
             "opCodeText": self.op_type,
             "imageSource": DataManipulations.get_image_source(self.university),
-            "lengthText": self.length
+            "lengthText": self.length,
+            "locationText": self.city,
+            "attendanceText": self.attendance,
+            "raexPosition": self.raex_position,
+            "budgetScore": self.budget_ege_score,
+            "paidScore": self.paid_ege_score,
+            "budgetPlaces": self.budget_places_amount,
+            "paidPlaces": self.paid_places_amount,
+            "singleExams": single_exams,
+            "choiceExams": choice_exams,
         }
         return op_dict
 

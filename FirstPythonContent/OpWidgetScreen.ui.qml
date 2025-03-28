@@ -483,7 +483,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: 30
             width: 300
-            height: 230
+            height: 240
             contentHeight: allExamsItem.height
 
             Item {
