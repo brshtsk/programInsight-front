@@ -16,10 +16,13 @@ class ModelDataManagement:
 
         data = []
 
+        # Памятка по конструированию объекта ОП:     def __init__(self, name, university, exams_amount, op_type,
+        # budget_ege_score, budget_places_amount, paid_ege_score, paid_places_amount, cost, city):
+
         for university in json_data:
-            for op_name in json_data[university]:
-                if type(json_data[university][op_name]) is dict:
-                    op_data = json_data[university][op_name]
+            for op_name in json_data[university]['Бакалавриат и специалитет']:
+                try:
+                    op_data = json_data[university]['Бакалавриат и специалитет'][op_name]
                     op_type = op_data['Квалификация']
                     exams_amount = None
                     budget_ege_score = None
@@ -29,35 +32,34 @@ class ModelDataManagement:
                     cost = None
                     city = None
 
-                    if op_type in ['Бакалавриат', 'Специалитет']:
-                        exams_amount = len(op_data['Предметы ЕГЭ 1'])
-                        for postup_data in op_data['Варианты поступления'].values():
-                            if 'нет' not in postup_data['Бюджет']:
-                                for budget_info in postup_data['Бюджет']:
-                                    if 'балл' in budget_info:
-                                        budget_ege_score = postup_data['Бюджет'][budget_info]
-                                    if 'мест' in budget_info:
-                                        budget_places_amount = postup_data['Бюджет'][budget_info]
-                            if 'нет' not in postup_data['Платное']:
-                                for budget_info in postup_data['Платное']:
-                                    if 'балл' in budget_info:
-                                        paid_ege_score = postup_data['Платное'][budget_info]
-                                    if 'мест' in budget_info:
-                                        paid_places_amount = postup_data['Платное'][budget_info]
-                                    if 'Стоимость' in budget_info:
-                                        cost = postup_data['Платное'][budget_info]
+                    exams_amount = len(op_data['Предметы ЕГЭ 1'])
 
-                    elif op_type == 'Магистратура':
-                        continue
-                        # ToDo
-                    else:
-                        print(f'Не распознана квалификация для {op_name} : {op_type}')
+                    if exams_amount == 0:
+                        raise Exception("Нет экзаменов")
+
+                    for postup_data in op_data['Варианты поступления'].values():
+                        if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
+                            for budget_info in postup_data['Бюджет']:
+                                if 'балл' in budget_info:
+                                    budget_ege_score = postup_data['Бюджет'][budget_info]
+                                if 'мест' in budget_info:
+                                    budget_places_amount = postup_data['Бюджет'][budget_info]
+                        if 'нет' not in postup_data['Платное']:
+                            for budget_info in postup_data['Платное']:
+                                if 'балл' in budget_info:
+                                    paid_ege_score = postup_data['Платное'][budget_info]
+                                if 'мест' in budget_info:
+                                    paid_places_amount = postup_data['Платное'][budget_info]
+                                if 'Стоимость' in budget_info:
+                                    cost = postup_data['Платное'][budget_info]
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city))
+                    # print(f"Получена ОП: {op_name} в {university}")
+                except:
+                    print(f"Ошибка при обработке ОП: {op_name} в {university}")
 
         return data
-
 
     def get_op_model_data(op_list: list[Op], settings=Settings()) -> (list[dict], list[dict]):
         """

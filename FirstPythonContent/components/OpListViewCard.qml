@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import FirstPython
+import QtQuick.Controls
 
 Rectangle {
     id: opCard
@@ -22,11 +23,19 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
-    Text {
-        id: opNameText
+    Flickable {
+        id: opNameContainerFlickable
         x: 15
         y: 15
         width: parent.width - 30
+        height: opNameText.height // либо можно задать фиксированную высоту, например, 55
+        clip: true
+        contentWidth: opNameText.width
+
+    Text {
+        id: opNameText
+        x: 0
+        y: 0
         height: 55
         color: "#ffffff"
         text: model.opNameText
@@ -34,6 +43,12 @@ Rectangle {
         textFormat: Text.RichText
         font.family: Constants.font.family
         font.styleName: "SemiBold"
+    }
+
+    ScrollBar.horizontal: ScrollBar {
+        policy: ScrollBar.Auto
+    }
+
     }
 
     Text {
@@ -141,14 +156,23 @@ Rectangle {
         font.family: Constants.font.family
     }
 
-    // MouseArea для обработки клика и изменения курсора
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
+        onPressed: {
+            // Если событие произошло в области opNameContainerFlickable, передаём его дальше
+            if (mouse.x >= opNameContainerFlickable.x &&
+                mouse.x <= opNameContainerFlickable.x + opNameContainerFlickable.width &&
+                mouse.y >= opNameContainerFlickable.y &&
+                mouse.y <= opNameContainerFlickable.y + opNameContainerFlickable.height &&
+                opNameText.width > opNameContainerFlickable.width) {
+                mouse.accepted = false
+            }
+        }
         onClicked: {
-            // Передаем информацию в питон-обработчик
-
+            // Если событие не было обработано Flickable'ом, то кликаем по карточке
             pyHandler.handleCardClicked(index, opNameText.text, universityNameText.text)
         }
     }
+
 }

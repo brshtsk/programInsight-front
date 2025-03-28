@@ -29,10 +29,11 @@ class Statistics:
             self.sum_budget_places += op.budget_places_amount
             self.sum_budget_ege_scores += op.budget_ege_score
             self.sum_budget_ege_subjects += op.exams_amount
-        self.sum_price += op.cost
-        self.sum_paid_places += op.paid_places_amount
-        self.sum_paid_ege_scores += op.paid_ege_score
-        self.sum_paid_ege_subjects += op.exams_amount
+        if op.cost:
+            self.sum_price += op.cost
+            self.sum_paid_places += op.paid_places_amount
+            self.sum_paid_ege_scores += op.paid_ege_score
+            self.sum_paid_ege_subjects += op.exams_amount
 
     def to_model_dict(self, settings=Settings()) -> list[dict]:
         """

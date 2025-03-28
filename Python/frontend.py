@@ -12,7 +12,7 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/op_data.json'))[::-1]
+        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/big_data.json'))[::-1]
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
