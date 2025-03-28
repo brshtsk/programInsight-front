@@ -507,6 +507,8 @@ Rectangle {
                 height: 270
                 anchors.bottom: parent.bottom
                 spacing: 10
+                interactive: false
+
                 model: statisticsModel // Используем Python-модель
                 // // Ниже тестовая модель
                 // model: ListModel {

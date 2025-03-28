@@ -478,106 +478,124 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        Item {
-            id: singleExamListItem
+        ScrollView {
+            id: allExamsScrollView
+            anchors.horizontalCenter: parent.horizontalCenter
             y: 30
             width: 300
-            height: singleExamListView.height
-            anchors.horizontalCenter: parent.horizontalCenter
+            height: 230
+            contentHeight: allExamsItem.height
 
-            ListView {
-                id: singleExamListView
+            Item {
+                id: allExamsItem
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: 0
                 width: 300
-                height: contentHeight
-                spacing: 10
+                height: singleExamListItem.height + choiceExamListItem.height
 
-                interactive: false
-
-                // Добавляем отступ перед первым элементом
-                header: Rectangle {
-                    width: listView.width
-                    height: 10
-                    color: "#00ffffff"
-                }
-
-                model: ListModel {
-                    ListElement {
-                        examNameText: "Математика (профиль)"
-                    }
-                    ListElement {
-                        examNameText: "Русский язык"
-                    }
-                }
-                delegate: Rectangle {
-                    id: examItemRecatngle
+                Item {
+                    id: singleExamListItem
+                    y: 0
+                    width: 300
+                    height: singleExamListView.height
                     anchors.horizontalCenter: parent.horizontalCenter
-                    y: 40
-                    width: 270
-                    height: 35
-                    color: "#53b93f"
-                    radius: 10
 
-                    Flickable {
-                        id: examNameContainerFlickable
-                        width: parent.width - 20
-                        height: examNameText.height
-                        anchors.verticalCenter: parent.verticalCenter
+                    ListView {
+                        id: singleExamListView
                         anchors.horizontalCenter: parent.horizontalCenter
-                        clip: true
-                        contentWidth: examNameText.width < width ? width : examNameText.width
+                        y: 0
+                        width: 300
+                        height: contentHeight
+                        spacing: 10
 
-                        Text {
-                            id: examNameText
-                            height: 20
-                            color: "#ffffff"
-                            text: model.examNameText
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: 18
-                            horizontalAlignment: Text.AlignLeft
-                            font.styleName: "Regular"
-                            font.family: Constants.font.family
+                        interactive: false
+
+                        // Добавляем отступ перед первым элементом
+                        header: Rectangle {
+                            width: listView.width
+                            height: 10
+                            color: "#00ffffff"
                         }
 
-                        ScrollBar.horizontal: ScrollBar {
-                            policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
+                        model: ListModel {
+                            ListElement {
+                                examNameText: "Математика (профиль)"
+                            }
+                            ListElement {
+                                examNameText: "Русский язык"
+                            }
+                        }
+                        delegate: Rectangle {
+                            id: examItemRecatngle
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            y: 40
+                            width: 270
+                            height: 35
+                            color: "#53b93f"
+                            radius: 10
+
+                            Flickable {
+                                id: examNameContainerFlickable
+                                width: parent.width - 20
+                                height: examNameText.height
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                clip: true
+                                contentWidth: examNameText.width
+                                              < width ? width : examNameText.width
+
+                                Text {
+                                    id: examNameText
+                                    height: 20
+                                    color: "#ffffff"
+                                    text: model.examNameText
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    font.pixelSize: 18
+                                    horizontalAlignment: Text.AlignLeft
+                                    font.styleName: "Regular"
+                                    font.family: Constants.font.family
+                                }
+
+                                ScrollBar.horizontal: ScrollBar {
+                                    policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        Item {
-            id: choiceExamListItem
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 30 + singleExamListItem.height
-            width: 300
-            height: choiceExamListView.height
+                Item {
+                    id: choiceExamListItem
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: singleExamListItem.height
+                    width: 300
+                    height: choiceExamListView.height
 
-            // Создаём экземпляр ExamsWithOptionsList и передаём в него нужную модель
-            ExamsWithOptionsList {
-                id: choiceExamListView
-                // Свойство examOptions переопределяем, передавая массив групп вариантов
-                examOptions: [{
-                        "header"// Здесь можно указать заголовок для группы, если он нужен
-                        : "Выбор из 2 предметов",
-                        "options": [{
-                                "optionNameText": "Информатика"
+                    // Создаём экземпляр ExamsWithOptionsList и передаём в него нужную модель
+                    ExamsWithOptionsList {
+                        id: choiceExamListView
+                        // Свойство examOptions переопределяем, передавая массив групп вариантов
+                        examOptions: [{
+                                "header"// Здесь можно указать заголовок для группы, если он нужен
+                                : "Выбор из 2 предметов",
+                                "options": [{
+                                        "optionNameText": "Информатика"
+                                    }, {
+                                        "optionNameText": "Физика"
+                                    }]
                             }, {
-                                "optionNameText": "Физика"
+                                "header": "Выбор из 3 предметов",
+                                "options": [{
+                                        "optionNameText": "География"
+                                    }, {
+                                        "optionNameText": "История"
+                                    }, {
+                                        "optionNameText": "Астрономия"
+                                    }]
                             }]
-                    }, {
-                        "header": "Выбор из 3 предметов",
-                        "options": [{
-                                "optionNameText": "География"
-                            }, {
-                                "optionNameText": "История"
-                            }, {
-                                "optionNameText": "Астрономия"
-                            }]
-                    }]
+                    }
+                }
             }
         }
     }
