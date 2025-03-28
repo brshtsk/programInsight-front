@@ -28,6 +28,7 @@ Rectangle {
 
         Text {
             id: opNameText
+            objectName: "opNameText"
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 10
@@ -80,6 +81,7 @@ Rectangle {
 
             Text {
                 id: opTimeText
+                objectName: "opTimeText"
                 x: 40
                 anchors.verticalCenter: parent.verticalCenter
                 font.family: Constants.font.family
@@ -121,9 +123,13 @@ Rectangle {
 
                 Text {
                     id: universityNameText
+                    objectName: "universityNameText"
+                    height: 44
                     x: 0
                     text: "Национальный исследовательский университет<br>Высшая школа экономики"
+                    // text: "Институт<br>B&amp;D"
                     font.pixelSize: 18
+                    verticalAlignment: Text.AlignVCenter
                     font.family: Constants.font.family
                     wrapMode: Text.NoWrap // отключаем перенос строк, чтобы текст не делался многострочным
                 }
@@ -155,6 +161,7 @@ Rectangle {
 
             Text {
                 id: opLocationText
+                objectName: "opLocationText"
                 x: 40
                 text: "Москва"
                 anchors.verticalCenter: parent.verticalCenter
@@ -181,6 +188,7 @@ Rectangle {
 
             Text {
                 id: opRatingText
+                objectName: "opRatingText"
                 x: 40
                 text: "ВУЗ 3-ий в RAEX"
                 anchors.verticalCenter: parent.verticalCenter
@@ -208,6 +216,7 @@ Rectangle {
 
             Text {
                 id: opAttendanceText
+                objectName: "opAttendanceText"
                 x: 40
                 text: "Очное"
                 anchors.verticalCenter: parent.verticalCenter
@@ -235,6 +244,7 @@ Rectangle {
 
             Text {
                 id: opPriceText
+                objectName: "opPriceText"
                 x: 40
                 text: "710к ₽ за год обучения"
                 anchors.verticalCenter: parent.verticalCenter
@@ -277,6 +287,7 @@ Rectangle {
 
                 Text {
                     id: budgetScoreText
+                    objectName: "budgetScoreText"
                     x: 20
                     y: 8
                     color: "#000000"
@@ -319,6 +330,7 @@ Rectangle {
                 radius: 10
                 Text {
                     id: paidScoreText
+                    objectName: "paidScoreText"
                     x: 20
                     y: 8
                     color: "#000000"
@@ -354,6 +366,7 @@ Rectangle {
         radius: 10
         Text {
             id: opTypeText
+            objectName: "opTypeText"
             height: 20
             color: "#ffffff"
             text: "Бакалавриат"
@@ -391,6 +404,7 @@ Rectangle {
                 radius: 10
                 Text {
                     id: budgetPlacesText
+                    objectName: "budgetPlacesText"
                     x: 20
                     y: 8
                     color: "#000000"
@@ -433,6 +447,7 @@ Rectangle {
                 radius: 10
                 Text {
                     id: paidPlacesText
+                    objectName: "paidPlacesText"
                     x: 20
                     y: 8
                     color: "#000000"

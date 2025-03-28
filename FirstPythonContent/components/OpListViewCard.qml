@@ -11,9 +11,11 @@ Rectangle {
     anchors.horizontalCenter: parent.horizontalCenter
 
     // Значения, хранимые для вызовов, но которые не выводятся в UI
+    property string fullUniversityName: model.fullUniversityNameText
     property string lengthText: model.lengthText
     property string locationText: model.locationText
     property string attendanceText: model.attendanceText
+    property string priceText: model.info2Text
     property int raexPosition: model.raexPosition
     property int budgetScore: model.budgetScore
     property int paidScore: model.paidScore
@@ -187,11 +189,12 @@ Rectangle {
             pyHandler.handleCardClicked(
                 index,
                 opNameText.text,
-                universityNameText.text,
+                fullUniversityName,
                 opCodeText.text,
                 lengthText,
                 locationText,
                 attendanceText,
+                priceText,
                 raexPosition,
                 budgetScore,
                 paidScore,

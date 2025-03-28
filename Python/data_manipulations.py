@@ -8,6 +8,10 @@ class DataManipulations:
         :param op_name: название ОП в 1 строку
         :return: название с переносом через <br>
         """
+        if '&' in op_name:
+            # Заменяем амперсанд на html-символ для корректного отображения
+            op_name = op_name.replace('&', '&amp;')
+
         op_split = op_name.split()
         if len(op_split) == 1:
             return op_name

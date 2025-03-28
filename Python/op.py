@@ -109,6 +109,7 @@ class Op:
             "paidPlaces": self.paid_places_amount,
             "singleExams": single_exams,
             "choiceExams": choice_exams,
+            "fullUniversityNameText": DataManipulations.split_line(self.university),
         }
         return op_dict
 
