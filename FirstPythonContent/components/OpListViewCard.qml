@@ -201,7 +201,8 @@ Rectangle {
                 budgetPlaces,
                 paidPlaces,
                 singleExams,
-                choiceExams
+                choiceExams,
+                model.imageSource
             )
         }
     }

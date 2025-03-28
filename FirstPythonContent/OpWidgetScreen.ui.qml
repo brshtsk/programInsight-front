@@ -43,6 +43,7 @@ Rectangle {
 
         Image {
             id: universityImage
+            objectName: "universityImage"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.rightMargin: 10
@@ -517,6 +518,7 @@ Rectangle {
 
                     ListView {
                         id: singleExamListView
+                        objectName: "singleExamListView"
                         anchors.horizontalCenter: parent.horizontalCenter
                         y: 0
                         width: 300
@@ -590,6 +592,8 @@ Rectangle {
                     // Создаём экземпляр ExamsWithOptionsList и передаём в него нужную модель
                     ExamsWithOptionsList {
                         id: choiceExamListView
+                        objectName: "choiceExamListView"
+
                         // Свойство examOptions переопределяем, передавая массив групп вариантов
                         examOptions: [{
                                 "header"// Здесь можно указать заголовок для группы, если он нужен
