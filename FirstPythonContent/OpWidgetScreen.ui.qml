@@ -11,7 +11,6 @@ import QtQuick.Controls
 import FirstPython
 import "components"
 
-
 Rectangle {
     id: opInfoContent
 
@@ -479,219 +478,106 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        // Rectangle {
-        //     id: examItemRecatngle
-        //     anchors.horizontalCenter: parent.horizontalCenter
-        //     y: 40
-        //     width: 270
-        //     height: 35
-        //     color: "#53b93f"
-        //     radius: 10
-
-        //     Flickable {
-        //         id: examNameContainerFlickable
-        //         width: parent.width - 20
-        //         height: examNameText.height
-        //         anchors.verticalCenter: parent.verticalCenter
-        //         anchors.horizontalCenter: parent.horizontalCenter
-        //         clip: true
-        //         contentWidth: examNameText.width < width ? width : examNameText.width
-
-        //         Text {
-        //             id: examNameText
-        //             height: 20
-        //             color: "#ffffff"
-        //             text: "Математика (профиль)"
-        //             anchors.verticalCenter: parent.verticalCenter
-        //             anchors.horizontalCenter: parent.horizontalCenter
-        //             font.pixelSize: 18
-        //             horizontalAlignment: Text.AlignLeft
-        //             font.styleName: "Regular"
-        //             font.family: Constants.font.family
-        //         }
-
-        //         ScrollBar.horizontal: ScrollBar {
-        //             policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
-        //         }
-        //     }
-        // }
-        // Rectangle {
-        //     id: multipleItemRecatngle
-        //     y: 153
-        //     width: 270
-        //     height: 30 + choiceExamListView.height + 10
-        //     color: "#53b93f"
-        //     radius: 10
-        //     anchors.horizontalCenterOffset: -96
-        //     anchors.horizontalCenter: parent.horizontalCenter
-
-        //     Text {
-        //         id: multipleHeaderText
-        //         height: 20
-        //         color: "#ffffff"
-        //         text: "Выбор из 2 предметов"
-        //         y: 5
-        //         anchors.horizontalCenter: parent.horizontalCenter
-        //         font.pixelSize: 18
-        //         font.styleName: "Regular"
-        //         font.family: Constants.font.family
-        //     }
-
-        //     ListView {
-        //         id: choiceExamListView
-        //         x: 0
-        //         y: 30
-        //         width: parent.width - 30
-        //         height: contentHeight
-        //         anchors.horizontalCenter: parent.horizontalCenter
-
-        //         // Добавляем отступ перед первым элементом
-        //         header: Rectangle {
-        //             width: listView.width
-        //             height: 0
-        //             color: "#00ffffff"
-        //         }
-
-        //         // Добавляем отступ после последнего элемента
-        //         footer: Rectangle {
-        //             width: listView.width
-        //             height: 0
-        //             color: "#00ffffff"
-        //         }
-        //         spacing: 5 // Добавляем отступ между элементами
-        //         model: ListModel {
-        //             ListElement {
-        //                 optionNameText: "Физика"
-        //             }
-        //             ListElement {
-        //                 optionNameText: "Информатика"
-        //             }
-        //         }
-        //         delegate: Rectangle {
-        //             id: examColumnRectangle
-        //             anchors.horizontalCenter: parent.horizontalCenter
-        //             y: 30
-        //             width: 210
-        //             height: 25
-        //             color: "#ffffff"
-        //             radius: 10
-
-        //             Flickable {
-        //                 id: optionNameContainerFlickable
-        //                 width: parent.width - 20
-        //                 height: examNameText.height
-        //                 anchors.verticalCenter: parent.verticalCenter
-        //                 anchors.horizontalCenter: parent.horizontalCenter
-        //                 clip: true
-        //                 contentWidth: optionNameText.width < width ? width : optionNameText.width
-
-        //                 Text {
-        //                     id: optionNameText
-        //                     height: 20
-        //                     color: "#000000"
-        //                     text: model.optionNameText
-        //                     anchors.verticalCenter: parent.verticalCenter
-        //                     anchors.horizontalCenter: parent.horizontalCenter
-        //                     font.pixelSize: 16
-        //                     font.styleName: "Regular"
-        //                     font.family: Constants.font.family
-        //                     horizontalAlignment: Text.AlignLeft
-        //                 }
-
-        //                 ScrollBar.horizontal: ScrollBar {
-        //                     policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        ListView {
-            id: singleExamListView
-            anchors.horizontalCenter: parent.horizontalCenter
+        Item {
+            id: singleExamListItem
             y: 30
             width: 300
-            height: contentHeight
-            spacing: 10
+            height: singleExamListView.height
+            anchors.horizontalCenter: parent.horizontalCenter
 
-            // Добавляем отступ перед первым элементом
-            header: Rectangle {
-                width: listView.width
-                height: 10
-                color: "#00ffffff"
-            }
-
-            model: ListModel {
-                ListElement {
-                    examNameText: "Математика (профиль)"
-                }
-                ListElement {
-                    examNameText: "Русский язык"
-                }
-            }
-            delegate: Rectangle {
-                id: examItemRecatngle
+            ListView {
+                id: singleExamListView
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 40
-                width: 270
-                height: 35
-                color: "#53b93f"
-                radius: 10
+                y: 0
+                width: 300
+                height: contentHeight
+                spacing: 10
 
-                Flickable {
-                    id: examNameContainerFlickable
-                    width: parent.width - 20
-                    height: examNameText.height
-                    anchors.verticalCenter: parent.verticalCenter
+                interactive: false
+
+                // Добавляем отступ перед первым элементом
+                header: Rectangle {
+                    width: listView.width
+                    height: 10
+                    color: "#00ffffff"
+                }
+
+                model: ListModel {
+                    ListElement {
+                        examNameText: "Математика (профиль)"
+                    }
+                    ListElement {
+                        examNameText: "Русский язык"
+                    }
+                }
+                delegate: Rectangle {
+                    id: examItemRecatngle
                     anchors.horizontalCenter: parent.horizontalCenter
-                    clip: true
-                    contentWidth: examNameText.width < width ? width : examNameText.width
+                    y: 40
+                    width: 270
+                    height: 35
+                    color: "#53b93f"
+                    radius: 10
 
-                    Text {
-                        id: examNameText
-                        height: 20
-                        color: "#ffffff"
-                        text: model.examNameText
+                    Flickable {
+                        id: examNameContainerFlickable
+                        width: parent.width - 20
+                        height: examNameText.height
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: 18
-                        horizontalAlignment: Text.AlignLeft
-                        font.styleName: "Regular"
-                        font.family: Constants.font.family
-                    }
+                        clip: true
+                        contentWidth: examNameText.width < width ? width : examNameText.width
 
-                    ScrollBar.horizontal: ScrollBar {
-                        policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
+                        Text {
+                            id: examNameText
+                            height: 20
+                            color: "#ffffff"
+                            text: model.examNameText
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignLeft
+                            font.styleName: "Regular"
+                            font.family: Constants.font.family
+                        }
+
+                        ScrollBar.horizontal: ScrollBar {
+                            policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
+                        }
                     }
                 }
             }
         }
 
         Item {
-            width: 800
-            height: 600
+            id: choiceExamListItem
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 30 + singleExamListItem.height
+            width: 300
+            height: choiceExamListView.height
 
             // Создаём экземпляр ExamsWithOptionsList и передаём в него нужную модель
             ExamsWithOptionsList {
-                id: examsList
-                anchors.centerIn: parent
+                id: choiceExamListView
                 // Свойство examOptions переопределяем, передавая массив групп вариантов
-                examOptions: [
-                    {
-                        // Здесь можно указать заголовок для группы, если он нужен
-                        header: "Выбор из 2 предметов",
-                        options: [
-                            { optionNameText: "Информатика" },
-                            { optionNameText: "Физика" }
-                        ]
-                    },
-                    {
-                        header: "Выбор из 2 предметов",
-                        options: [
-                            { optionNameText: "География" },
-                            { optionNameText: "История" }
-                        ]
-                    }
-                ]
+                examOptions: [{
+                        "header"// Здесь можно указать заголовок для группы, если он нужен
+                        : "Выбор из 2 предметов",
+                        "options": [{
+                                "optionNameText": "Информатика"
+                            }, {
+                                "optionNameText": "Физика"
+                            }]
+                    }, {
+                        "header": "Выбор из 3 предметов",
+                        "options": [{
+                                "optionNameText": "География"
+                            }, {
+                                "optionNameText": "История"
+                            }, {
+                                "optionNameText": "Астрономия"
+                            }]
+                    }]
             }
         }
     }

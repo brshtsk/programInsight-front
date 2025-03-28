@@ -1,21 +1,56 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-// Если ChoiceExamCard.ui.qml лежит в той же директории,
-// QML автоматически распознает его как компонент с именем ChoiceExamCard.
 Item {
     id: examsWithOptionsList
     width: 300
-    height: 400
+    height: optionsListView.height
 
-    // Свойство для вариантов экзаменов; сюда будет передаваться model.options из Python.
-    property var examOptions: model.options
+    // // Тестовые данные, чтобы сразу проверить отображение
+    // property var examOptions: [
+    //     {
+    //         header: "Выбор из 2 предметов",
+    //         options: [
+    //             { optionNameText: "Физика" },
+    //             { optionNameText: "Информатика" }
+    //         ]
+    //     },
+    //     {
+    //         header: "Выбор из 3 предметов",
+    //         options: [
+    //             { optionNameText: "География" },
+    //             { optionNameText: "История" },
+    //             { optionNameText: "Химия" }
+    //         ]
+    //     }
+    // ]
+
+    property var examOptions
 
     ListView {
         id: optionsListView
-        anchors.fill: parent
-        // Используем свойство examOptions как модель
+        width: 300
+        height: contentHeight
+        spacing: 10
+
+        interactive: false
+
+        // Добавляем отступ перед первым элементом
+        header: Rectangle {
+            width: listView.width
+            height: 10
+            color: "#00ffffff"
+        }
+
+        // Модель – массив групп экзаменов
         model: examsWithOptionsList.examOptions
-        delegate: ChoiceExamCard { }
+
+        // В делегате создаём экземпляр ChoiceExamCard и явно передаём данные
+        delegate: ChoiceExamCard {
+            examData: modelData
+            // Если нужно, можно передавать и отдельные поля, например:
+            // examHeader: model.header
+            // examOptions: model.options
+        }
     }
 }
