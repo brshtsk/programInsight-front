@@ -64,29 +64,54 @@ class Frontend(QObject):
             print('Кнопка дашбордов не найдена!')
 
     @Slot()
+    # Python
     def search_button_clicked(self):
-        # Если окно уже открыто, выходим из метода
-        if self.search_settings_window is not None:
-            print("Окно настроек уже открыто!")
-            return
-
-        print('Кнопка настроек поиска нажата!')
-        settings_qml_path = Utils.resource_path('FirstPythonContent/SearchSettings.qml')
-        component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(settings_qml_path)))
-        if component.status() == QQmlComponent.Ready:
-            self.search_settings_window = component.create()  # Создаем окно и сохраняем ссылку
-            if self.search_settings_window:
-                self.search_settings_window.show()
-                self.connect_to_search_settings(self.search_settings_window)
-                # Подключаем пользовательский сигнал закрытия из QML
-                try:
+        if self.search_settings_window is None:
+            print('Кнопка настроек поиска нажата!')
+            settings_qml_path = Utils.resource_path('FirstPythonContent/SearchSettings.qml')
+            component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(settings_qml_path)))
+            if component.status() == QQmlComponent.Ready:
+                self.search_settings_window = component.create()
+                if self.search_settings_window:
+                    self.search_settings_window.show()
+                    self.connect_to_search_settings(self.search_settings_window)
+                    # При закрытии окна вместо уничтожения просто скрываем его
                     self.search_settings_window.windowClosed.connect(self.on_search_settings_closed)
-                except Exception as e:
-                    print("Не удалось подключить сигнал windowClosed:", e)
+                    # Заполняем окно предыдущими настройками
+                    self.restore_search_settings_view(self.search_settings_window)
+                else:
+                    print("Не удалось создать окно настроек.")
             else:
-                print("Не удалось создать окно настроек.")
+                print("Ошибка при загрузке SearchSettings.qml:", component.errorString())
         else:
-            print("Ошибка при загрузке SearchSettings.qml:", component.errorString())
+            # Если окно уже существует, показываем его и обновляем значения
+            self.search_settings_window.show()
+            self.restore_search_settings_view(self.search_settings_window)
+
+    def restore_search_settings_view(self, settings_window):
+        # Восстанавливаем значение ComboBox "scoreTypeComboBox"
+        combo_box = settings_window.findChild(QObject, 'scoreTypeComboBox')
+        if combo_box:
+            # 0 - бюджет, 1 - платное
+            combo_box.setProperty('currentIndex', 0 if self.settings.show_budget_score else 1)
+        # Восстанавливаем состояние CheckBox "onlyWithBudgetCheckBox"
+        only_budget_checkbox = settings_window.findChild(QObject, 'onlyWithBudgetCheckBox')
+        if only_budget_checkbox:
+            only_budget_checkbox.setProperty('checked', self.settings.show_op_only_with_budget)
+        # Восстанавливаем состояние CheckBox "applyFilterByPriceCheckBox"
+        apply_filter_checkbox = settings_window.findChild(QObject, 'applyFilterByPriceCheckBox')
+        if apply_filter_checkbox:
+            apply_filter_checkbox.setProperty('checked', self.settings.filter_by_price)
+        # Восстанавливаем текстовые поля для цены
+        min_price_field = settings_window.findChild(QObject, 'minPriceTextField')
+        if min_price_field:
+            # Если цена хранится в тысячах, делим на 1000 для отображения пользователю
+            if self.settings.min_price > 0:
+                min_price_field.setProperty('text', str(self.settings.min_price // 1000))
+        max_price_field = settings_window.findChild(QObject, 'maxPriceTextField')
+        if max_price_field:
+            if self.settings.max_price < 100_000_000:
+                max_price_field.setProperty('text', str(self.settings.max_price // 1000))
 
     @Slot()
     def dashboard_button_clicked(self):

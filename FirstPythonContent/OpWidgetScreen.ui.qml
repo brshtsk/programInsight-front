@@ -26,19 +26,34 @@ Rectangle {
         color: "#53b93f"
         radius: 10
 
-        Text {
-            id: opNameText
-            objectName: "opNameText"
+        Flickable {
+            id: opNameFlickable
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 10
-            font.styleName: "SemiBold"
-            width: 500
+            width: 600
             height: 60
-            color: "#ffffff"
-            text: "Прикладная математика<br>и информатика"
-            font.family: Constants.font.family
-            font.pixelSize: 24
+            contentWidth: opNameText.width
+
+            // Отключаем интерактивность, если текст помещается полностью
+            interactive: opNameText.width > width
+
+            Text {
+                id: opNameText
+                objectName: "opNameText"
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                font.styleName: "SemiBold"
+                height: 60
+                color: "#ffffff"
+                text: "Прикладная математика<br>и информатика"
+                font.family: Constants.font.family
+                font.pixelSize: 24
+            }
+
+            ScrollBar.horizontal: ScrollBar {
+                policy: ScrollBar.Auto // или ScrollBar.Auto для отображения по необходимости
+            }
         }
 
         Image {
@@ -114,6 +129,9 @@ Rectangle {
                 height: universityNameText.height // либо задайте фиксированную высоту
                 clip: true
                 contentWidth: universityNameText.width
+
+                // Отключаем интерактивность, если текст помещается полностью
+                interactive: universityNameText.width > width
 
                 // MouseArea, который меняет курсор при наведении
                 MouseArea {
