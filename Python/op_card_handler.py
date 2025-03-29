@@ -2,7 +2,6 @@ from utils import Utils
 from PySide6.QtCore import QObject, Slot
 from PySide6.QtQml import QQmlComponent
 from PySide6.QtCore import QUrl
-from op_card_models.exam_list_model import ExamListModel
 
 
 class PyHandler(QObject):
@@ -89,8 +88,11 @@ class PyHandler(QObject):
                     if current_model and hasattr(current_model, "updateData"):
                         current_model.updateData(single_exams)
                     else:
-                        exam_model = ExamListModel(single_exams)
-                        single_exam_list_view.setProperty("model", exam_model)
+                        exams = []
+                        for exam in single_exams:
+                            exams.append({"examNameText": exam})
+
+                        single_exam_list_view.setProperty("singleExamModel", exams)
                 else:
                     print("Элемент 'singleExamListView' не найден")
 

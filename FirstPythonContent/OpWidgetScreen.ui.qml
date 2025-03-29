@@ -14,14 +14,14 @@ import "components"
 Rectangle {
     id: opInfoContent
 
-    width: 890
-    height: 500
+    width: 730
+    height: 600
 
     Rectangle {
         id: opNameRectangle
         x: 20
         y: 20
-        width: 850
+        width: 690
         height: 80
         color: "#53b93f"
         radius: 10
@@ -261,7 +261,7 @@ Rectangle {
         id: opScoreRectangle
         x: 380
         y: 110
-        width: 240
+        width: 330
         height: 90
 
         color: "#dde9db"
@@ -381,9 +381,9 @@ Rectangle {
 
     Rectangle {
         id: opPlacesRectangle
-        x: 630
-        y: 110
-        width: 240
+        x: 20
+        y: 490
+        width: 350
         height: 90
         color: "#dde9db"
         radius: 10
@@ -478,8 +478,8 @@ Rectangle {
         id: subjectsRectangle
         x: 380
         y: 210
-        width: 490
-        height: 270
+        width: 330
+        height: 370
         color: "#dde9db"
         radius: 10
 
@@ -499,7 +499,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             y: 30
             width: 300
-            height: 240
+            height: 340
             contentHeight: allExamsItem.height
 
             Item {
@@ -516,69 +516,17 @@ Rectangle {
                     height: singleExamListView.height
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    ListView {
+                    SingleExamsList {
                         id: singleExamListView
                         objectName: "singleExamListView"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        y: 0
-                        width: 300
-                        height: contentHeight
-                        spacing: 10
 
-                        interactive: false
-
-                        // Добавляем отступ перед первым элементом
-                        header: Rectangle {
-                            width: listView.width
-                            height: 10
-                            color: "#00ffffff"
-                        }
-
-                        model: ListModel {
-                            ListElement {
-                                examNameText: "Математика (профиль)"
-                            }
-                            ListElement {
-                                examNameText: "Русский язык"
-                            }
-                        }
-                        delegate: Rectangle {
-                            id: examItemRecatngle
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            y: 40
-                            width: 270
-                            height: 35
-                            color: "#53b93f"
-                            radius: 10
-
-                            Flickable {
-                                id: examNameContainerFlickable
-                                width: parent.width - 20
-                                height: examNameText.height
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                clip: true
-                                contentWidth: examNameText.width
-                                              < width ? width : examNameText.width
-
-                                Text {
-                                    id: examNameText
-                                    height: 20
-                                    color: "#ffffff"
-                                    text: model.examNameText
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    font.pixelSize: 18
-                                    horizontalAlignment: Text.AlignLeft
-                                    font.styleName: "Regular"
-                                    font.family: Constants.font.family
-                                }
-
-                                ScrollBar.horizontal: ScrollBar {
-                                    policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
-                                }
-                            }
-                        }
+                        exams: [{
+                                "examNameText": "Математика (профиль)"
+                            }, {
+                                "examNameText": "Русский язык"
+                            }, {
+                                "examNameText": "Английский язык"
+                            }]
                     }
                 }
 
