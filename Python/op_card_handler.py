@@ -33,21 +33,22 @@ class PyHandler(QObject):
             # opRatingText
             attendance_text,  # opAttendanceText
             price_text + " за год обучения",  # opPriceText (значение можно задать по необходимости)
-            budget_score,  # budgetScoreText
+            "-" if (not budget_score) else budget_score,  # budgetScoreText
             paid_score,  # paidScoreText
             op_type,  # opTypeText
             budget_places,  # budgetPlacesText
             paid_places,  # paidPlacesText
             image_source,  # imageSource
-            single_exams # для ListView
+            single_exams,  # для ListView
+            choice_exams  # для ListView
         )
 
     def showOpWidget(self, op_name, op_time, university_name, op_location, op_rating,
                      op_attendance, op_price, budget_score, paid_score, op_type,
-                     budget_places, paid_places, image_source, single_exams):
+                     budget_places, paid_places, image_source, single_exams, choice_exams):
         """
         Создает и показывает QML-виджет с информацией об ОП.
-        Все аргументы - str.
+        Все аргументы - str, либо список строк (для экзаменов).
         """
         widget_qml_path = Utils.resource_path('FirstPythonContent/OpWidget.qml')
         component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(widget_qml_path)))
@@ -92,6 +93,18 @@ class PyHandler(QObject):
                         single_exam_list_view.setProperty("model", exam_model)
                 else:
                     print("Элемент 'singleExamListView' не найден")
+
+                choice_exam_list_view = window.findChild(QObject, "choiceExamListView")
+                if choice_exam_list_view:
+                    exam_options = []
+                    for var in choice_exams:
+                        new_option = {"header": f"Выбор из {len(var)} предметов", "options": []}
+                        for exam in var:
+                            new_option["options"].append({"optionNameText": exam})
+                        exam_options.append(new_option)
+                    choice_exam_list_view.setProperty("examOptions", exam_options)
+                else:
+                    print("Элемент 'choiceExamListView' не найден")
 
                 window.show()
             else:
