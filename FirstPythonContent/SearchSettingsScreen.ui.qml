@@ -7,7 +7,7 @@ import FirstPython
 Rectangle {
     id: settingsContent
     width: 710
-    height: 480
+    height: 600
     color: "#ffffff"
 
     Item {
@@ -43,10 +43,10 @@ Rectangle {
     }
 
     Rectangle {
-        id: keySettingsRectangle
+        id: typeAndScoreSettingsRectangle
         y: 80
         x: 20
-        height: 210
+        height: 160
         width: 390
         color: "#dde9db"
         radius: 10
@@ -126,8 +126,193 @@ Rectangle {
         }
 
         Item {
-            id: applyFilterByPriceItem
+            id: applyFilterByScoreItem
+            y: 60
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: applyFilterByScoreText
+                x: 0
+                width: 330
+                height: 30
+                color: "#373737"
+                text: "Фильтровать ОП по баллам"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignBottom
+                textFormat: Text.RichText
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+            }
+
+            CheckBox {
+                id: applyFilterByScoreCheckBox
+                objectName: "applyFilterByScoreCheckBox"
+                width: 30
+                height: 30
+                text: ""
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+
+                indicator: Rectangle {
+                    id: scoreCheckBoxIndicator
+                    color: "#ffffff"
+                    radius: 5
+                    border.color: "#53b93f"
+                    border.width: 2
+                    anchors.fill: parent
+                    Image {
+                        id: scoreCheckMark
+                        width: 20
+                        height: 20
+                        visible: applyFilterByScoreCheckBox.checked
+                        source: "resources/tick.svg"
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+
+            Rectangle {
+                id: filterScoreHelpRectangle
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
+                width: 24
+                height: 36
+                color: "#53b93f"
+                radius: 10
+
+                Text {
+                    anchors.fill: parent
+                    text: "?"
+                    color: "#ffffff"
+                    font.pixelSize: 21
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    textFormat: Text.RichText
+                    font.family: Constants.font.family
+                    font.styleName: "Bold"
+                }
+
+                MouseArea {
+                    id: scoreHelpMouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                }
+
+                ToolTip {
+                    text: "Подсказка:<br><br>Ниже укажите средний проходной балл по <b>одному</b> предмету."
+                    visible: scoreHelpMouseArea.containsMouse
+                }
+            }
+        }
+
+        Item {
+            id: scoreIntervalItem
             y: 110
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: scoreFromText
+                width: 130
+                height: 30
+                color: "#373737"
+                text: "Проходной балл от"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignBottom
+                textFormat: Text.RichText
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+            }
+
+            TextField {
+                id: minScoreTextField
+                x: 192
+                objectName: "minScoreTextField"
+                width: 65
+                height: 35 // Увеличьте высоту
+                placeholderText: "min"
+                font.pixelSize: 16
+                selectionColor: "#53b93f"
+                anchors.verticalCenter: parent.verticalCenter
+
+                topPadding: 5 // Поднимает текст, чтобы не обрезался
+                verticalAlignment: Text.AlignVCenter
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#ffffff"
+                    radius: 5
+                    border.color: "#53b93f"
+                    border.width: 2
+                }
+            }
+
+            Text {
+                id: scoreToText
+                x: 260
+                y: 5
+                width: 20
+                height: 30
+                color: "#373737"
+                text: "до"
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignBottom
+                textFormat: Text.RichText
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+            }
+
+            TextField {
+                id: maxScoreTextField
+                x: 287
+                objectName: "maxScoreTextField"
+                width: 65
+                height: 35 // Увеличьте высоту
+                placeholderText: "max"
+                font.pixelSize: 16
+                selectionColor: "#53b93f"
+                anchors.verticalCenter: parent.verticalCenter
+
+                topPadding: 5 // Поднимает текст, чтобы не обрезался
+                verticalAlignment: Text.AlignVCenter
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#ffffff"
+                    radius: 5
+                    border.color: "#53b93f"
+                    border.width: 2
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: paymentSettingsRectangle
+        x: 20
+        y: 250
+        width: 390
+        height: 160
+        color: "#dde9db"
+        radius: 10
+        border.width: 0
+
+        Item {
+            id: applyFilterByPriceItem
+            y: 60
             width: 200
             height: 40
             anchors.left: parent.left
@@ -184,7 +369,7 @@ Rectangle {
 
         Item {
             id: priceIntervalItem
-            y: 160
+            y: 110
             width: 200
             height: 40
             anchors.left: parent.left
@@ -208,7 +393,7 @@ Rectangle {
 
             TextField {
                 id: minPriceTextField
-                x: 138
+                x: 140
                 objectName: "minPriceTextField"
                 width: 65
                 height: 35 // Увеличьте высоту
@@ -288,7 +473,7 @@ Rectangle {
         Item {
             id: onlyWithBudgetSettingsItem
             x: 10
-            y: 60
+            y: 10
             width: 200
             height: 40
             anchors.left: parent.left
@@ -379,7 +564,7 @@ Rectangle {
         x: 420
         y: 80
         width: 270
-        height: 270
+        height: 390
         color: "#dde9db"
         radius: 10
 
@@ -540,7 +725,7 @@ Rectangle {
     Rectangle {
         id: searchByNameRectangle
         x: 20
-        y: 300
+        y: 420
         width: 390
         height: 160
         color: "#0053b93f"
@@ -693,7 +878,7 @@ Rectangle {
     Rectangle {
         id: sortOpRectangle
         x: 420
-        y: 360
+        y: 480
         width: 270
         height: 100
         color: "#dde9db"
