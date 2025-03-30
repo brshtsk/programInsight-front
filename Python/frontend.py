@@ -193,7 +193,6 @@ class Frontend(QObject):
         """Слот, вызываемый при закрытии окна настроек, чтобы очистить ссылку."""
         print("Окно настроек закрыто")
         self.search_settings_window = None
-        # ToDo: сохранять настройки, чтобы при следующем открытии окна поля не сбрасывались
 
     @Slot()
     def on_only_budget_checkbox_toggled(self):

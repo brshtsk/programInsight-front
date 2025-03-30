@@ -19,6 +19,9 @@ class ModelDataManagement:
         # ToDo: парсинг RAEX
         # ToDo: магистратура
 
+        # Код для оценки данных: множество всех существующих предметов
+        subjects = set()
+
         for university in json_data:
             for op_name in json_data[university]['Бакалавриат и специалитет']:
                 try:
@@ -49,6 +52,7 @@ class ModelDataManagement:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
+                            subjects.add(exam)
                         exams.append(this_var)
 
                     for postup_data in op_data['Варианты поступления'].values():
@@ -73,6 +77,9 @@ class ModelDataManagement:
                     # print(f"Получена ОП: {op_name} в {university}")
                 except:
                     print(f"Ошибка при обработке ОП: {op_name} в {university}")
+
+        print(f"Количество уникальных предметов: {len(subjects)}")
+        print(f"Предметы: {subjects}")
 
         return data
 
