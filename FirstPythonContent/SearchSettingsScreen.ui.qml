@@ -7,7 +7,7 @@ import FirstPython
 Rectangle {
     id: settingsContent
     width: 710
-    height: 500
+    height: 480
     color: "#ffffff"
 
     Item {
@@ -46,7 +46,7 @@ Rectangle {
         id: keySettingsRectangle
         y: 80
         x: 20
-        height: 60
+        height: 210
         width: 390
         color: "#dde9db"
         radius: 10
@@ -124,21 +124,10 @@ Rectangle {
                 }
             }
         }
-    }
-
-    Rectangle {
-        id: paidSettingsRectangle
-        width: 390
-        height: 160
-        y: 150
-        x: 20
-        color: "#dde9db"
-        radius: 10
-        border.width: 0
 
         Item {
             id: applyFilterByPriceItem
-            y: 60
+            y: 110
             width: 200
             height: 40
             anchors.left: parent.left
@@ -195,7 +184,7 @@ Rectangle {
 
         Item {
             id: priceIntervalItem
-            y: 110
+            y: 160
             width: 200
             height: 40
             anchors.left: parent.left
@@ -299,7 +288,7 @@ Rectangle {
         Item {
             id: onlyWithBudgetSettingsItem
             x: 10
-            y: 10
+            y: 60
             width: 200
             height: 40
             anchors.left: parent.left
@@ -390,7 +379,7 @@ Rectangle {
         x: 420
         y: 80
         width: 270
-        height: 400
+        height: 270
         color: "#dde9db"
         radius: 10
 
@@ -551,10 +540,10 @@ Rectangle {
     Rectangle {
         id: searchByNameRectangle
         x: 20
-        y: 320
+        y: 300
         width: 390
-        height: 200
-        color: "#dde9db"
+        height: 160
+        color: "#0053b93f"
         radius: 10
 
         Item {
@@ -588,7 +577,7 @@ Rectangle {
                 objectName: "cityNameTextField"
                 width: 200
                 height: 35 // Увеличьте высоту
-                placeholderText: "любой"
+                placeholderText: "любой город"
                 font.pixelSize: 16
                 selectionColor: "#53b93f"
                 anchors.verticalCenter: parent.verticalCenter
@@ -602,6 +591,234 @@ Rectangle {
                     radius: 5
                     border.color: "#53b93f"
                     border.width: 2
+                }
+            }
+        }
+
+        Item {
+            id: opNameSettingsItem
+            x: 10
+            y: 60
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: opNameSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Название ОП"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+
+            TextField {
+                id: opNameTextField
+                width: 200
+                height: 35
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+                topPadding: 5
+                selectionColor: "#53b93f"
+                placeholderText: "любое ОП"
+                objectName: "opNameTextField"
+                background: Rectangle {
+                    color: "#ffffff"
+                    radius: 5
+                    border.color: "#53b93f"
+                    border.width: 2
+                    anchors.fill: parent
+                }
+            }
+        }
+
+        Item {
+            id: universityNameSettingsItem
+            x: 10
+            y: 110
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: universityNameSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Название ВУЗа"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+
+            TextField {
+                id: universityNameTextField
+                width: 200
+                height: 35
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+                topPadding: 5
+                selectionColor: "#53b93f"
+                placeholderText: "любой ВУЗ"
+                objectName: "universityNameTextField"
+                background: Rectangle {
+                    color: "#ffffff"
+                    radius: 5
+                    border.color: "#53b93f"
+                    border.width: 2
+                    anchors.fill: parent
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: sortOpRectangle
+        x: 420
+        y: 360
+        width: 270
+        height: 100
+        color: "#dde9db"
+        radius: 10
+
+        Item {
+            id: upperSortOpSettingsItem
+            x: 10
+            y: 10
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: sortOpVarSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Сортировка ОП"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+        }
+
+        Item {
+            id: lowerSortOpSettingsItem
+            x: 10
+            y: 50
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+
+            ComboBox {
+                id: sortOpVarComboBox
+                width: 180
+                height: 30
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                objectName: "sortOpVarComboBox"
+                model: ["По рейтингу RAEX", "По стоимости", "По проходным"]
+                indicator: Item {
+                    width: 20
+                    height: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    Text {
+                        color: "#ffffff"
+                        text: "\u25be"
+                        font.pixelSize: 24
+                        anchors.centerIn: parent
+                    }
+                }
+                contentItem: Rectangle {
+                    id: sortOpVarComboBoxBackground
+                    color: "#53b93f"
+                    radius: 10
+                    anchors.fill: parent
+                    anchors.leftMargin: -5
+                    anchors.rightMargin: -5
+                    Text {
+                        width: parent.width - 20
+                        color: "#ffffff"
+                        text: sortOpVarComboBox.currentText
+                        font.pixelSize: 18
+                        font.styleName: "SemiBold"
+                        font.family: Constants.font.family
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+
+            Button {
+                id: sortUpDownButton
+                objectName: "sortUpDownButton"
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 45
+                height: 30
+
+                font.pixelSize: 21
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+
+                contentItem: Image {
+                    // Немного костыльно, так как трабл с размером png
+                    scale: sortUpDownButton.hovered ? 1.47 : 1.4
+                    id: sortUpDownImage
+                    source: "resources/sort-from-bottom.png"
+                    width: 30
+                    height: 30
+
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectFit
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+
+                background: Rectangle {
+                    color: sortUpDownButton.pressed ? "#7dd96b" : "#53b93f" // Изменение цвета при нажатии
+                    radius: 10
+                    scale: sortUpDownButton.hovered ? 1.05 : 1.0 // Увеличение кнопки при наведении
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
                 }
             }
         }
