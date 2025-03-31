@@ -59,30 +59,62 @@ class Statistics:
             except ZeroDivisionError:
                 return 0
 
-        statistics_data = [
-            {
-                "statisticTypeText": "Средний балл ЕГЭ",
-                "imageSource": "resources/pencil-plain.png",
-                "statisticProgressText": str(round(get_average_score(), 1)),
-                "progress": get_average_score() / 100
-            },
-            {
-                "statisticTypeText": "Средняя стоимость (тыс. ₽)",
-                "imageSource": "resources/money.png",
-                "statisticProgressText": str(round(self.sum_price / self.op_amount / 1000)),
-                "progress": 1.0
-            },
-            {
-                "statisticTypeText": "Среднее количество мест",
-                "imageSource": "resources/people.png",
-                "statisticProgressText": str(round(get_average_places_amount())),
-                "progress": 1.0
-            },
-            {
-                "statisticTypeText": "С бюджетными местами",
-                "imageSource": "resources/cap.svg",
-                "statisticProgressText": f"{round(self.have_budget / self.op_amount * 100)}%",
-                "progress": self.have_budget / self.op_amount
-            }
-        ]
-        return statistics_data
+        try:
+
+            statistics_data = [
+                {
+                    "statisticTypeText": "Средний балл ЕГЭ",
+                    "imageSource": "resources/pencil-plain.png",
+                    "statisticProgressText": str(round(get_average_score(), 1)),
+                    "progress": get_average_score() / 100
+                },
+                {
+                    "statisticTypeText": "Средняя стоимость (тыс. ₽)",
+                    "imageSource": "resources/money.png",
+                    "statisticProgressText": str(round(self.sum_price / self.op_amount / 1000)),
+                    "progress": 1.0
+                },
+                {
+                    "statisticTypeText": "Среднее количество мест",
+                    "imageSource": "resources/people.png",
+                    "statisticProgressText": str(round(get_average_places_amount())),
+                    "progress": 1.0
+                },
+                {
+                    "statisticTypeText": "С бюджетными местами",
+                    "imageSource": "resources/cap.svg",
+                    "statisticProgressText": f"{round(self.have_budget / self.op_amount * 100)}%",
+                    "progress": self.have_budget / self.op_amount
+                }
+            ]
+            return statistics_data
+
+        except ZeroDivisionError:
+
+            statistics_data = [
+                {
+                    "statisticTypeText": "Средний балл ЕГЭ",
+                    "imageSource": "resources/pencil-plain.png",
+                    "statisticProgressText": "-",
+                    "progress": 0
+                },
+                {
+                    "statisticTypeText": "Средняя стоимость (тыс. ₽)",
+                    "imageSource": "resources/money.png",
+                    "statisticProgressText": "-",
+                    "progress": 0
+                },
+                {
+                    "statisticTypeText": "Среднее количество мест",
+                    "imageSource": "resources/people.png",
+                    "statisticProgressText": "-",
+                    "progress": 0
+                },
+                {
+                    "statisticTypeText": "С бюджетными местами",
+                    "imageSource": "resources/cap.svg",
+                    "statisticProgressText": "-",
+                    "progress": 0
+                }
+            ]
+            return statistics_data

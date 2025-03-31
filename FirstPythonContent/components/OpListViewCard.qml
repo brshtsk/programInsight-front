@@ -150,7 +150,7 @@ Rectangle {
         width: 72
         height: 16
         color: "#ffffff"
-        text: qsTr("Баллов ЕГЭ")
+        text: qsTr("Проходной")
         font.pixelSize: 12
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

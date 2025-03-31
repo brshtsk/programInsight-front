@@ -51,11 +51,9 @@ class DataManipulations:
         :param university_name: полная строка
         :return: название длиной не более 35 символов (лишние слова справа удалены)
         """
-        name_split = university_name.split()
-        idx = -1
-        while sum(map(len, name_split[:idx])) > 20 and idx > 1:
-            idx -= 1
-        return ' '.join(name_split[:idx]) + '...'
+        if len(university_name) <= 18:
+            return university_name
+        return university_name[:19] + '...'
 
     @lru_cache
     def get_image_source(university_name: str) -> str:

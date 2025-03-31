@@ -119,13 +119,36 @@ class Op:
         :param settings:
         :return:
         """
+        if settings.filter_by_score:
+            if not self.exams_amount:
+                return False
+
+            if settings.show_budget_score:
+                if not self.budget_ege_score:
+                    return False
+                average_budget_score = self.budget_ege_score / self.exams_amount
+
+                if not self.budget_ege_score:
+                    return False
+                return settings.min_average_score <= average_budget_score <= settings.max_average_score
+            else:
+                if not self.paid_ege_score:
+                    return False
+                average_paid_score = self.paid_ege_score / self.exams_amount
+
+                if not self.paid_ege_score:
+                    return False
+                return settings.min_average_score <= average_paid_score <= settings.max_average_score
+
         if settings.show_op_only_with_budget:
             if self.budget_ege_score:
-                pass
+                return True
             else:
                 return False
+
         if settings.filter_by_price and settings.price_range_is_ok() and self.cost:
             return settings.min_price <= self.cost <= settings.max_price
+
         if not self.cost:
             return False
         return True

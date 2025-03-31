@@ -24,10 +24,6 @@ class Frontend(QObject):
         self.setup_connections()
 
     def setup_models(self):
-        # Регистрируем обработчик в QML, чтобы обращаться к нему по имени "pyHandler"
-        context = self.engine.rootContext()
-        context.setContextProperty("pyHandler", self.pyHandler)
-
         # Получаем данные для модели
         op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings)
         self.op_model = opListModel(op_model_data)
@@ -48,6 +44,10 @@ class Frontend(QObject):
 
     def setup_connections(self):
         root_object = self.engine.rootObjects()[0]
+
+        # Регистрируем обработчик в QML, чтобы обращаться к нему по имени "pyHandler"
+        context = self.engine.rootContext()
+        context.setContextProperty("pyHandler", self.pyHandler)
 
         # Кнопка настроек
         button = root_object.findChild(QObject, 'searchSettingsButton')
@@ -84,20 +84,21 @@ class Frontend(QObject):
             else:
                 print("Ошибка при загрузке SearchSettings.qml:", component.errorString())
         else:
-            # Если окно уже существует, показываем его и обновляем значения
-            self.search_settings_window.show()
-            self.restore_search_settings_view(self.search_settings_window)
+            try:
+                # Если окно уже существует, показываем его и обновляем значения
+                self.search_settings_window.show()
+                self.restore_search_settings_view(self.search_settings_window)
+            except:
+                print("Окно поиска уже открыто, восстановление настроек не выполнено (не критично)")
 
     def restore_search_settings_view(self, settings_window):
+        # ToDo: адаптировать под новые настройки
+
         # Восстанавливаем значение ComboBox "scoreTypeComboBox"
         combo_box = settings_window.findChild(QObject, 'scoreTypeComboBox')
         if combo_box:
             # 0 - бюджет, 1 - платное
             combo_box.setProperty('currentIndex', 0 if self.settings.show_budget_score else 1)
-        # Восстанавливаем состояние CheckBox "onlyWithBudgetCheckBox"
-        only_budget_checkbox = settings_window.findChild(QObject, 'onlyWithBudgetCheckBox')
-        if only_budget_checkbox:
-            only_budget_checkbox.setProperty('checked', self.settings.show_op_only_with_budget)
         # Восстанавливаем состояние CheckBox "applyFilterByPriceCheckBox"
         apply_filter_checkbox = settings_window.findChild(QObject, 'applyFilterByPriceCheckBox')
         if apply_filter_checkbox:
@@ -142,19 +143,37 @@ class Frontend(QObject):
         # ToDo: не дает открыть дашборды во второй раз
 
     def connect_to_search_settings(self, settings_window):
-        # Показывать баллы на бюджет или платное
-        combo_box = settings_window.findChild(QObject, 'scoreTypeComboBox')
-        if combo_box:
-            combo_box.currentIndexChanged.connect(self.combobox_index_changed)
+        # Искать поступление на бюджет или платное
+        payment_combo_box = settings_window.findChild(QObject, 'paymentTypeComboBox')
+        if payment_combo_box:
+            payment_combo_box.currentIndexChanged.connect(self.payment_combobox_index_changed)
         else:
-            print("ComboBox 'scoreTypeComboBox' не найден!")
+            print("ComboBox 'paymentTypeComboBox' не найден!")
 
-        # Показывать только ОП с бюджетными местами
-        only_budget_checkbox = settings_window.findChild(QObject, 'onlyWithBudgetCheckBox')
-        if only_budget_checkbox:
-            only_budget_checkbox.toggled.connect(self.on_only_budget_checkbox_toggled)
+        # Искать поступление на бакалавриат, специалитет или магистратуру
+        qualification_combo_box = settings_window.findChild(QObject, 'qualificationTypeComboBox')
+        if qualification_combo_box:
+            qualification_combo_box.currentIndexChanged.connect(self.qualification_combobox_index_changed)
         else:
-            print("Checkbox 'onlyWithBudgetCheckBox' не найден")
+            print("ComboBox 'qualificationTypeComboBox' не найден!")
+
+        # Настройки диапазона минимального и максимального балла за один предмет
+        apply_filter_by_score_checkbox = settings_window.findChild(QObject, 'applyFilterByScoreCheckBox')
+        min_score_text_field = settings_window.findChild(QObject, 'minScoreTextField')
+        max_score_text_field = settings_window.findChild(QObject, 'maxScoreTextField')
+
+        if apply_filter_by_score_checkbox:
+            apply_filter_by_score_checkbox.toggled.connect(self.apply_filter_by_score_checkbox_toggled)
+        else:
+            print("Checkbox 'applyFilterByScoreCheckBox' не найден")
+        if min_score_text_field:
+            min_score_text_field.textChanged.connect(self.on_min_score_changed)
+        else:
+            print("ScoreField 'minScoreTextField' не найден")
+        if max_score_text_field:
+            max_score_text_field.textChanged.connect(self.on_max_score_changed)
+        else:
+            print("ScoreField 'maxScoreTextField' не найден")
 
         # Настройки диапазона минимальной и максимальной стоимости обучения
         apply_filter_by_price_checkbox = settings_window.findChild(QObject, 'applyFilterByPriceCheckBox')
@@ -177,14 +196,29 @@ class Frontend(QObject):
             print("PriceField 'maxPriceTextField' не найден")
 
     @Slot()
-    def combobox_index_changed(self):
-        combo_box = self.sender()
-        if combo_box is not None:
-            index = combo_box.property('currentIndex')
-            print(f"Выбранный индекс: {index}")
+    def payment_combobox_index_changed(self):
+        payment_combo_box = self.sender()
+        if payment_combo_box is not None:
+            index = payment_combo_box.property('currentIndex')
             # 0 - бюджет, 1 - платное
-            self.settings.show_budget_score = (index == 0)
+            print(f"Выбранный индекс: {index}. Выбрано поступление на {'бюджет' if not index else 'платное'}")
+            if index == 0:
+                self.settings.set_settings_for_budget()
+            else:
+                self.settings.set_settings_for_paid()
             self.setup_models()
+        else:
+            print("sender() не найден")
+
+    @Slot()
+    def qualification_combobox_index_changed(self):
+        qualification_combo_box = self.sender()
+        if qualification_combo_box is not None:
+            index = qualification_combo_box.property('currentIndex')
+            # 0 - бакалавриат, 1 - специалитет, 2 - бакалавриат/специалитет, 3 - магистратура
+            print(
+                f"Выбранный индекс: {index}. Выбрано: {'бакалавриат' if index == 0 else 'специалитет' if index == 1 else 'бакалавриат/специалитет' if index == 2 else 'магистратура'}")
+
         else:
             print("sender() не найден")
 
@@ -195,28 +229,16 @@ class Frontend(QObject):
         self.search_settings_window = None
 
     @Slot()
-    def on_only_budget_checkbox_toggled(self):
-        checkbox = self.sender()
-        if checkbox is not None:
-            checked = checkbox.property('checked')
-            print(f"Состояние чекбокса 'onlyWithBudgetCheckBox': {checked}")
-            self.settings.show_op_only_with_budget = checked
-            self.setup_models()
-        else:
-            print("sender() не найден")
-
-    @Slot()
     def apply_filter_by_price_checkbox_toggled(self):
         checkbox = self.sender()
         if checkbox is not None:
             checked = checkbox.property('checked')
             print(f"Состояние чекбокса 'applyFilterByPriceCheckBox': {checked}")
-            self.settings.filter_by_price = checked
+            self.settings.apply_filter_by_price(checked)
             try:
                 self.setup_models()
             except:
                 print("Ошибка при применении фильтра по цене")
-                # ToDo: уведомлять пользователя, если по фильтру ничего не найдено
         else:
             print("sender() не найден")
 
@@ -248,4 +270,48 @@ class Frontend(QObject):
             print(f"Максимальная цена {max_price} не может быть задана! Сбросим до 100000000")
             self.settings.max_price = 100000000
             if self.settings.filter_by_price and self.settings.price_range_is_ok():
+                self.setup_models()
+
+    @Slot()
+    def apply_filter_by_score_checkbox_toggled(self):
+        checkbox = self.sender()
+        if checkbox is not None:
+            checked = checkbox.property('checked')
+            print(f"Состояние чекбокса 'applyFilterByScoreCheckBox': {checked}")
+            self.settings.filter_by_score = checked
+            try:
+                self.setup_models()
+            except:
+                print("Ошибка при применении фильтра по баллам")
+        else:
+            print("sender() не найден")
+
+    @Slot()
+    def on_min_score_changed(self):
+        min_average_score = self.sender().property('text')  # Получаем текст из поля
+        print(f"Минимальный балл введен: {min_average_score}")
+        try:
+            min_average_score = int(min_average_score)
+            self.settings.min_average_score = min_average_score
+            if self.settings.filter_by_score:
+                self.setup_models()
+        except:
+            print(f"Минимальный балл {min_average_score} не может быть задан! Сбросим до 0")
+            self.settings.min_score = 0
+            if self.settings.filter_by_score:
+                self.setup_models()
+
+    @Slot()
+    def on_max_score_changed(self):
+        max_average_score = self.sender().property('text')
+        print(f"Максимальный балл введен: {max_average_score}")
+        try:
+            max_average_score = int(max_average_score)
+            self.settings.max_score = max_average_score
+            if self.settings.filter_by_score:
+                self.setup_models()
+        except:
+            print(f"Максимальный балл {max_average_score} не может быть задан! Сбросим до 100000000")
+            self.settings.max_score = 100000000
+            if self.settings.filter_by_score:
                 self.setup_models()

@@ -498,7 +498,7 @@ Rectangle {
 
             ComboBox {
                 id: paymentTypeComboBox
-                objectName: "scoreTypeComboBox"
+                objectName: "paymentTypeComboBox"
                 anchors.verticalCenter: parent.verticalCenter
                 height: 30
                 anchors.right: parent.right
