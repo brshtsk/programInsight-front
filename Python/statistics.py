@@ -63,7 +63,7 @@ class Statistics:
 
             statistics_data = [
                 {
-                    "statisticTypeText": "Средний балл ЕГЭ",
+                    "statisticTypeText": "Средний проходной балл",
                     "imageSource": "resources/pencil-plain.png",
                     "statisticProgressText": str(round(get_average_score(), 1)),
                     "progress": get_average_score() / 100
@@ -93,7 +93,7 @@ class Statistics:
 
             statistics_data = [
                 {
-                    "statisticTypeText": "Средний балл ЕГЭ",
+                    "statisticTypeText": "Средний проходной балл",
                     "imageSource": "resources/pencil-plain.png",
                     "statisticProgressText": "-",
                     "progress": 0

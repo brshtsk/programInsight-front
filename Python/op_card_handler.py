@@ -84,15 +84,11 @@ class PyHandler(QObject):
                 # Передача single_exams в ListView.
                 single_exam_list_view = window.findChild(QObject, "singleExamListView")
                 if single_exam_list_view:
-                    current_model = single_exam_list_view.property("model")
-                    if current_model and hasattr(current_model, "updateData"):
-                        current_model.updateData(single_exams)
-                    else:
-                        exams = []
-                        for exam in single_exams:
-                            exams.append({"examNameText": exam})
+                    exams = []
+                    for exam in single_exams:
+                        exams.append({"examNameText": exam})
 
-                        single_exam_list_view.setProperty("singleExamModel", exams)
+                    single_exam_list_view.setProperty("exams", exams)
                 else:
                     print("Элемент 'singleExamListView' не найден")
 

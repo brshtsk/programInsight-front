@@ -92,27 +92,75 @@ class Frontend(QObject):
                 print("Окно поиска уже открыто, восстановление настроек не выполнено (не критично)")
 
     def restore_search_settings_view(self, settings_window):
-        # ToDo: адаптировать под новые настройки
+        # Восстанавливаем состояние ComboBox "qualificationTypeComboBox"
+        qualification_combo_box = settings_window.findChild(QObject, 'qualificationTypeComboBox')
+        if qualification_combo_box:
+            # Индексы ComboBox: 0 - Бакалавриат, 1 - Специалитет, 2 - Бакалавриат/Специалитет, 3 - Магистратура
+            index = None
+            if self.settings.qualifications == ['Бакалавриат']:
+                index = 0
+            if self.settings.qualifications == ['Специалитет']:
+                index = 1
+            if self.settings.qualifications == ['Бакалавриат', 'Специалитет']:
+                index = 2
+            if self.settings.qualifications == ['Магистратура']:
+                index = 3
+            qualification_combo_box.setProperty('currentIndex', index)
+        else:
+            print("ComboBox 'qualificationTypeComboBox' не найден!")
 
-        # Восстанавливаем значение ComboBox "scoreTypeComboBox"
-        combo_box = settings_window.findChild(QObject, 'scoreTypeComboBox')
-        if combo_box:
-            # 0 - бюджет, 1 - платное
-            combo_box.setProperty('currentIndex', 0 if self.settings.show_budget_score else 1)
+        # Восстанавливаем состояние CheckBox "applyFilterByScoreCheckBox"
+        apply_filter_checkbox = settings_window.findChild(QObject, 'applyFilterByScoreCheckBox')
+        if apply_filter_checkbox:
+            apply_filter_checkbox.setProperty('checked', self.settings.filter_by_score)
+        else:
+            print("Checkbox 'applyFilterByScoreCheckBox' не найден!")
+
+        # Восстанавливаем текстовые поля для баллов
+        min_score_field = settings_window.findChild(QObject, 'minScoreTextField')
+        if min_score_field:
+            # Если балл хранится в тысячах, делим на 1000 для отображения пользователю
+            if self.settings.min_average_score > 0:
+                min_score_field.setProperty('text', str(self.settings.min_average_score))
+        else:
+            print("ScoreField 'minScoreTextField' не найден!")
+
+        max_score_field = settings_window.findChild(QObject, 'maxScoreTextField')
+        if max_score_field:
+            if self.settings.max_average_score < 100_000_000:
+                max_score_field.setProperty('text', str(self.settings.max_average_score))
+        else:
+            print("ScoreField 'maxScoreTextField' не найден!")
+
+        # Восстанавливаем состояние ComboBox "paymentTypeComboBox"
+        payment_combo_box = settings_window.findChild(QObject, 'paymentTypeComboBox')
+        if payment_combo_box:
+            payment_combo_box.setProperty('currentIndex', 0 if self.settings.show_op_only_with_budget else 1)
+        else:
+            print("ComboBox 'paymentTypeComboBox' не найден!")
+
         # Восстанавливаем состояние CheckBox "applyFilterByPriceCheckBox"
         apply_filter_checkbox = settings_window.findChild(QObject, 'applyFilterByPriceCheckBox')
         if apply_filter_checkbox:
-            apply_filter_checkbox.setProperty('checked', self.settings.filter_by_price)
+            apply_filter_checkbox.setProperty('checked', self.settings.user_chose_filter_by_price)
+        else:
+            print("Checkbox 'applyFilterByPriceCheckBox' не найден!")
+
         # Восстанавливаем текстовые поля для цены
         min_price_field = settings_window.findChild(QObject, 'minPriceTextField')
         if min_price_field:
             # Если цена хранится в тысячах, делим на 1000 для отображения пользователю
             if self.settings.min_price > 0:
                 min_price_field.setProperty('text', str(self.settings.min_price // 1000))
+        else:
+            print("PriceField 'minPriceTextField' не найден!")
+
         max_price_field = settings_window.findChild(QObject, 'maxPriceTextField')
         if max_price_field:
             if self.settings.max_price < 100_000_000:
                 max_price_field.setProperty('text', str(self.settings.max_price // 1000))
+        else:
+            print("PriceField 'maxPriceTextField' не найден!")
 
     @Slot()
     def dashboard_button_clicked(self):
@@ -215,10 +263,19 @@ class Frontend(QObject):
         qualification_combo_box = self.sender()
         if qualification_combo_box is not None:
             index = qualification_combo_box.property('currentIndex')
-            # 0 - бакалавриат, 1 - специалитет, 2 - бакалавриат/специалитет, 3 - магистратура
-            print(
-                f"Выбранный индекс: {index}. Выбрано: {'бакалавриат' if index == 0 else 'специалитет' if index == 1 else 'бакалавриат/специалитет' if index == 2 else 'магистратура'}")
-
+            # 0 - Бакалавриат, 1 - Специалитет, 2 - Бакалавриат/Специалитет, 3 - Магистратура
+            chosen_qualifications = []
+            if index == 0:
+                chosen_qualifications = ['Бакалавриат']
+            if index == 1:
+                chosen_qualifications = ['Специалитет']
+            if index == 2:
+                chosen_qualifications = ['Бакалавриат', 'Специалитет']
+            if index == 3:
+                chosen_qualifications = ['Магистратура']
+            print(f"Выбранный индекс: {index}. Выбрано: {chosen_qualifications}")
+            self.settings.qualifications = chosen_qualifications
+            self.setup_models()
         else:
             print("sender() не найден")
 

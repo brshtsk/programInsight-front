@@ -18,6 +18,8 @@ class Settings:
         self.min_price = 0
         self.max_price = 100_000_000
 
+        self.qualifications = ['Бакалавриат']
+
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
 

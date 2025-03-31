@@ -17,10 +17,12 @@ class ModelDataManagement:
         data = []
 
         # ToDo: парсинг RAEX
-        # ToDo: магистратура
 
-        # Код для оценки данных: множество всех существующих предметов
-        subjects = set()
+        # Множество всех существующих предметов
+        subjects_bak_or_spec = set()
+        subjects_mag = set()
+        # ОП с ошибками
+        bad_ops = set()
 
         for university in json_data:
             for op_name in json_data[university]['Бакалавриат и специалитет']:
@@ -52,7 +54,7 @@ class ModelDataManagement:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
-                            subjects.add(exam)
+                            subjects_bak_or_spec.add(exam)
                         exams.append(this_var)
 
                     for postup_data in op_data['Варианты поступления'].values():
@@ -76,10 +78,77 @@ class ModelDataManagement:
                                    raex_position))
                     # print(f"Получена ОП: {op_name} в {university}")
                 except:
-                    print(f"Ошибка при обработке ОП: {op_name} в {university}")
+                    # print(f"Ошибка при обработке ОП: {op_name} в {university}")
+                    bad_ops.add(("Бакалавриат/Специалитет", op_name))
 
-        print(f"Количество уникальных предметов: {len(subjects)}")
-        print(f"Предметы: {subjects}")
+            for op_name in json_data[university]['Магистратура']:
+                try:
+                    op_data = json_data[university]['Магистратура'][op_name]
+                    op_type = op_data['Квалификация']
+                    exams_amount = None
+                    budget_ege_score = None
+                    budget_places_amount = None
+                    paid_ege_score = None
+                    paid_places_amount = None
+                    cost = None
+                    city = None
+                    length = None
+                    attendance = None
+                    exams = None
+                    raex_position = None
+
+                    exams_amount = len(op_data['Вступительные 1'])
+                    city = op_data['Город']
+                    length = op_data['Срок обучения']
+                    attendance = op_data['Форма обучения']
+
+                    if exams_amount == 0:
+                        raise Exception("Нет экзаменов")
+
+                    exams = []
+                    for exam_var in op_data['Вступительные 1']:
+                        this_var = []
+                        for exam in exam_var:
+                            this_var.append(exam)
+                            subjects_mag.add(exam)
+                        exams.append(this_var)
+
+                    for postup_data in op_data['Варианты поступления'].values():
+                        if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
+                            for budget_info in postup_data['Бюджет']:
+                                if 'балл' in budget_info:
+                                    budget_ege_score = postup_data['Бюджет'][budget_info]
+                                if 'мест' in budget_info:
+                                    budget_places_amount = postup_data['Бюджет'][budget_info]
+                        if 'нет' not in postup_data['Платное']:
+                            for budget_info in postup_data['Платное']:
+                                if 'балл' in budget_info:
+                                    paid_ege_score = postup_data['Платное'][budget_info]
+                                if 'мест' in budget_info:
+                                    paid_places_amount = postup_data['Платное'][budget_info]
+                                if 'Стоимость' in budget_info:
+                                    cost = postup_data['Платное'][budget_info]
+
+                    data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
+                                   paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
+                                   raex_position))
+                    # print(f"Получена ОП: {op_name} в {university}")
+                except:
+                    # print(f"Ошибка при обработке ОП: {op_name} в {university}")
+                    bad_ops.add(("Магистратура", op_name))
+
+        print(f"Количество ОП с ошибками: {len(bad_ops)}")
+        print(f"Ошибки: {bad_ops}")
+
+        print()
+
+        print(f"Количество уникальных предметов на бакалавриат/специалитет: {len(subjects_bak_or_spec)}")
+        print(f"Предметы на бакалавриат/специалитет: {subjects_bak_or_spec}")
+
+        print()
+
+        print(f"Количество уникальных предметов на магистратуру: {len(subjects_mag)}")
+        print(f"Предметы на магистратуру: {subjects_mag}")
 
         return data
 
