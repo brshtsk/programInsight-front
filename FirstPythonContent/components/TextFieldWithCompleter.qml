@@ -5,17 +5,17 @@ Item {
     width: 300
     height: 35
 
-    // Список доступных городов
-    property var availableCities: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань", "Монтана"]
+    property var availableValues: []
+    property string placeholder: "введите текст"
 
     TextField {
-        id: cityNameTextField
+        id: inputTextField
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         width: parent.width
         height: 35
-        placeholderText: "любой город"
+        placeholderText: placeholder
         font.pixelSize: 16
         selectionColor: "#53b93f"
         topPadding: 5
@@ -31,38 +31,41 @@ Item {
 
         onTextChanged: {
             completerModel.clear();
-            // Если поле не пустое, фильтруем список городов
             if (text !== "") {
                 var suggestionsCount = 0;
-                for (var i = 0; i < availableCities.length; i++) {
-                    if (availableCities[i].toLowerCase().indexOf(text.toLowerCase()) !== -1) {
-                        completerModel.append({ "city": availableCities[i] });
+                for (var i = 0; i < availableValues.length; i++) {
+                    if (availableValues[i].toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+                        completerModel.append({ "value": availableValues[i] });
                         suggestionsCount++;
-                        // Ограничиваем количество вариантов до двух
                         if (suggestionsCount >= 2) break;
                     }
                 }
             }
             listView.visible = completerModel.count > 0;
         }
+
+        // Скрываем completer при потере фокуса
+        onFocusChanged: {
+            if (!focus) {
+                listView.visible = false;
+            }
+        }
     }
 
-    // Модель для подсказок
     ListModel {
         id: completerModel
     }
 
     ListView {
         id: listView
-        anchors.top: cityNameTextField.bottom
-        anchors.left: cityNameTextField.left
-        anchors.right: cityNameTextField.right
-        // Высота зависит от количества элементов (до двух)
+        anchors.top: inputTextField.bottom
+        anchors.left: inputTextField.left
+        anchors.right: inputTextField.right
         height: Math.min(completerModel.count * 40, 80)
         model: completerModel
         visible: false
         clip: true
-        z: 999  // Высокий уровень, чтобы быть поверх остальных элементов
+        z: 999
 
         delegate: Item {
             width: parent.width
@@ -72,14 +75,14 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
-                text: city
+                text: value
                 font.pixelSize: 16
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    cityNameTextField.text = city;
+                    inputTextField.text = value;
                     listView.visible = false;
                 }
                 hoverEnabled: true

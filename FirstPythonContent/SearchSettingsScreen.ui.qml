@@ -757,34 +757,15 @@ Rectangle {
                 font.family: Constants.font.family
             }
 
-            // TextField {
-            //     id: cityNameTextField
-            //     anchors.right: parent.right
-            //     objectName: "cityNameTextField"
-            //     width: 200
-            //     height: 35 // Увеличьте высоту
-            //     placeholderText: "любой город"
-            //     font.pixelSize: 16
-            //     selectionColor: "#53b93f"
-            //     anchors.verticalCenter: parent.verticalCenter
-
-            //     topPadding: 5 // Поднимает текст, чтобы не обрезался
-            //     verticalAlignment: Text.AlignVCenter
-
-            //     background: Rectangle {
-            //         anchors.fill: parent
-            //         color: "#ffffff"
-            //         radius: 5
-            //         border.color: "#53b93f"
-            //         border.width: 2
-            //     }
-            // }
             TextFieldWithCompleter {
                 id: cityNameTextField
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 objectName: "cityNameTextField"
                 width: 200
-                height: 35 // Увеличьте высоту
+                height: 35
+                placeholder: "любой город"
+                availableValues: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань"]
             }
         }
 
@@ -813,25 +794,15 @@ Rectangle {
                 font.family: Constants.font.family
             }
 
-            TextField {
+            TextFieldWithCompleter {
                 id: opNameTextField
-                width: 200
-                height: 35
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-                topPadding: 5
-                selectionColor: "#53b93f"
-                placeholderText: "любое ОП"
                 objectName: "opNameTextField"
-                background: Rectangle {
-                    color: "#ffffff"
-                    radius: 5
-                    border.color: "#53b93f"
-                    border.width: 2
-                    anchors.fill: parent
-                }
+                width: 200
+                height: 35
+                placeholder: "любое ОП"
+                availableValues: ["Программная инженерия", "Прикладная математика", "Прикладной анализ данных", "Прикладная математика и информатика"]
             }
         }
 
@@ -860,25 +831,15 @@ Rectangle {
                 font.family: Constants.font.family
             }
 
-            TextField {
+            TextFieldWithCompleter {
                 id: universityNameTextField
-                width: 200
-                height: 35
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-                topPadding: 5
-                selectionColor: "#53b93f"
-                placeholderText: "любой ВУЗ"
                 objectName: "universityNameTextField"
-                background: Rectangle {
-                    color: "#ffffff"
-                    radius: 5
-                    border.color: "#53b93f"
-                    border.width: 2
-                    anchors.fill: parent
-                }
+                width: 200
+                height: 35
+                placeholder: "любой ВУЗ"
+                availableValues: ["ВШЭ", "ИТМО", "МИФИ", "МФТИ"]
             }
         }
     }
