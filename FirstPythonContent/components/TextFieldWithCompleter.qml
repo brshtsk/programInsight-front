@@ -7,6 +7,7 @@ Item {
 
     property var availableValues: []
     property string placeholder: "введите текст"
+    property int maxCompitionsAmount: 2
 
     TextField {
         id: inputTextField
@@ -37,7 +38,7 @@ Item {
                     if (availableValues[i].toLowerCase().indexOf(text.toLowerCase()) !== -1) {
                         completerModel.append({ "value": availableValues[i] });
                         suggestionsCount++;
-                        if (suggestionsCount >= 2) break;
+                        if (suggestionsCount >= maxCompitionsAmount) break;
                     }
                 }
             }
@@ -61,7 +62,7 @@ Item {
         anchors.top: inputTextField.bottom
         anchors.left: inputTextField.left
         anchors.right: inputTextField.right
-        height: Math.min(completerModel.count * 40, 80)
+        height: Math.min(completerModel.count * 30, maxCompitionsAmount * 30)
         model: completerModel
         visible: false
         clip: true
@@ -69,15 +70,7 @@ Item {
 
         delegate: Item {
             width: parent.width
-            height: 40
-
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                text: value
-                font.pixelSize: 16
-            }
+            height: 30
 
             MouseArea {
                 anchors.fill: parent
@@ -88,10 +81,19 @@ Item {
                 hoverEnabled: true
                 Rectangle {
                     anchors.fill: parent
-                    color: mouseArea.containsMouse ? "#e0e0e0" : "transparent"
+                    color: mouseArea.containsMouse ? "#ffffff" : "#ffffff"
                     z: -1
                     id: mouseArea
                 }
+            }
+
+            Text {
+                color: inputTextField.color
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                text: value
+                font.pixelSize: 16
             }
         }
 

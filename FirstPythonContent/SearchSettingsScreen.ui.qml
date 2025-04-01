@@ -733,82 +733,8 @@ Rectangle {
         radius: 10
 
         Item {
-            id: cityNameSettingsItem
-            x: 10
-            y: 10
-            width: 200
-            height: 40
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            Text {
-                id: cityNameSettingsText
-                x: 0
-                height: 30
-                color: "#373737"
-                text: "Город обучения"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                font.pixelSize: 21
-                verticalAlignment: Text.AlignVCenter
-                textFormat: Text.RichText
-                font.styleName: "SemiBold"
-                font.family: Constants.font.family
-            }
-
-            TextFieldWithCompleter {
-                id: cityNameTextField
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                objectName: "cityNameTextField"
-                width: 200
-                height: 35
-                placeholder: "любой город"
-                availableValues: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань"]
-            }
-        }
-
-        Item {
-            id: opNameSettingsItem
-            x: 10
-            y: 60
-            width: 200
-            height: 40
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            Text {
-                id: opNameSettingsText
-                x: 0
-                height: 30
-                color: "#373737"
-                text: "Название ОП"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                font.pixelSize: 21
-                verticalAlignment: Text.AlignVCenter
-                textFormat: Text.RichText
-                font.styleName: "SemiBold"
-                font.family: Constants.font.family
-            }
-
-            TextFieldWithCompleter {
-                id: opNameTextField
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                objectName: "opNameTextField"
-                width: 200
-                height: 35
-                placeholder: "любое ОП"
-                availableValues: ["Программная инженерия", "Прикладная математика", "Прикладной анализ данных", "Прикладная математика и информатика"]
-            }
-        }
-
-        Item {
             id: universityNameSettingsItem
-            x: 10
+            x: -10
             y: 110
             width: 200
             height: 40
@@ -840,6 +766,83 @@ Rectangle {
                 height: 35
                 placeholder: "любой ВУЗ"
                 availableValues: ["ВШЭ", "ИТМО", "МИФИ", "МФТИ"]
+                maxCompitionsAmount: 1
+            }
+        }
+
+        Item {
+            id: opNameSettingsItem
+            x: -10
+            y: 60
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: opNameSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Название ОП"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+
+            TextFieldWithCompleter {
+                id: opNameTextField
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                objectName: "opNameTextField"
+                width: 200
+                height: 35
+                placeholder: "любое ОП"
+                availableValues: ["Программная инженерия", "Прикладная математика", "Прикладной анализ данных", "Прикладная математика и информатика"]
+                maxCompitionsAmount: 2
+            }
+        }
+
+        Item {
+            id: cityNameSettingsItem
+            x: -10
+            y: 10
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: cityNameSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Город обучения"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+
+            TextFieldWithCompleter {
+                id: cityNameTextField
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                objectName: "cityNameTextField"
+                width: 200
+                height: 35
+                placeholder: "любой город"
+                availableValues: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань"]
+                maxCompitionsAmount: 3
             }
         }
     }
