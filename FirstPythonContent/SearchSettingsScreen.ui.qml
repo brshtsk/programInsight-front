@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Studio.Application
 import FirstPython
+import "components"
 
 Rectangle {
     id: settingsContent
@@ -756,27 +757,34 @@ Rectangle {
                 font.family: Constants.font.family
             }
 
-            TextField {
+            // TextField {
+            //     id: cityNameTextField
+            //     anchors.right: parent.right
+            //     objectName: "cityNameTextField"
+            //     width: 200
+            //     height: 35 // Увеличьте высоту
+            //     placeholderText: "любой город"
+            //     font.pixelSize: 16
+            //     selectionColor: "#53b93f"
+            //     anchors.verticalCenter: parent.verticalCenter
+
+            //     topPadding: 5 // Поднимает текст, чтобы не обрезался
+            //     verticalAlignment: Text.AlignVCenter
+
+            //     background: Rectangle {
+            //         anchors.fill: parent
+            //         color: "#ffffff"
+            //         radius: 5
+            //         border.color: "#53b93f"
+            //         border.width: 2
+            //     }
+            // }
+            TextFieldWithCompleter {
                 id: cityNameTextField
                 anchors.right: parent.right
                 objectName: "cityNameTextField"
                 width: 200
                 height: 35 // Увеличьте высоту
-                placeholderText: "любой город"
-                font.pixelSize: 16
-                selectionColor: "#53b93f"
-                anchors.verticalCenter: parent.verticalCenter
-
-                topPadding: 5 // Поднимает текст, чтобы не обрезался
-                verticalAlignment: Text.AlignVCenter
-
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#ffffff"
-                    radius: 5
-                    border.color: "#53b93f"
-                    border.width: 2
-                }
             }
         }
 

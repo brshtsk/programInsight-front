@@ -12,7 +12,7 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list = ModelDataManagement.get_op_data(Utils.resource_path('Python/big_data.json'))[::-1]
+        self.op_list, self.unique_values = ModelDataManagement.get_op_data(Utils.resource_path('Python/big_data.json'))
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
@@ -243,6 +243,14 @@ class Frontend(QObject):
         else:
             print("PriceField 'maxPriceTextField' не найден")
 
+        # Поиск по названию города
+
+        city_name_text_field = settings_window.findChild(QObject, 'cityNameTextField')
+        if city_name_text_field:
+            city_name_text_field.textChanged.connect(self.on_city_name_changed)
+        else:
+            print("TextField 'cityNameTextField' не найден")
+
     @Slot()
     def payment_combobox_index_changed(self):
         payment_combo_box = self.sender()
@@ -372,3 +380,7 @@ class Frontend(QObject):
             self.settings.max_score = 100000000
             if self.settings.filter_by_score:
                 self.setup_models()
+
+    @Slot()
+    def on_city_name_changed(self):
+        city_name = self.sender().property('text')  # Получаем текст из поля

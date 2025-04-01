@@ -2,25 +2,25 @@ import json
 from statistics import Statistics
 from op import Op
 from search_settings import Settings
+from unique_values import UniqueValues
 
 
 class ModelDataManagement:
-    def get_op_data(file_name: str) -> list[Op]:
+    def get_op_data(file_name: str) -> (list[Op], UniqueValues):
         """
         Получение объектов ОП из файла
         :param file_name: json-файл
-        :return: список с объектами ОП
+        :return: список с объектами ОП, объект уникальных значений
         """
         with open(file_name, encoding='utf-8') as json_file:
             json_data = json.load(json_file)
 
         data = []
 
+        unique_values = UniqueValues()
+
         # ToDo: парсинг RAEX
 
-        # Множество всех существующих предметов
-        subjects_bak_or_spec = set()
-        subjects_mag = set()
         # ОП с ошибками
         bad_ops = set()
 
@@ -54,7 +54,6 @@ class ModelDataManagement:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
-                            subjects_bak_or_spec.add(exam)
                         exams.append(this_var)
 
                     for postup_data in op_data['Варианты поступления'].values():
@@ -76,6 +75,7 @@ class ModelDataManagement:
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
                                    raex_position))
+                    unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
                 except:
                     # print(f"Ошибка при обработке ОП: {op_name} в {university}")
@@ -110,7 +110,6 @@ class ModelDataManagement:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
-                            subjects_mag.add(exam)
                         exams.append(this_var)
 
                     for postup_data in op_data['Варианты поступления'].values():
@@ -132,6 +131,7 @@ class ModelDataManagement:
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
                                    raex_position))
+                    unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
                 except:
                     # print(f"Ошибка при обработке ОП: {op_name} в {university}")
@@ -142,15 +142,15 @@ class ModelDataManagement:
 
         print()
 
-        print(f"Количество уникальных предметов на бакалавриат/специалитет: {len(subjects_bak_or_spec)}")
-        print(f"Предметы на бакалавриат/специалитет: {subjects_bak_or_spec}")
+        print(f"Количество уникальных предметов на бакалавриат/специалитет: {len(unique_values.subjects_bak_or_spec)}")
+        print(f"Предметы на бакалавриат/специалитет: {unique_values.subjects_bak_or_spec}")
 
         print()
 
-        print(f"Количество уникальных предметов на магистратуру: {len(subjects_mag)}")
-        print(f"Предметы на магистратуру: {subjects_mag}")
+        print(f"Количество уникальных предметов на магистратуру: {len(unique_values.subjects_mag)}")
+        print(f"Предметы на магистратуру: {unique_values.subjects_mag}")
 
-        return data
+        return data, unique_values
 
     def get_op_model_data(op_list: list[Op], settings=Settings()) -> (list[dict], list[dict]):
         """
