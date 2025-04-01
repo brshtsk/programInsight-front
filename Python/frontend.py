@@ -244,10 +244,9 @@ class Frontend(QObject):
             print("PriceField 'maxPriceTextField' не найден")
 
         # Поиск по названию города
-
         city_name_text_field = settings_window.findChild(QObject, 'cityNameTextField')
         if city_name_text_field:
-            city_name_text_field.textChanged.connect(self.on_city_name_changed)
+            city_name_text_field.userTextChanged.connect(self.on_city_name_changed)
         else:
             print("TextField 'cityNameTextField' не найден")
 

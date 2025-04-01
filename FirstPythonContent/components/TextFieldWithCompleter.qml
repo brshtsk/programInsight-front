@@ -1,13 +1,21 @@
+// C:/Users/kitki/QtProjects/FirstPython/FirstPythonContent/components/TextFieldWithCompleter.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Item {
+    id: rootItem
     width: 300
     height: 35
 
     property var availableValues: []
     property string placeholder: "введите текст"
     property int maxCompitionsAmount: 2
+
+    // Экспорт свойства текста
+    property alias text: inputTextField.text
+
+    // Переименованный сигнал для удобного подключения в Python
+    signal userTextChanged(string newText)
 
     TextField {
         id: inputTextField
@@ -31,6 +39,8 @@ Item {
         }
 
         onTextChanged: {
+            // Вызываем пользовательский сигнал вместо стандартного textChanged
+            rootItem.userTextChanged(text)
             completerModel.clear();
             if (text !== "") {
                 var suggestionsCount = 0;
@@ -38,18 +48,17 @@ Item {
                     if (availableValues[i].toLowerCase().indexOf(text.toLowerCase()) !== -1) {
                         completerModel.append({ "value": availableValues[i] });
                         suggestionsCount++;
-                        if (suggestionsCount >= maxCompitionsAmount) break;
+                        if (suggestionsCount >= maxCompitionsAmount)
+                            break;
                     }
                 }
             }
             listView.visible = completerModel.count > 0;
         }
 
-        // Скрываем completer при потере фокуса
         onFocusChanged: {
-            if (!focus) {
+            if (!focus)
                 listView.visible = false;
-            }
         }
     }
 
