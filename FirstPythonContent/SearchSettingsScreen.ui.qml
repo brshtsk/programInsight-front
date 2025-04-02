@@ -7,7 +7,7 @@ import "components"
 
 Rectangle {
     id: settingsContent
-    width: 710
+    width: 740
     height: 600
     color: "#ffffff"
 
@@ -547,24 +547,21 @@ Rectangle {
 
     Text {
         id: headerText
-        x: 55
-        y: 19
         text: "Настройки<br>поиска"
         font.pixelSize: 24
         textFormat: Text.RichText
         font.family: Constants.font.family
         font.styleName: "SemiBold"
         anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 29
-        anchors.topMargin: 11
+        anchors.verticalCenter: upperLogoItem.verticalCenter
+        anchors.leftMargin: 30
     }
 
     Rectangle {
-        id: rectangle
+        id: userExamsInteractionRectangle
         x: 420
         y: 80
-        width: 270
+        width: 300
         height: 390
         color: "#dde9db"
         radius: 10
@@ -664,13 +661,23 @@ Rectangle {
                 }
             }
         }
+
+        ScrollView {
+            id: allExamsScrollView
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: userExamsSettingsItem.bottom
+            width: 300
+            height: 340
+            contentHeight: allExamsItem.height
+            SingleExamsList {}
+        }
     }
 
     Rectangle {
-        id: userExamsRectangle
+        id: userExamsHeaderRectangle
         x: 420
         y: 20
-        width: 270
+        width: 300
         height: 50
         color: "#53b93f"
         radius: 10
@@ -851,7 +858,7 @@ Rectangle {
         id: sortOpRectangle
         x: 420
         y: 480
-        width: 270
+        width: 300
         height: 100
         color: "#dde9db"
         radius: 10
@@ -895,7 +902,7 @@ Rectangle {
 
             ComboBox {
                 id: sortOpVarComboBox
-                width: 180
+                width: 200
                 height: 30
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
