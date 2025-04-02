@@ -1,8 +1,9 @@
-from PySide6.QtCore import QObject, Slot, Signal
+from PySide6.QtCore import QObject, Slot, Signal, QUrl
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from search_settings import Settings
 from unique_values import UniqueValues
+from new_exam_window import NewExamWindow
 
 
 class SearchSettingsWindow(QObject):
@@ -14,6 +15,7 @@ class SearchSettingsWindow(QObject):
         self.settings = settings
         self.unique_values = unique_values
         self.window = None
+        self.new_exam_window = None
         self.load_window()
 
     def load_window(self):
@@ -110,6 +112,13 @@ class SearchSettingsWindow(QObject):
             university_name_text_field.setProperty('availableValues', list(self.unique_values.universities))
         else:
             print("TextField 'universityNameTextField' не найден")
+
+        # Кнопка добавления экзамена в список
+        add_exam_button = self.window.findChild(QObject, 'addExamButton')
+        if add_exam_button:
+            add_exam_button.clicked.connect(self.add_exam_button_clicked)
+        else:
+            print("Button 'addExamButton' не найден")
 
     def restore_view(self):
         # Восстанавливаем состояние ComboBox "qualificationTypeComboBox"
@@ -379,3 +388,16 @@ class SearchSettingsWindow(QObject):
             print(f"Название университета {university_name} не может быть задано! Сбросим до None")
             self.settings.university_name = None
             self.updateModels.emit()
+
+    @Slot()
+    def add_exam_button_clicked(self):
+        print("Кнопка добавления экзамена нажата!")
+        # Если окно уже создано и отображается, просто поднимаем его наверх
+        if self.new_exam_window is None or self.new_exam_window.window is None:
+            self.new_exam_window = NewExamWindow(self.engine)
+        else:
+            try:
+                self.new_exam_window.show()
+            except Exception as e:
+                print("Окно нового экзамена уже открыто:", e)
+

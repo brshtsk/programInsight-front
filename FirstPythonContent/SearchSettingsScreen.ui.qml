@@ -562,7 +562,7 @@ Rectangle {
         x: 420
         y: 80
         width: 300
-        height: 390
+        height: 280
         color: "#dde9db"
         radius: 10
 
@@ -667,9 +667,12 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: userExamsSettingsItem.bottom
             width: 300
-            height: 340
-            contentHeight: allExamsItem.height
-            SingleExamsList {}
+            height: 230
+            contentHeight: allExamsList.height
+            SingleExamsList {
+                id: allExamsList
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 
@@ -982,6 +985,94 @@ Rectangle {
                         ColorAnimation {
                             duration: 200
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: filterByExamsRectangle
+        x: 420
+        y: 370
+        width: 300
+        height: 100
+        color: "#dde9db"
+        radius: 10
+
+        Item {
+            id: upperFilterByExamsItem
+            x: 10
+            y: 10
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+
+            Text {
+                id: filterByExamsText
+                height: 30
+                color: "#373737"
+                text: "Фильтр по предметам"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+        }
+
+        Item {
+            id: lowerFilterByExamsItem
+            x: 10
+            y: 50
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+
+            ComboBox {
+                id: filterByExamsComboBox
+                width: 270
+                height: 30
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                objectName: "filterByExamsComboBox"
+                model: ["Выключен", "Включен, без баллов", "Включен, с баллами"]
+                indicator: Item {
+                    width: 20
+                    height: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    Text {
+                        color: "#ffffff"
+                        text: "\u25be"
+                        font.pixelSize: 24
+                        anchors.centerIn: parent
+                    }
+                }
+                contentItem: Rectangle {
+                    id: filterByExamsComboBoxBackground
+                    color: "#53b93f"
+                    radius: 10
+                    anchors.fill: parent
+                    anchors.leftMargin: -5
+                    anchors.rightMargin: -5
+                    Text {
+                        width: parent.width - 20
+                        color: "#ffffff"
+                        text: filterByExamsComboBox.currentText
+                        font.pixelSize: 18
+                        font.styleName: "SemiBold"
+                        font.family: Constants.font.family
+                        anchors.centerIn: parent
                     }
                 }
             }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import FirstPython
+import "components"
 
 Rectangle {
     id: root
@@ -98,11 +99,10 @@ Rectangle {
             }
 
             ToolTip {
-                text: "Подсказка<br><br>Введите информацию о сдаваеомом экзамене.<br>Если вам известен балл за экзамен, укажите его."
+                text: "Подсказка:<br><br>Введите информацию о сдаваеомом экзамене.<br>Если вам известен балл за экзамен, укажите его."
                 visible: helpMouseArea.containsMouse
             }
         }
-
     }
 
     Rectangle {
@@ -154,8 +154,7 @@ Rectangle {
 
                     Text {
                         width: parent.width - 20
-                        text: examTypeComboBox.currentText
-                              === "На магистратуру" ? "Маг" : examTypeComboBox.currentText === "Доп баллы к ЕГЭ" ? "Доп" : examTypeComboBox.currentText
+                        text: examTypeComboBox.currentText === "На магистратуру" ? "Маг" : examTypeComboBox.currentText === "Доп баллы к ЕГЭ" ? "Доп" : examTypeComboBox.currentText
                         color: "#ffffff"
                         anchors.centerIn: parent
                         font.pixelSize: 18
@@ -270,5 +269,4 @@ Rectangle {
             }
         }
     }
-
 }
