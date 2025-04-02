@@ -10,6 +10,7 @@ Item {
     property var availableValues: []
     property string placeholder: "введите текст"
     property int maxCompitionsAmount: 2
+    property bool disableCompleterNow: false
 
     // Экспорт свойства текста
     property alias text: inputTextField.text
@@ -54,6 +55,11 @@ Item {
                 }
             }
             listView.visible = completerModel.count > 0;
+
+            if (disableCompleterNow) {
+                listView.visible = false
+                disableCompleterNow = false
+            }
         }
 
         onFocusChanged: {

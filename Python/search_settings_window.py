@@ -167,6 +167,8 @@ class SearchSettingsWindow(QObject):
         city_name_field = self.window.findChild(QObject, 'cityNameTextField')
         if city_name_field:
             if self.settings.city_name is not None:
+                # После восстановления не нужно показывать Completer
+                city_name_field.setProperty('disableCompleterNow', True)
                 city_name_field.setProperty('text', self.settings.city_name)
         else:
             print("TextField 'cityNameTextField' не найден!")

@@ -85,11 +85,9 @@ class Frontend(QObject):
             except Exception as e:
                 print("Окно настроек уже открыто, восстановление настроек не выполнено:", e)
 
-    def restore_search_settings_view(self, settings_window):
-        pass
-
     @Slot()
     def dashboard_button_clicked(self):
+        # ToDo: отдельный класс для дашбордов
         # Если окно дашбордов уже открыто, выходим из метода
         if self.dashboard_window is not None:
             print("Окно дашбордов уже открыто!")
@@ -115,59 +113,3 @@ class Frontend(QObject):
         print("Окно дашбордов закрыто")
         self.dashboard_window = None
         # ToDo: не дает открыть дашборды во второй раз
-
-    def connect_to_search_settings(self, settings_window):
-        pass
-
-    @Slot()
-    def payment_combobox_index_changed(self):
-        payment_combo_box = self.sender()
-        if payment_combo_box is not None:
-            index = payment_combo_box.property('currentIndex')
-            # 0 - бюджет, 1 - платное
-            print(f"Выбранный индекс: {index}. Выбрано поступление на {'бюджет' if not index else 'платное'}")
-            if index == 0:
-                self.settings.set_settings_for_budget()
-            else:
-                self.settings.set_settings_for_paid()
-            self.setup_models()
-        else:
-            print("sender() не найден")
-
-    @Slot()
-    def qualification_combobox_index_changed(self):
-        pass
-
-    @Slot()
-    def on_search_settings_closed(self):
-        """Слот, вызываемый при закрытии окна настроек, чтобы очистить ссылку."""
-        print("Окно настроек закрыто")
-        self.search_settings_window = None
-
-    @Slot()
-    def apply_filter_by_price_checkbox_toggled(self):
-        pass
-
-    @Slot()
-    def on_min_price_changed(self):
-        pass
-
-    @Slot()
-    def on_max_price_changed(self):
-        pass
-
-    @Slot()
-    def apply_filter_by_score_checkbox_toggled(self):
-        pass
-
-    @Slot()
-    def on_min_score_changed(self):
-        pass
-
-    @Slot()
-    def on_max_score_changed(self):
-        pass
-
-    @Slot()
-    def on_city_name_changed(self):
-        pass
