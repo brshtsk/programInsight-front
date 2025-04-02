@@ -123,6 +123,14 @@ class Op:
             if settings.city_name.lower() != self.city.lower():
                 return False
 
+        if settings.op_name:
+            if settings.op_name.lower() != self.name.lower():
+                return False
+
+        if settings.university_name:
+            if settings.university_name.lower() not in self.university.lower():
+                return False
+
         if self.op_type not in settings.qualifications:
             return False
 

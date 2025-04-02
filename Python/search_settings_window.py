@@ -4,6 +4,7 @@ from utils import Utils
 from search_settings import Settings
 from unique_values import UniqueValues
 
+
 class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
 
@@ -92,6 +93,24 @@ class SearchSettingsWindow(QObject):
         else:
             print("TextField 'cityNameTextField' не найден")
 
+        # Поиск по названию ОП
+        op_name_text_field = self.window.findChild(QObject, 'opNameTextField')
+        if op_name_text_field:
+            op_name_text_field.userTextChanged.connect(self.on_op_name_changed)
+            # Список всех ОП в completer
+            op_name_text_field.setProperty('availableValues', list(self.unique_values.op_names))
+        else:
+            print("TextField 'opNameTextField' не найден")
+
+        # Поиск по названию университета
+        university_name_text_field = self.window.findChild(QObject, 'universityNameTextField')
+        if university_name_text_field:
+            university_name_text_field.userTextChanged.connect(self.on_university_name_changed)
+            # Список всех университетов в completer
+            university_name_text_field.setProperty('availableValues', list(self.unique_values.universities))
+        else:
+            print("TextField 'universityNameTextField' не найден")
+
     def restore_view(self):
         # Восстанавливаем состояние ComboBox "qualificationTypeComboBox"
         qualification_combo_box = self.window.findChild(QObject, 'qualificationTypeComboBox')
@@ -172,6 +191,26 @@ class SearchSettingsWindow(QObject):
                 city_name_field.setProperty('text', self.settings.city_name)
         else:
             print("TextField 'cityNameTextField' не найден!")
+
+        # Восстанавливаем текстовое поле для названия ОП
+        op_name_field = self.window.findChild(QObject, 'opNameTextField')
+        if op_name_field:
+            if self.settings.op_name is not None:
+                # После восстановления не нужно показывать Completer
+                op_name_field.setProperty('disableCompleterNow', True)
+                op_name_field.setProperty('text', self.settings.op_name)
+        else:
+            print("TextField 'opNameTextField' не найден!")
+
+        # Восстанавливаем текстовое поле для названия университета
+        university_name_field = self.window.findChild(QObject, 'universityNameTextField')
+        if university_name_field:
+            if self.settings.university_name is not None:
+                # После восстановления не нужно показывать Completer
+                university_name_field.setProperty('disableCompleterNow', True)
+                university_name_field.setProperty('text', self.settings.university_name)
+        else:
+            print("TextField 'universityNameTextField' не найден!")
 
     @Slot()
     def on_window_closed(self):
@@ -309,4 +348,34 @@ class SearchSettingsWindow(QObject):
         except:
             print(f"Название города {city_name} не может быть задано! Сбросим до None")
             self.settings.city_name = None
+            self.updateModels.emit()
+
+    @Slot()
+    def on_op_name_changed(self):
+        op_name = self.sender().property('text')  # Получаем текст из поля
+        print(f"Название ОП введено: {op_name}")
+        try:
+            if op_name == "":
+                self.settings.op_name = None
+            else:
+                self.settings.op_name = op_name
+            self.updateModels.emit()
+        except:
+            print(f"Название ОП {op_name} не может быть задано! Сбросим до None")
+            self.settings.op_name = None
+            self.updateModels.emit()
+
+    @Slot()
+    def on_university_name_changed(self):
+        university_name = self.sender().property('text')
+        print(f"Название университета введено: {university_name}")
+        try:
+            if university_name == "":
+                self.settings.university_name = None
+            else:
+                self.settings.university_name = university_name
+            self.updateModels.emit()
+        except:
+            print(f"Название университета {university_name} не может быть задано! Сбросим до None")
+            self.settings.university_name = None
             self.updateModels.emit()

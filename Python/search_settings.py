@@ -21,6 +21,8 @@ class Settings:
         self.qualifications = ['Бакалавриат']
 
         self.city_name = None
+        self.op_name = None
+        self.university_name = None
 
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
