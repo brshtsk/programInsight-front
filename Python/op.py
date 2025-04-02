@@ -119,6 +119,10 @@ class Op:
         :param settings:
         :return:
         """
+        if settings.city_name:
+            if settings.city_name.lower() != self.city.lower():
+                return False
+
         if self.op_type not in settings.qualifications:
             return False
 

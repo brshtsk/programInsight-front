@@ -6,9 +6,12 @@ from manage_model_data import ModelDataManagement
 from utils import Utils
 from search_settings import Settings
 from op_card_handler import PyHandler
+from unique_values import UniqueValues
 
 
 class Frontend(QObject):
+    unique_values: UniqueValues  # Явно указываем тип атрибута
+
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
@@ -162,6 +165,14 @@ class Frontend(QObject):
         else:
             print("PriceField 'maxPriceTextField' не найден!")
 
+        # Восстанавливаем текстовое поле для названия города
+        city_name_field = settings_window.findChild(QObject, 'cityNameTextField')
+        if city_name_field:
+            if self.settings.city_name is not None:
+                city_name_field.setProperty('text', self.settings.city_name)
+        else:
+            print("TextField 'cityNameTextField' не найден!")
+
     @Slot()
     def dashboard_button_clicked(self):
         # Если окно дашбордов уже открыто, выходим из метода
@@ -247,6 +258,8 @@ class Frontend(QObject):
         city_name_text_field = settings_window.findChild(QObject, 'cityNameTextField')
         if city_name_text_field:
             city_name_text_field.userTextChanged.connect(self.on_city_name_changed)
+            # Список всех городов в completer
+            city_name_text_field.setProperty('availableValues', list(self.unique_values.cities))
         else:
             print("TextField 'cityNameTextField' не найден")
 
@@ -383,3 +396,14 @@ class Frontend(QObject):
     @Slot()
     def on_city_name_changed(self):
         city_name = self.sender().property('text')  # Получаем текст из поля
+        print(f"Название города введено: {city_name}")
+        try:
+            if city_name == "":
+                self.settings.city_name = None
+            else:
+                self.settings.city_name = city_name
+            self.setup_models()
+        except:
+            print(f"Название города {city_name} не может быть задано! Сбросим до None")
+            self.settings.city_name = None
+            self.setup_models()
