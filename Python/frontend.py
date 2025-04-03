@@ -113,3 +113,4 @@ class Frontend(QObject):
         print("Окно дашбордов закрыто")
         self.dashboard_window = None
         # ToDo: не дает открыть дашборды во второй раз
+        # Решается отдельным классом для дашбордов, добавлением self.window.windowClosed.connect(self.on_window_closed)

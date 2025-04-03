@@ -19,7 +19,6 @@ class ModelDataManagement:
 
         unique_values = UniqueValues()
 
-        # ToDo: парсинг RAEX
 
         # ОП с ошибками
         bad_ops = set()

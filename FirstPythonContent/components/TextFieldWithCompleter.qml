@@ -11,6 +11,7 @@ Item {
     property string placeholder: "введите текст"
     property int maxCompitionsAmount: 2
     property bool disableCompleterNow: false
+    property bool editable: true
 
     // Экспорт свойства текста
     property alias text: inputTextField.text
@@ -30,6 +31,8 @@ Item {
         selectionColor: "#53b93f"
         topPadding: 5
         verticalAlignment: Text.AlignVCenter
+
+        readOnly: !rootItem.editable
 
         background: Rectangle {
             anchors.fill: parent

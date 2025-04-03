@@ -394,7 +394,7 @@ class SearchSettingsWindow(QObject):
         print("Кнопка добавления экзамена нажата!")
         # Если окно уже создано и отображается, просто поднимаем его наверх
         if self.new_exam_window is None or self.new_exam_window.window is None:
-            self.new_exam_window = NewExamWindow(self.engine)
+            self.new_exam_window = NewExamWindow(self.engine, self.unique_values)
         else:
             try:
                 self.new_exam_window.show()

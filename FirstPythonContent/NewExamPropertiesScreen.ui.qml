@@ -139,9 +139,9 @@ Rectangle {
                 height: 30
                 anchors.right: parent.right
                 anchors.rightMargin: 5
-                width: 60
+                width: 120
 
-                model: ["ЕГЭ", "На магистратуру", "Доп баллы к ЕГЭ"]
+                model: ["ЕГЭ/ДВИ", "Доп баллы ЕГЭ", "Магистратура"]
 
                 // Кастомизация фон и текстового содержимого
                 contentItem: Rectangle {
@@ -154,7 +154,7 @@ Rectangle {
 
                     Text {
                         width: parent.width - 20
-                        text: examTypeComboBox.currentText === "На магистратуру" ? "Маг" : examTypeComboBox.currentText === "Доп баллы к ЕГЭ" ? "Доп" : examTypeComboBox.currentText
+                        text: examTypeComboBox.currentText === "Магистратура" ? "Магстр..." : examTypeComboBox.currentText === "Доп баллы ЕГЭ" ? "Доп ЕГЭ" : examTypeComboBox.currentText
                         color: "#ffffff"
                         anchors.centerIn: parent
                         font.pixelSize: 18
@@ -200,7 +200,7 @@ Rectangle {
                 id: maxScoreTextField
                 anchors.right: parent.right
                 objectName: "maxScoreTextField"
-                width: 70
+                width: 65
                 height: 35 // Увеличьте высоту
                 placeholderText: ""
                 font.pixelSize: 16
@@ -263,7 +263,7 @@ Rectangle {
                 objectName: "examNameTextField"
                 width: parent.width
                 height: 35
-                placeholder: "введите название экзамена"
+                placeholder: "введите название предмета"
                 availableValues: ["Программная инженерия", "Прикладная математика", "Прикладной анализ данных", "Прикладная математика и информатика", "Компьютерные науки и анализ данных"]
                 maxCompitionsAmount: 5
             }
