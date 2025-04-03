@@ -8,14 +8,15 @@ class NewExamWindow(QObject):
         super().__init__()
         self.engine = engine
         self.unique_values = unique_values
+        self.component = None
         self.window = None
         self.load_window()
 
     def load_window(self):
         exam_card_path = Utils.resource_path('FirstPythonContent/NewExamProperties.qml')
-        component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(exam_card_path)))
-        if component.status() == QQmlComponent.Ready:
-            self.window = component.create()
+        self.component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(exam_card_path)))
+        if self.component.status() == QQmlComponent.Ready:
+            self.window = self.component.create()
             if self.window:
                 self.window.show()
                 self.connect_signals()
@@ -24,7 +25,7 @@ class NewExamWindow(QObject):
             else:
                 print("Не удалось создать окно NewExamProperties.")
         else:
-            print("Ошибка при загрузке NewExamProperties.qml:", component.errorString())
+            print("Ошибка при загрузке NewExamProperties.qml:", self.component.errorString())
 
     @Slot()
     def on_window_closed(self):
@@ -111,6 +112,7 @@ class NewExamWindow(QObject):
             index = exam_type_combobox.property('currentIndex')
             # 0 - 'ЕГЭ/ДВИ', 1 - 'Доп баллы ЕГЭ', 2 - 'Магистратура'
             print(f"Выбран тип экзамена: {index} ({['ЕГЭ/ДВИ', 'Доп баллы ЕГЭ', 'Магистратура'][index]})")
+            window = exam_type_combobox.property('window')
             self.set_properties()
         else:
             print("sender() не найден!")
