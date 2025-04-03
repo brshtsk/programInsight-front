@@ -19,6 +19,7 @@ class ModelDataManagement:
 
         unique_values = UniqueValues()
 
+        # ToDo: искать именно вариант поступления на основе 11 классов
 
         # ОП с ошибками
         bad_ops = set()

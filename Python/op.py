@@ -5,6 +5,8 @@ from search_settings import Settings
 class Op:
     def __init__(self, name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                  paid_ege_score, paid_places_amount, cost, city, length, attendance, exams, raex_position):
+        # ToDo: посещаемость, длительность в виде списка
+
         if type(name) is not str:
             raise TypeError("name должно быть строкой")
         self.name = name  # Название образовательной программы

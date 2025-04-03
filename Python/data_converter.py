@@ -12,19 +12,19 @@ class DataConverter:
         data = []
         for op in op_list:
             data.append({
-                'name': op.name,
-                'university': op.university,
-                'exams_amount': op.exams_amount,
-                'op_type': op.op_type,
-                'budget_ege_score': op.budget_ege_score,
-                'budget_places_amount': op.budget_places_amount,
-                'paid_ege_score': op.paid_ege_score,
-                'paid_places_amount': op.paid_places_amount,
-                'cost': op.cost,
-                'city': op.city,
-                'length': op.length,
-                'attendance': op.attendance,
-                'exams': op.exams,
-                'raex_position': op.raex_position
+                'Программа': op.name,
+                'Университет': op.university,
+                'Кол-во экзаменов': op.exams_amount,
+                'Квалификация': op.op_type,
+                'Проходной балл на бюджет': op.budget_ege_score,
+                'Кол-во бюджетных мест': op.budget_places_amount,
+                'Проходной балл на платное': op.paid_ege_score,
+                'Кол-во платных мест': op.paid_places_amount,
+                'Стоимость (в год)': op.cost,
+                'Город': op.city,
+                'Срок обучения': op.length,
+                'Форма обучения': op.attendance,
+                'ЕГЭ': op.exams,
+                'Место в топе': op.raex_position
             })
         return pd.DataFrame(data)
