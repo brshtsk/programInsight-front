@@ -14,15 +14,16 @@ class SearchSettingsWindow(QObject):
         self.engine = engine
         self.settings = settings
         self.unique_values = unique_values
+        self.component = None
         self.window = None
         self.new_exam_window = None
         self.load_window()
 
     def load_window(self):
         settings_qml_path = Utils.resource_path('FirstPythonContent/SearchSettings.qml')
-        component = QQmlComponent(self.engine, str(settings_qml_path))
-        if component.status() == QQmlComponent.Ready:
-            self.window = component.create()
+        self.component = QQmlComponent(self.engine, str(settings_qml_path))
+        if self.component.status() == QQmlComponent.Ready:
+            self.window = self.component.create()
             if self.window:
                 self.window.show()
                 self.connect_signals()
@@ -31,7 +32,7 @@ class SearchSettingsWindow(QObject):
             else:
                 print("Не удалось создать окно настроек.")
         else:
-            print("Ошибка при загрузке SearchSettings.qml:", component.errorString())
+            print("Ошибка при загрузке SearchSettings.qml:", self.component.errorString())
 
     def connect_signals(self):
         # Искать поступление на бюджет или платное
