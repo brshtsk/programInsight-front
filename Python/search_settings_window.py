@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Slot, Signal, QUrl
+from PySide6.QtCore import QObject, Slot, Signal
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from search_settings import Settings
@@ -8,16 +8,20 @@ from new_exam_window import NewExamWindow
 
 class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
+    searchSettingsClosed = Signal()  # Сигнал для уведомления Frontend о закрытии окна настроек
 
-    def __init__(self, engine, settings: Settings, unique_values: UniqueValues):
+    def __init__(self, engine, settings: Settings, unique_values: UniqueValues, frontend_parent):
         super().__init__()
         self.engine = engine
         self.settings = settings
         self.unique_values = unique_values
+        self.frontend_parent = frontend_parent
         self.component = None
         self.window = None
         self.new_exam_window = None
         self.load_window()
+
+        self.frontend_parent.mainWindowClosed.connect(self.on_main_window_closed)
 
     def load_window(self):
         settings_qml_path = Utils.resource_path('FirstPythonContent/SearchSettings.qml')
@@ -224,8 +228,9 @@ class SearchSettingsWindow(QObject):
 
     @Slot()
     def on_window_closed(self):
-        print("Окно настроек закрыто")
+        print("Окно настроек закрыто (либо пользователем, либо программно)")
         self.window = None
+        self.searchSettingsClosed.emit()  # Уведомляем NewExamWindow о закрытии окна настроек
 
     @Slot()
     def qualification_combobox_index_changed(self):
@@ -395,10 +400,16 @@ class SearchSettingsWindow(QObject):
         print("Кнопка добавления экзамена нажата!")
         # Если окно уже создано и отображается, просто поднимаем его наверх
         if self.new_exam_window is None or self.new_exam_window.window is None:
-            self.new_exam_window = NewExamWindow(self.engine, self.unique_values)
+            self.new_exam_window = NewExamWindow(self.engine, self.unique_values, self)
         else:
             try:
                 self.new_exam_window.show()
             except Exception as e:
                 print("Окно нового экзамена уже открыто:", e)
 
+    @Slot()
+    def on_main_window_closed(self):
+        print("Главное окно закрыто, закрываем окно настроек")
+        if self.window is not None:
+            self.window.close()
+            # self.on_window_closed() - выполняется автоматически

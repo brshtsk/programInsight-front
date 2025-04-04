@@ -4,13 +4,16 @@ from utils import Utils
 from unique_values import UniqueValues
 
 class NewExamWindow(QObject):
-    def __init__(self, engine, unique_values: UniqueValues):
+    def __init__(self, engine, unique_values: UniqueValues, search_settings_window_parent):
         super().__init__()
         self.engine = engine
         self.unique_values = unique_values
+        self.search_settings_window_parent = search_settings_window_parent
         self.component = None
         self.window = None
         self.load_window()
+
+        self.search_settings_window_parent.searchSettingsClosed.connect(self.on_search_settings_closed)
 
     def load_window(self):
         exam_card_path = Utils.resource_path('FirstPythonContent/NewExamProperties.qml')
@@ -30,7 +33,7 @@ class NewExamWindow(QObject):
     @Slot()
     def on_window_closed(self):
         """Слот, вызываемый при закрытии окна, чтобы очистить ссылку."""
-        print("Окно NewExamProperties закрыто")
+        print("Окно NewExamProperties закрыто (либо пользователем, либо программно)")
         self.window = None
 
     @Slot()
@@ -116,3 +119,13 @@ class NewExamWindow(QObject):
             self.set_properties()
         else:
             print("sender() не найден!")
+
+    @Slot()
+    def on_search_settings_closed(self):
+        """
+        Слот, вызываемый при закрытии окна настроек поиска.
+        Закрывает текущее окно NewExamWindow, если оно открыто.
+        """
+        print("Окно настроек поиска закрыто, закрываем NewExamWindow")
+        if self.window is not None:
+            self.window.close()

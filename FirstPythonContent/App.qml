@@ -11,6 +11,15 @@ Window {
     visible: true
     title: "ProgramInsight"
 
+    signal windowClosed()  // Пользовательский сигнал закрытия
+
+    // Отслеживаем изменение свойства visible:
+    onVisibleChanged: {
+        if (!visible) {
+            windowClosed()
+        }
+    }
+
     Screen01 {
         id: mainScreen
     }

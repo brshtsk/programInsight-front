@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Slot, QUrl
+from PySide6.QtCore import QObject, Slot, QUrl, Signal
 from PySide6.QtQml import QQmlComponent
 from op_model import opListModel
 from statistics_model import StatisticsListModel
@@ -12,6 +12,7 @@ from search_settings_window import SearchSettingsWindow
 
 class Frontend(QObject):
     unique_values: UniqueValues  # Явно указываем тип атрибута
+    mainWindowClosed = Signal()  # Сигнал, который будет испускаться при закрытии главного окна
 
     def __init__(self, engine):
         super().__init__()
@@ -72,12 +73,15 @@ class Frontend(QObject):
         else:
             print('Кнопка дашбордов не найдена!')
 
+        # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
+        root_object.windowClosed.connect(self.on_main_window_closed)
+
     @Slot()
     def search_button_clicked(self):
         # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
         if self.search_settings_window is None or self.search_settings_window.window is None:
             print('Кнопка настроек поиска нажата!')
-            self.search_settings_window = SearchSettingsWindow(self.engine, self.settings, self.unique_values)
+            self.search_settings_window = SearchSettingsWindow(self.engine, self.settings, self.unique_values, self)
             self.search_settings_window.updateModels.connect(self.setup_models)
         else:
             try:
@@ -115,3 +119,8 @@ class Frontend(QObject):
         self.dashboard_window = None
         # ToDo: не дает открыть дашборды во второй раз
         # Решается отдельным классом для дашбордов, добавлением self.window.windowClosed.connect(self.on_window_closed)
+
+    def on_main_window_closed(self):
+        """Слот, вызываемый при закрытии главного окна."""
+        print("Главное окно закрыто")
+        self.mainWindowClosed.emit()
