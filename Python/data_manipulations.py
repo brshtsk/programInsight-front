@@ -68,3 +68,14 @@ class DataManipulations:
             if pattern in university_name:
                 return patterns[pattern]
         return default
+
+    def suitable_floats_to_int(float_list: list) -> list:
+        """
+        Преобразует список из float в int, если возможно
+        :param float_list: список с числами
+        :return: список с int
+        """
+        for i in range(len(float_list)):
+            if int(float_list[i]) == float_list[i]:
+                float_list[i] = int(float_list[i])
+        return float_list

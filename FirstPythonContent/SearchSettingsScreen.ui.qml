@@ -675,9 +675,9 @@ Rectangle {
                     "examTypeText": "ЕГЭ",
                     "scoreText": "97"
                 }, {
-                    "examNameText": "Иностранный",
-                    "examTypeText": "ЕГЭ",
-                    "scoreText": "88"
+                    "examNameText": "Собеседование",
+                    "examTypeText": "Магистратура",
+                    "scoreText": "-"
                 }]
         }
     }

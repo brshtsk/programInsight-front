@@ -6,9 +6,11 @@ Rectangle {
     id: examCard
     width: 270
     height: 65
-    color: "#53b93f"
+    color: "#ffffff"
     radius: 10
     anchors.horizontalCenter: parent.horizontalCenter
+    border.color: "#53b93f"
+    border.width: 2
 
     Flickable {
         id: examNameContainerFlickable
@@ -24,7 +26,7 @@ Rectangle {
         x: 0
         y: 0
         height: 20
-        color: "#ffffff"
+        color: "#373737"
         text: modelData.examNameText
         font.pixelSize: 18
         textFormat: Text.RichText
@@ -42,12 +44,11 @@ Rectangle {
     Rectangle {
         id: scoreRectangle
         y: 33
-        // anchors.right: parent.right
-        // anchors.rightMargin: 15
-        x: 75
-        width: 94
+        anchors.left: examTypeRectangle.right
+        anchors.leftMargin: 5
+        width: scoreText.width + 20
         height: 25
-        color: "#ffffff"
+        color: "#dde9db"
         radius: 10
 
         Text {
@@ -57,8 +58,9 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.family: Constants.font.family
             font.styleName: "SemiBold"
-            anchors.fill: parent
-            color: "#53b93f"
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "#373737"
             text: "Балл: " + modelData.scoreText
         }
     }
@@ -67,15 +69,16 @@ Rectangle {
         id: examTypeRectangle
         x: 15
         y: 33
-        width: 54
+        width: examTypeText.width + 20
         height: 25
-        color: "#ffffff"
+        color: "#dde9db"
         radius: 10
         Text {
             id: examTypeText
-            color: "#53b93f"
+            color: "#373737"
             text: modelData.examTypeText
-            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 18
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

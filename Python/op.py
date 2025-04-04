@@ -131,7 +131,8 @@ class Op:
                 self.university),
             "opCodeText": self.op_type,
             "imageSource": DataManipulations.get_image_source(self.university),
-            "lengthText": "Длительность: " + "; ".join(map(str, self.length)),
+            "lengthText": "Срок обучения (лет): " + "; ".join(
+                map(str, DataManipulations.suitable_floats_to_int(self.length))),
             "locationText": self.city,
             "attendanceText": "; ".join(self.attendance),
             "raexPosition": self.raex_position,

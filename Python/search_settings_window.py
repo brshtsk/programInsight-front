@@ -10,6 +10,8 @@ class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
     searchSettingsClosed = Signal()  # Сигнал для уведомления Frontend о закрытии окна настроек
 
+    # ToDo: можно сделать ползунок для выбора диапазона баллов и стоимости
+
     def __init__(self, engine, settings: Settings, unique_values: UniqueValues, frontend_parent):
         super().__init__()
         self.engine = engine
