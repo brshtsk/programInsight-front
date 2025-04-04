@@ -42,6 +42,12 @@ Item {
             color: "#00ffffff"
         }
 
+        footer: Rectangle {
+            width: listView.width
+            height: 10
+            color: "#00ffffff"
+        }
+
         // Модель – массив групп экзаменов
         model: examsWithOptionsList.examOptions
 

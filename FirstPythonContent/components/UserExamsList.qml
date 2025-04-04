@@ -35,8 +35,7 @@ Item {
         width: 300
         height: contentHeight
         spacing: 10
-
-        interactive: false
+        clip: true
 
         // Добавляем отступ перед первым элементом
         header: Rectangle {

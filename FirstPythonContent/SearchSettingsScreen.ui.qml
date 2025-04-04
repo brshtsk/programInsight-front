@@ -662,23 +662,37 @@ Rectangle {
             }
         }
 
-        UserExamsList {
+        ScrollView {
             anchors.top: userExamsSettingsItem.bottom
             anchors.bottom: parent.bottom
+            width: 300
+            anchors.horizontalCenter: parent.horizontalCenter
+            contentHeight: chosenUserExamsList.height
+            clip: true
 
-            exams: [{
-                    "examNameText": "Математика (профиль)",
-                    "examTypeText": "ЕГЭ",
-                    "scoreText": "82"
-                }, {
-                    "examNameText": "Русский язык",
-                    "examTypeText": "ЕГЭ",
-                    "scoreText": "97"
-                }, {
-                    "examNameText": "Собеседование",
-                    "examTypeText": "Магистратура",
-                    "scoreText": "-"
-                }]
+            UserExamsList {
+                id: chosenUserExamsList
+                objectName: "chosenUserExamsList"
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                exams: [{
+                        "examNameText": "Математика (профиль)",
+                        "examTypeText": "ЕГЭ",
+                        "scoreText": "82"
+                    }, {
+                        "examNameText": "Русский язык",
+                        "examTypeText": "ЕГЭ",
+                        "scoreText": "97"
+                    }, {
+                        "examNameText": "Собеседование",
+                        "examTypeText": "Магистратура",
+                        "scoreText": "-"
+                    }, {
+                        "examNameText": "ГТО",
+                        "examTypeText": "Доп. к ЕГЭ",
+                        "scoreText": "-"
+                    }]
+            }
         }
     }
 

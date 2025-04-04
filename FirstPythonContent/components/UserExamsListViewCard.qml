@@ -16,7 +16,7 @@ Rectangle {
         id: examNameContainerFlickable
         x: 15
         y: 10
-        width: parent.width - 30
+        width: parent.width - 50
         height: examNameText.height // либо можно задать фиксированную высоту, например, 55
         clip: true
         contentWidth: examNameText.width
@@ -87,4 +87,23 @@ Rectangle {
         }
     }
 
+    Item {
+        id: deleteItem
+        anchors.verticalCenter: examNameContainerFlickable.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 15
+        width: 20
+        height: 20
+        Text {
+            id: deleteText
+            color: "#ed9528"
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: 18
+            text: "×"
+            font.family: Constants.font.family
+            font.styleName: "Bold"
+        }
+    }
 }
