@@ -7,25 +7,25 @@ Item {
     width: 300
     height: userExamListView.height
 
-    property var exams: [
-        {
-            examNameText: "Математика (профиль)",
-            examTypeText: "ЕГЭ",
-            scoreText: "82"
-        },
-        {
-            examNameText: "Русский язык",
-            examTypeText: "ЕГЭ",
-            scoreText: "97"
-        },
-        {
-            examNameText: "Иностранный",
-            examTypeText: "ЕГЭ",
-            scoreText: "88"
-        },
-    ]
+    // property var exams: [
+    //     {
+    //         examNameText: "Математика (профиль)",
+    //         examTypeText: "ЕГЭ",
+    //         scoreText: "82"
+    //     },
+    //     {
+    //         examNameText: "Русский язык",
+    //         examTypeText: "ЕГЭ",
+    //         scoreText: "97"
+    //     },
+    //     {
+    //         examNameText: "Иностранный",
+    //         examTypeText: "ЕГЭ",
+    //         scoreText: "88"
+    //     },
+    // ]
 
-    // property var exams
+    property var exams
 
     ListView {
         id: userExamListView

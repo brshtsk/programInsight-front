@@ -9,6 +9,7 @@ class PyHandler(QObject):
         super().__init__()
         self.engine = engine
         # ToDo: отлов закрытия главного окна. Если оно закрылось, закрываем окна с информацией об ОП
+        # ToDo: можно поработать над footer в списке экзаменов
 
     @Slot(int, str, str, str, str, str, str, str, int, int, int, int, int, list, list, str)
     def handleCardClicked(self, index, op_name, university_name, op_type, length_text,

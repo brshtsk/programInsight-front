@@ -662,14 +662,23 @@ Rectangle {
             }
         }
 
-        ScrollView {
-            id: userExamsScrollView
-            anchors.horizontalCenter: parent.horizontalCenter
+        UserExamsList {
             anchors.top: userExamsSettingsItem.bottom
-            width: 300
-            height: 230
-            // contentHeight: allExamsList.height
+            anchors.bottom: parent.bottom
 
+            exams: [{
+                    "examNameText": "Математика (профиль)",
+                    "examTypeText": "ЕГЭ",
+                    "scoreText": "82"
+                }, {
+                    "examNameText": "Русский язык",
+                    "examTypeText": "ЕГЭ",
+                    "scoreText": "97"
+                }, {
+                    "examNameText": "Иностранный",
+                    "examTypeText": "ЕГЭ",
+                    "scoreText": "88"
+                }]
         }
     }
 

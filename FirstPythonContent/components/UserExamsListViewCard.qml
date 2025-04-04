@@ -42,9 +42,10 @@ Rectangle {
     Rectangle {
         id: scoreRectangle
         y: 33
-        anchors.right: parent.right
-        anchors.rightMargin: 15
-        width: 54
+        // anchors.right: parent.right
+        // anchors.rightMargin: 15
+        x: 75
+        width: 94
         height: 25
         color: "#ffffff"
         radius: 10
@@ -58,30 +59,13 @@ Rectangle {
             font.styleName: "SemiBold"
             anchors.fill: parent
             color: "#53b93f"
-            text: modelData.scoreText
+            text: "Балл: " + modelData.scoreText
         }
-    }
-
-    Text {
-        id: scoreInfoText
-        anchors.top: scoreRectangle.bottom
-        anchors.right: scoreRectangle.left
-        anchors.rightMargin: 5
-        anchors.verticalCenter: scoreRectangle.verticalCenter
-        height: 14
-        color: "#ffffff"
-        text: "Балл:"
-        font.pixelSize: 18
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.family: Constants.font.family
-        font.styleName: "SemiBold"
-
     }
 
     Rectangle {
         id: examTypeRectangle
-        x: 55
+        x: 15
         y: 33
         width: 54
         height: 25
@@ -98,21 +82,6 @@ Rectangle {
             font.styleName: "SemiBold"
             font.family: Constants.font.family
         }
-    }
-
-    Text {
-        id: examTypeInfoText
-        anchors.right: examTypeRectangle.left
-        anchors.rightMargin: 5
-        anchors.verticalCenter: examTypeRectangle.verticalCenter
-        height: 20
-        color: "#ffffff"
-        text: "Тип:"
-        font.pixelSize: 18
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.family: Constants.font.family
-        font.styleName: "SemiBold"
     }
 
 }
