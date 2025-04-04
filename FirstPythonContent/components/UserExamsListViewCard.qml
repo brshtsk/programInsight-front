@@ -94,16 +94,40 @@ Rectangle {
         anchors.rightMargin: 15
         width: 20
         height: 20
-        Text {
-            id: deleteText
-            color: "#ed9528"
-            anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: 18
-            text: "×"
-            font.family: Constants.font.family
-            font.styleName: "Bold"
-        }
+        // Button {
+        //     id: deleteButton
+        //     width: 20
+        //     height: 20
+        //     horizontalCenter: parent.horizontalCenter
+        //     verticalCenter: parent.verticalCenter
+
+        //     // Прозрачный фон
+        //     background: Rectangle {
+        //         color: "transparent"
+        //         // Можно добавить эффекты при наведении, например, легкое увеличение:
+        //         scale: deleteButton.hovered ? 1.1 : 1.0
+        //         Behavior on scale {
+        //             NumberAnimation { duration: 100 }
+        //         }
+        //     }
+
+        //     // Элемент, отображающий символ "×"
+        //     contentItem: Text {
+        //         anchors.fill: parent
+        //         text: "×"
+        //         color: "#ed9528"
+        //         horizontalAlignment: Text.AlignHCenter
+        //         verticalAlignment: Text.AlignVCenter
+        //         font.pointSize: 18
+        //         font.family: Constants.font.family
+        //         font.styleName: "Bold"
+        //     }
+
+        //     // // Обработка нажатия (например, сигнал для удаления объекта)
+        //     // onClicked: {
+        //     //     // Добавьте здесь логику удаления
+        //     // }
+        // }
+
     }
 }

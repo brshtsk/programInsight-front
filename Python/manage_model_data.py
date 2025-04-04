@@ -213,7 +213,7 @@ class ModelDataManagement:
                     cost = postup_data['Платное'][paid_info]
         return paid_places_amount, paid_ege_score, cost
 
-    def get_op_model_data(op_list: list[Op], settings=Settings()) -> (list[dict], list[dict]):
+    def get_op_model_data(op_list: list[Op], settings=Settings(), unique_values=UniqueValues()) -> (list[dict], list[dict]):
         """
         Создает данные для модели ОП и статистики
         :param op_list: список с объектами ОП
@@ -224,7 +224,7 @@ class ModelDataManagement:
 
         op_model_data = []
         for op in op_list:
-            if op.suits(settings):
+            if op.suits(settings, unique_values):
                 op_model_data.append(op.to_model_dict(settings))
                 statistics.add(op)
 

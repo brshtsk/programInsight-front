@@ -33,7 +33,8 @@ class Frontend(QObject):
     def setup_models(self):
         try:
             # Получаем данные для модели
-            op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings)
+            op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings,
+                                                                                         self.unique_values)
             self.op_model = opListModel(op_model_data)
             self.statistics_model = StatisticsListModel(statistics_model_data)
 

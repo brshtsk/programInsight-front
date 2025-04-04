@@ -15,6 +15,7 @@ class UniqueValues:
         self.subjects_mag = set()
         self.cities = set()
         self.universities = set()
+        self.lowercase_universities = set()  # Для бытрого поиска по ВУЗам
         self.op_names = set()
 
     def add_op(self, op: Op):
@@ -25,6 +26,7 @@ class UniqueValues:
         '''
         self.op_names.add(op.name)
         self.universities.add(op.university)
+        self.lowercase_universities.add(op.university.lower())
         self.cities.add(op.city)
 
         if op.op_type == 'Бакалавриат' or op.op_type == 'Специалитет':

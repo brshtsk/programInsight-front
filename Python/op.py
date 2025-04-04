@@ -146,10 +146,12 @@ class Op:
         }
         return op_dict
 
-    def suits(self, settings=Settings()) -> bool:
+    # Не указан тип UniqueValues, чтобы не было циклической зависимости
+    def suits(self, settings: Settings, unique_values) -> bool:
         """
         Показывает, нужно ли отображать данное ОП при указанных настройках
         :param settings:
+        :param unique_values:
         :return:
         """
         if settings.city_name:
@@ -161,8 +163,17 @@ class Op:
                 return False
 
         if settings.university_name:
-            if settings.university_name.lower() not in self.university.lower():
-                return False
+            # Работает по такому принципу: если указано название университета,
+            # которое содержится в unique_values, то нам подходят только ОП из этого университета.
+            # Если полного совпадения нет, проверяем, вдруг это часть названия.
+
+            if settings.university_name.lower() in unique_values.lowercase_universities:
+                if settings.university_name.lower() != self.university.lower():
+                    return False
+            else:
+                # Если совпадения нет, то проверяем, вдруг это часть названия.
+                if settings.university_name.lower() not in self.university.lower():
+                    return False
 
         if self.op_type not in settings.qualifications:
             return False
