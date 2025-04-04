@@ -663,16 +663,13 @@ Rectangle {
         }
 
         ScrollView {
-            id: allExamsScrollView
+            id: userExamsScrollView
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: userExamsSettingsItem.bottom
             width: 300
             height: 230
-            contentHeight: allExamsList.height
-            SingleExamsList {
-                id: allExamsList
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+            // contentHeight: allExamsList.height
+
         }
     }
 
@@ -743,7 +740,7 @@ Rectangle {
         radius: 10
 
         Item {
-            id: universityNameSettingsItem
+            id: cityNameSettingsItem
             x: -10
             y: 110
             width: 200
@@ -753,11 +750,11 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             Text {
-                id: universityNameSettingsText
+                id: cityNameSettingsText
                 x: 0
                 height: 30
                 color: "#373737"
-                text: "Название ВУЗа"
+                text: "Город обучения"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 font.pixelSize: 21
@@ -768,18 +765,17 @@ Rectangle {
             }
 
             TextFieldWithCompleter {
-                id: universityNameTextField
+                id: cityNameTextField
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                objectName: "universityNameTextField"
+                objectName: "cityNameTextField"
                 width: 200
                 height: 35
-                placeholder: "любой ВУЗ"
-                availableValues: ["ВШЭ", "ИТМО", "МИФИ", "МФТИ"]
+                placeholder: "любой город"
+                availableValues: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань"]
                 maxCompitionsAmount: 1
             }
         }
-
         Item {
             id: opNameSettingsItem
             x: -10
@@ -819,7 +815,7 @@ Rectangle {
         }
 
         Item {
-            id: cityNameSettingsItem
+            id: universityNameSettingsItem
             x: -10
             y: 10
             width: 200
@@ -829,11 +825,11 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             Text {
-                id: cityNameSettingsText
+                id: universityNameSettingsText
                 x: 0
                 height: 30
                 color: "#373737"
-                text: "Город обучения"
+                text: "Название ВУЗа"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 font.pixelSize: 21
@@ -844,14 +840,14 @@ Rectangle {
             }
 
             TextFieldWithCompleter {
-                id: cityNameTextField
+                id: universityNameTextField
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                objectName: "cityNameTextField"
+                objectName: "universityNameTextField"
                 width: 200
                 height: 35
-                placeholder: "любой город"
-                availableValues: ["Москва", "Можайск", "Санкт-Петербург", "Владивосток", "Владикавказ", "Казань"]
+                placeholder: "любой ВУЗ"
+                availableValues: ["ВШЭ", "ИТМО", "МИФИ", "МФТИ"]
                 maxCompitionsAmount: 3
             }
         }

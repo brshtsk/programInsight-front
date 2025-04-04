@@ -74,6 +74,7 @@ class NewExamWindow(QObject):
                 if exam_name_text_field:
                     exam_name_text_field.setProperty('editable', True)
                     exam_name_text_field.setProperty('availableValues', list(self.unique_values.subjects_bak_or_spec))
+                    exam_name_text_field.setProperty('text', "")
                     print('Успешно установлены значения для examNameTextField (ЕГЭ/ДВИ)')
                 else:
                     print("ComboBox 'examNameTextField' не найден!")
@@ -98,6 +99,7 @@ class NewExamWindow(QObject):
                 if exam_name_text_field:
                     exam_name_text_field.setProperty('editable', True)
                     exam_name_text_field.setProperty('availableValues', list(self.unique_values.subjects_mag))
+                    exam_name_text_field.setProperty('text', "")
                     print('Успешно установлены значения для examNameTextField (Магистратура)')
                 else:
                     print("ComboBox 'examNameTextField' не найден!")
