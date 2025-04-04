@@ -1,89 +1,99 @@
 from data_manipulations import DataManipulations
 from search_settings import Settings
+from typing import Optional, List
 
 
 class Op:
-    def __init__(self, name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
-                 paid_ege_score, paid_places_amount, cost, city, length, attendance, exams, raex_position):
-        if type(name) is not str:
+    def __init__(self,
+                 name: str,
+                 university: str,
+                 exams_amount: Optional[int],
+                 op_type: str,
+                 budget_ege_score: Optional[int],
+                 budget_places_amount: Optional[int],
+                 paid_ege_score: Optional[int],
+                 paid_places_amount: Optional[int],
+                 cost: Optional[int],
+                 city: Optional[str],
+                 length: Optional[List[float]],
+                 attendance: Optional[List[str]],
+                 exams: Optional[List[str]],
+                 raex_position: Optional[int]):
+        # Проверка типа строки через isinstance
+        if not isinstance(name, str):
             raise TypeError("name должно быть строкой")
-        self.name = name  # Название образовательной программы
+        self.name = name
 
-        if type(university) is not str:
+        if not isinstance(university, str):
             raise TypeError("university должно быть строкой")
-        self.university = university  # Университет
+        self.university = university
 
-        if type(exams_amount) is not int and exams_amount is not None:
+        # Проверка типа числа или None
+        if exams_amount is not None and not isinstance(exams_amount, int):
             raise TypeError("exams_amount должно быть целым числом или None")
-        if exams_amount <= 0:
+        if exams_amount is not None and exams_amount <= 0:
             raise ValueError("exams_amount должно быть больше 0")
-        self.exams_amount = exams_amount  # Количество экзаменов (3/None)
+        self.exams_amount = exams_amount
 
-        if type(op_type) is not str:
+        if not isinstance(op_type, str):
             raise TypeError("op_type должно быть строкой")
-        self.op_type = op_type  # Тип программы ('Бакалавриат'/'Специалитет'/'Магистратура')
+        self.op_type = op_type
 
-        if type(budget_ege_score) is not int and budget_ege_score is not None:
+        if budget_ege_score is not None and not isinstance(budget_ege_score, int):
             raise TypeError("budget_ege_score должно быть целым числом или None")
-        self.budget_ege_score = budget_ege_score  # Проходной балл на бюджет (234/None)
-        # Эта переменная также показывает проходной балл на магистратуру, хотя и в названии есть ЕГЭ
-        # (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+        self.budget_ege_score = budget_ege_score
 
-        if type(budget_places_amount) is not int and budget_places_amount is not None:
+        if budget_places_amount is not None and not isinstance(budget_places_amount, int):
             raise TypeError("budget_places_amount должно быть целым числом или None")
-        self.budget_places_amount = budget_places_amount  # Количество бюджетных мест (50/None)
+        self.budget_places_amount = budget_places_amount
 
-        if type(paid_ege_score) is not int and paid_ege_score is not None:
+        if paid_ege_score is not None and not isinstance(paid_ege_score, int):
             raise TypeError("paid_ege_score должно быть целым числом или None")
-        self.paid_ege_score = paid_ege_score  # Проходной балл на платное (123/None)
-        # Эта переменная также показывает проходной балл на магистратуру, хотя и в названии есть ЕГЭ
-        # (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+        self.paid_ege_score = paid_ege_score
 
-        if type(paid_places_amount) is not int and paid_places_amount is not None:
+        if paid_places_amount is not None and not isinstance(paid_places_amount, int):
             raise TypeError("paid_places_amount должно быть целым числом или None")
-        self.paid_places_amount = paid_places_amount  # Количество платных мест (40/None)
+        self.paid_places_amount = paid_places_amount
 
-        if type(cost) is not int and cost is not None:
+        if cost is not None and not isinstance(cost, int):
             raise TypeError("cost должно быть целым числом или None")
-        self.cost = cost  # Стоимость обучения 730000/None
+        self.cost = cost
 
-        if type(city) is not str and city is not None:
+        if city is not None and not isinstance(city, str):
             raise TypeError("city должно быть строкой или None")
-        self.city = city  # Город, где находится университет 'Москва'/None
+        self.city = city
 
-        if type(length) is not list and length is not None:
+        if length is not None and not isinstance(length, list):
             raise TypeError("length должно быть списком float или None")
-        self.length = length  # Длительность обучения
-        # Так как может быть несколько длительностей, то это список [4.5, 5.0]/None
+        self.length = length
 
-        if type(attendance) is not list and attendance is not None:
+        if attendance is not None and not isinstance(attendance, list):
             raise TypeError("attendance должно быть списком строк или None")
-        self.attendance = attendance  # Форма обучения
-        # Так как может быть несколько форм, то это список ['Очная', 'Заочная']/None
+        self.attendance = attendance
 
-        if type(exams) is not list and exams is not None:
+        if exams is not None and not isinstance(exams, list):
             raise TypeError("exams должно быть списком строк или None")
-        self.exams = exams  # Список экзаменов ([['математика'], ['физика', 'химия'], ['информатика']]/None)
+        self.exams = exams
 
-        if type(raex_position) is not int and raex_position is not None:
+        if raex_position is not None and not isinstance(raex_position, int):
             raise TypeError("raex_position должно быть целым числом или None")
-        self.raex_position = raex_position  # Позиция в рейтинге RAEX (1/None)
+        self.raex_position = raex_position
 
-        # Проверки:
-
-        # 1) Если какие-то данные о бюджетных местах отсутствуют, то все данные о бюджетных местах должны отсутствовать
+        # Дополнительные проверки:
+        # Если некоторые данные о бюджетных местах отсутствуют, все они должны отсутствовать.
         if [self.budget_places_amount, self.budget_ege_score].count(None) not in [0, 2]:
             self.budget_places_amount = None
             self.budget_ege_score = None
-        # 2) Если какие-то данные о платных местах отсутствуют, то все данные о платных местах должны отсутствовать
+
+        # Если некоторые данные о платных местах отсутствуют, все они должны отсутствовать.
         if [self.paid_places_amount, self.paid_ege_score, self.cost].count(None) not in [0, 3]:
             self.paid_places_amount = None
             self.paid_ege_score = None
             self.cost = None
 
-        # Если нет данных ни о бюджетных, ни о платных местах, такой ОП нам не подходит
+        # Если нет данных ни о бюджетных, ни о платных местах, такой ОП не подходит.
         if self.budget_places_amount is None and self.paid_places_amount is None:
-            raise ValueError("Недостаточное данных о бюджетных и платных местах")
+            raise ValueError("Недостаточно данных о бюджетных и платных местах")
 
     def to_model_dict(self, settings=Settings()) -> dict:
         """
