@@ -34,6 +34,7 @@ Rectangle {
             width: 600
             height: 60
             contentWidth: opNameText.width
+            clip: true
 
             // Отключаем интерактивность, если текст помещается полностью
             interactive: opNameText.width > width

@@ -3,6 +3,7 @@ from statistics import Statistics
 from op import Op
 from search_settings import Settings
 from unique_values import UniqueValues
+from typing import Optional
 
 
 class ModelDataManagement:
@@ -24,11 +25,13 @@ class ModelDataManagement:
         # ОП с ошибками
         bad_ops = set()
 
-        for university in json_data:
-            for op_name in json_data[university]['Бакалавриат и специалитет']:
+        for op_data in json_data:
+            op_name = op_data['Программа']
+            op_type = op_data['Квалификация']
+
+            if op_type in ['Бакалавриат', 'Специалитет']:
                 try:
-                    op_data = json_data[university]['Бакалавриат и специалитет'][op_name]
-                    op_type = op_data['Квалификация']
+                    university = None
                     exams_amount = None
                     budget_ege_score = None
                     budget_places_amount = None
@@ -41,36 +44,49 @@ class ModelDataManagement:
                     exams = None
                     raex_position = None
 
-                    exams_amount = len(op_data['Предметы ЕГЭ 1'])
+                    exams_amount = len(op_data['ЕГЭ'])
                     city = op_data['Город']
                     length = op_data['Срок обучения']
                     attendance = op_data['Форма обучения']
+                    university = op_data['Университет']
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
 
                     exams = []
-                    for exam_var in op_data['Предметы ЕГЭ 1']:
+                    for exam_var in op_data['ЕГЭ']:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
                         exams.append(this_var)
 
-                    for postup_data in op_data['Варианты поступления'].values():
-                        if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
-                            for budget_info in postup_data['Бюджет']:
-                                if 'балл' in budget_info:
-                                    budget_ege_score = postup_data['Бюджет'][budget_info]
-                                if 'мест' in budget_info:
-                                    budget_places_amount = postup_data['Бюджет'][budget_info]
-                        if 'нет' not in postup_data['Платное']:
-                            for budget_info in postup_data['Платное']:
-                                if 'балл' in budget_info:
-                                    paid_ege_score = postup_data['Платное'][budget_info]
-                                if 'мест' in budget_info:
-                                    paid_places_amount = postup_data['Платное'][budget_info]
-                                if 'Стоимость' in budget_info:
-                                    cost = postup_data['Платное'][budget_info]
+                    # Самый популярный вариант поступления - 'Очная, на русском, Полный курс, на базе 11 классов'
+                    if 'Очная, на русском, Полный курс, на базе 11 классов' in op_data:
+                        postup_data = op_data['Очная, на русском, Полный курс, на базе 11 классов']
+                        budget_places_amount, budget_ege_score = ModelDataManagement.parse_budget_postup_data(
+                            postup_data)
+                        paid_places_amount, paid_ege_score, cost = ModelDataManagement.parse_paid_postup_data(
+                            postup_data)
+
+                    # Если на вариант 'Очная, на русском, Полный курс, на базе 11 классов' нельзя поступить на бюджет,
+                    # то ищем хоть какой-то вариант
+                    if budget_ege_score is None and budget_places_amount is None:
+                        for variant in op_data['Варианты поступления']:
+                            postup_data = op_data['Варианты поступления'][variant]
+                            budget_places_amount, budget_ege_score = ModelDataManagement.parse_budget_postup_data(
+                                postup_data)
+                            if budget_ege_score is not None and budget_places_amount is not None:
+                                break
+
+                    # Если на вариант 'Очная, на русском, Полный курс, на базе 11 классов' нельзя поступить на платное,
+                    # то ищем хоть какой-то вариант
+                    if paid_ege_score is None and paid_places_amount is None and cost is None:
+                        for variant in op_data['Варианты поступления']:
+                            postup_data = op_data['Варианты поступления'][variant]
+                            paid_places_amount, paid_ege_score, cost = ModelDataManagement.parse_paid_postup_data(
+                                postup_data)
+                            if paid_ege_score is not None and paid_places_amount is not None and cost is not None:
+                                break
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
@@ -81,10 +97,8 @@ class ModelDataManagement:
                     # print(f"Ошибка при обработке ОП: {op_name} в {university}")
                     bad_ops.add(("Бакалавриат/Специалитет", op_name))
 
-            for op_name in json_data[university]['Магистратура']:
+            if op_type == 'Магистратура':
                 try:
-                    op_data = json_data[university]['Магистратура'][op_name]
-                    op_type = op_data['Квалификация']
                     exams_amount = None
                     budget_ege_score = None
                     budget_places_amount = None
@@ -97,7 +111,7 @@ class ModelDataManagement:
                     exams = None
                     raex_position = None
 
-                    exams_amount = len(op_data['Вступительные 1'])
+                    exams_amount = len(op_data['Вступительные'])
                     city = op_data['Город']
                     length = op_data['Срок обучения']
                     attendance = op_data['Форма обучения']
@@ -106,27 +120,39 @@ class ModelDataManagement:
                         raise Exception("Нет экзаменов")
 
                     exams = []
-                    for exam_var in op_data['Вступительные 1']:
+                    for exam_var in op_data['Вступительные']:
                         this_var = []
                         for exam in exam_var:
                             this_var.append(exam)
                         exams.append(this_var)
 
-                    for postup_data in op_data['Варианты поступления'].values():
-                        if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
-                            for budget_info in postup_data['Бюджет']:
-                                if 'балл' in budget_info:
-                                    budget_ege_score = postup_data['Бюджет'][budget_info]
-                                if 'мест' in budget_info:
-                                    budget_places_amount = postup_data['Бюджет'][budget_info]
-                        if 'нет' not in postup_data['Платное']:
-                            for budget_info in postup_data['Платное']:
-                                if 'балл' in budget_info:
-                                    paid_ege_score = postup_data['Платное'][budget_info]
-                                if 'мест' in budget_info:
-                                    paid_places_amount = postup_data['Платное'][budget_info]
-                                if 'Стоимость' in budget_info:
-                                    cost = postup_data['Платное'][budget_info]
+                    # Самый популярный вариант поступления - 'Очная, на русском, 2 года'
+                    if 'Очная, на русском, 2 года' in op_data:
+                        postup_data = op_data['Очная, на русском, 2 года']
+                        budget_places_amount, budget_ege_score = ModelDataManagement.parse_budget_postup_data(
+                            postup_data)
+                        paid_places_amount, paid_ege_score, cost = ModelDataManagement.parse_paid_postup_data(
+                            postup_data)
+
+                    # Если на вариант 'Очная, на русском, 2 года' нельзя поступить на бюджет,
+                    # то ищем хоть какой-то вариант
+                    if budget_ege_score is None and budget_places_amount is None:
+                        for variant in op_data['Варианты поступления']:
+                            postup_data = op_data['Варианты поступления'][variant]
+                            budget_places_amount, budget_ege_score = ModelDataManagement.parse_budget_postup_data(
+                                postup_data)
+                            if budget_ege_score is not None and budget_places_amount is not None:
+                                break
+
+                    # Если на вариант 'Очная, на русском, 2 года' нельзя поступить на платное,
+                    # то ищем хоть какой-то вариант
+                    if paid_ege_score is None and paid_places_amount is None and cost is None:
+                        for variant in op_data['Варианты поступления']:
+                            postup_data = op_data['Варианты поступления'][variant]
+                            paid_places_amount, paid_ege_score, cost = ModelDataManagement.parse_paid_postup_data(
+                                postup_data)
+                            if paid_ege_score is not None and paid_places_amount is not None and cost is not None:
+                                break
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
@@ -151,6 +177,41 @@ class ModelDataManagement:
         print(f"Предметы на магистратуру: {unique_values.subjects_mag}")
 
         return data, unique_values
+
+    def parse_budget_postup_data(postup_data: dict) -> (Optional[int], Optional[int]):
+        """
+        Парсит данные о бюджетных местах
+        :return: количество мест, проходной балл
+        """
+        budget_places_amount = None
+        budget_ege_score = None
+
+        if 'нет' not in postup_data['Бюджет'] and type(postup_data['Бюджет']) is dict:
+            for budget_info in postup_data['Бюджет']:
+                if 'балл' in budget_info:
+                    budget_ege_score = postup_data['Бюджет'][budget_info]
+                if 'мест' in budget_info:
+                    budget_places_amount = postup_data['Бюджет'][budget_info]
+        return budget_places_amount, budget_ege_score
+
+    def parse_paid_postup_data(postup_data: dict) -> (Optional[int], Optional[int], Optional[int]):
+        """
+        Парсит данные о платных местах
+        :return: количество мест, проходной балл, стоимость
+        """
+        paid_places_amount = None
+        paid_ege_score = None
+        cost = None
+
+        if 'нет' not in postup_data['Платное'] and type(postup_data['Платное']) is dict:
+            for paid_info in postup_data['Платное']:
+                if 'балл' in paid_info:
+                    paid_ege_score = postup_data['Платное'][paid_info]
+                if 'мест' in paid_info:
+                    paid_places_amount = postup_data['Платное'][paid_info]
+                if 'Стоимость' in paid_info:
+                    cost = postup_data['Платное'][paid_info]
+        return paid_places_amount, paid_ege_score, cost
 
     def get_op_model_data(op_list: list[Op], settings=Settings()) -> (list[dict], list[dict]):
         """

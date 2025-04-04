@@ -33,7 +33,7 @@ class PyHandler(QObject):
             attendance_text,  # opAttendanceText
             price_text + " за год обучения",  # opPriceText (значение можно задать по необходимости)
             "-" if (not budget_score) else budget_score,  # budgetScoreText
-            paid_score,  # paidScoreText
+            "-" if (not paid_score) else paid_score,  # paidScoreText
             op_type,  # opTypeText
             budget_places,  # budgetPlacesText
             paid_places,  # paidPlacesText

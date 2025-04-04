@@ -16,7 +16,8 @@ class Frontend(QObject):
     def __init__(self, engine):
         super().__init__()
         self.engine = engine
-        self.op_list, self.unique_values = ModelDataManagement.get_op_data(Utils.resource_path('Python/big_data.json'))
+        self.op_list, self.unique_values = ModelDataManagement.get_op_data(
+            Utils.resource_path('Python/small_programs_info_lines.json'))
         self.settings = Settings()
         self.op_model = None
         self.statistics_model = None
@@ -47,8 +48,8 @@ class Frontend(QObject):
             context = self.engine.rootContext()
             context.setContextProperty("opModel", self.op_model)
             context.setContextProperty("statisticsModel", self.statistics_model)
-        except:
-            print("Ошибка при создании моделей! Модели не изменены.")
+        except Exception as e:
+            print("Ошибка при создании моделей! Модели не изменены. Текст ошибки:", e)
 
     def setup_connections(self):
         root_object = self.engine.rootObjects()[0]

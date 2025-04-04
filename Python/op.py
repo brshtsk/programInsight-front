@@ -5,8 +5,6 @@ from search_settings import Settings
 class Op:
     def __init__(self, name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                  paid_ege_score, paid_places_amount, cost, city, length, attendance, exams, raex_position):
-        # ToDo: посещаемость, длительность в виде списка
-
         if type(name) is not str:
             raise TypeError("name должно быть строкой")
         self.name = name  # Название образовательной программы
@@ -28,6 +26,8 @@ class Op:
         if type(budget_ege_score) is not int and budget_ege_score is not None:
             raise TypeError("budget_ege_score должно быть целым числом или None")
         self.budget_ege_score = budget_ege_score  # Проходной балл на бюджет (234/None)
+        # Эта переменная также показывает проходной балл на магистратуру, хотя и в названии есть ЕГЭ
+        # (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 
         if type(budget_places_amount) is not int and budget_places_amount is not None:
             raise TypeError("budget_places_amount должно быть целым числом или None")
@@ -36,6 +36,8 @@ class Op:
         if type(paid_ege_score) is not int and paid_ege_score is not None:
             raise TypeError("paid_ege_score должно быть целым числом или None")
         self.paid_ege_score = paid_ege_score  # Проходной балл на платное (123/None)
+        # Эта переменная также показывает проходной балл на магистратуру, хотя и в названии есть ЕГЭ
+        # (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 
         if type(paid_places_amount) is not int and paid_places_amount is not None:
             raise TypeError("paid_places_amount должно быть целым числом или None")
@@ -49,21 +51,39 @@ class Op:
             raise TypeError("city должно быть строкой или None")
         self.city = city  # Город, где находится университет 'Москва'/None
 
-        if type(length) is not str and length is not None:
-            raise TypeError("length должно быть строкой или None")
-        self.length = length  # Длина программы ("4 года"/None)
+        if type(length) is not list and length is not None:
+            raise TypeError("length должно быть списком float или None")
+        self.length = length  # Длительность обучения
+        # Так как может быть несколько длительностей, то это список [4.5, 5.0]/None
 
-        if type(attendance) is not str and attendance is not None:
-            raise TypeError("attendance должно быть строкой или None")
-        self.attendance = attendance  # Форма обучения ('Очная'/None)
+        if type(attendance) is not list and attendance is not None:
+            raise TypeError("attendance должно быть списком строк или None")
+        self.attendance = attendance  # Форма обучения
+        # Так как может быть несколько форм, то это список ['Очная', 'Заочная']/None
 
         if type(exams) is not list and exams is not None:
-            raise TypeError("exams должно быть списком или None")
+            raise TypeError("exams должно быть списком строк или None")
         self.exams = exams  # Список экзаменов ([['математика'], ['физика', 'химия'], ['информатика']]/None)
 
         if type(raex_position) is not int and raex_position is not None:
             raise TypeError("raex_position должно быть целым числом или None")
         self.raex_position = raex_position  # Позиция в рейтинге RAEX (1/None)
+
+        # Проверки:
+
+        # 1) Если какие-то данные о бюджетных местах отсутствуют, то все данные о бюджетных местах должны отсутствовать
+        if [self.budget_places_amount, self.budget_ege_score].count(None) not in [0, 2]:
+            self.budget_places_amount = None
+            self.budget_ege_score = None
+        # 2) Если какие-то данные о платных местах отсутствуют, то все данные о платных местах должны отсутствовать
+        if [self.paid_places_amount, self.paid_ege_score, self.cost].count(None) not in [0, 3]:
+            self.paid_places_amount = None
+            self.paid_ege_score = None
+            self.cost = None
+
+        # Если нет данных ни о бюджетных, ни о платных местах, такой ОП нам не подходит
+        if self.budget_places_amount is None and self.paid_places_amount is None:
+            raise ValueError("Недостаточное данных о бюджетных и платных местах")
 
     def to_model_dict(self, settings=Settings()) -> dict:
         """
@@ -101,9 +121,9 @@ class Op:
                 self.university),
             "opCodeText": self.op_type,
             "imageSource": DataManipulations.get_image_source(self.university),
-            "lengthText": self.length,
+            "lengthText": "Длительность: " + "; ".join(map(str, self.length)),
             "locationText": self.city,
-            "attendanceText": self.attendance,
+            "attendanceText": "; ".join(self.attendance),
             "raexPosition": self.raex_position,
             "budgetScore": self.budget_ege_score,
             "paidScore": self.paid_ege_score,
