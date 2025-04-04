@@ -9,8 +9,8 @@ Rectangle {
     height: 350
 
     Button {
-        id: loadProfileExamsButton
-        objectName: "loadProfileExamsButton"
+        id: saveExamButton
+        objectName: "saveExamButton"
         x: 20
         y: 300
         width: 300
@@ -21,8 +21,8 @@ Rectangle {
         font.styleName: "SemiBold"
 
         contentItem: Text {
-            scale: loadProfileExamsButton.hovered ? 1.05 : 1.0
-            font: loadProfileExamsButton.font
+            scale: saveExamButton.hovered ? 1.05 : 1.0
+            font: saveExamButton.font
             color: "#FFFFFF"
             text: "Сохранить предмет" // Белый цвет текста
             horizontalAlignment: Text.AlignHCenter
@@ -35,9 +35,9 @@ Rectangle {
         }
 
         background: Rectangle {
-            color: loadProfileExamsButton.pressed ? "#7dd96b" : "#53b93f"
+            color: saveExamButton.pressed ? "#7dd96b" : "#53b93f"
             radius: 10
-            scale: loadProfileExamsButton.hovered ? 1.05 : 1.0
+            scale: saveExamButton.hovered ? 1.05 : 1.0
             Behavior on scale {
                 NumberAnimation {
                     duration: 100
@@ -197,9 +197,9 @@ Rectangle {
             }
 
             TextField {
-                id: maxScoreTextField
+                id: examScoreTextField
                 anchors.right: parent.right
-                objectName: "maxScoreTextField"
+                objectName: "examScoreTextField"
                 width: 65
                 height: 35 // Увеличьте высоту
                 placeholderText: ""

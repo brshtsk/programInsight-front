@@ -94,40 +94,45 @@ Rectangle {
         anchors.rightMargin: 15
         width: 20
         height: 20
-        // Button {
-        //     id: deleteButton
-        //     width: 20
-        //     height: 20
-        //     horizontalCenter: parent.horizontalCenter
-        //     verticalCenter: parent.verticalCenter
+        Button {
+            id: deleteButton
+            width: 20
+            height: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
-        //     // Прозрачный фон
-        //     background: Rectangle {
-        //         color: "transparent"
-        //         // Можно добавить эффекты при наведении, например, легкое увеличение:
-        //         scale: deleteButton.hovered ? 1.1 : 1.0
-        //         Behavior on scale {
-        //             NumberAnimation { duration: 100 }
-        //         }
-        //     }
+            // Прозрачный фон
+            background: Rectangle {
+                color: "transparent"
+            }
 
-        //     // Элемент, отображающий символ "×"
-        //     contentItem: Text {
-        //         anchors.fill: parent
-        //         text: "×"
-        //         color: "#ed9528"
-        //         horizontalAlignment: Text.AlignHCenter
-        //         verticalAlignment: Text.AlignVCenter
-        //         font.pointSize: 18
-        //         font.family: Constants.font.family
-        //         font.styleName: "Bold"
-        //     }
+            // Элемент, отображающий символ "×"
+            contentItem: Text {
+                anchors.fill: parent
+                text: "×"
+                color: deleteButton.pressed ? "#ffc885" : "#ed9528"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 22
+                font.family: Constants.font.family
+                font.styleName: "Regular"
 
-        //     // // Обработка нажатия (например, сигнал для удаления объекта)
-        //     // onClicked: {
-        //     //     // Добавьте здесь логику удаления
-        //     // }
-        // }
+                scale: deleteButton.hovered ? 1.1 : 1.0
+                Behavior on scale {
+                    NumberAnimation { duration: 100 }
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+            }
+
+            // Сигнал для удаления объекта
+            onClicked: {
+                examHandler.handleExamDeleted(modelData.examNameText, modelData.examTypeText)
+            }
+        }
 
     }
 }

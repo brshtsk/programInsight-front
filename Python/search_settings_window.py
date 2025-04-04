@@ -4,6 +4,7 @@ from utils import Utils
 from search_settings import Settings
 from unique_values import UniqueValues
 from new_exam_window import NewExamWindow
+from exam_deletion_handler import ExamHandler
 
 
 class SearchSettingsWindow(QObject):
@@ -21,6 +22,8 @@ class SearchSettingsWindow(QObject):
         self.component = None
         self.window = None
         self.new_exam_window = None
+        self.exam_handler = ExamHandler(engine)  # Создаем экземпляр обработчика (для объектов в ListView)
+
         self.load_window()
 
         self.frontend_parent.mainWindowClosed.connect(self.on_main_window_closed)
@@ -126,6 +129,18 @@ class SearchSettingsWindow(QObject):
             add_exam_button.clicked.connect(self.add_exam_button_clicked)
         else:
             print("Button 'addExamButton' не найден")
+
+        # Изначально список экзаменов пустой
+        chosen_user_exams_list = self.window.findChild(QObject, 'chosenUserExamsList')
+        if chosen_user_exams_list:
+            # Передаем в QML пустой список экзаменов
+            chosen_user_exams_list.setProperty('exams', [])
+        else:
+            print("ListView 'chosenUserExamsList' не найден")
+
+        # Добавляем в контекст обработчик для удаления экзамена
+        context = self.engine.rootContext()
+        context.setContextProperty("examHandler", self.exam_handler)
 
     def restore_view(self):
         # Восстанавливаем состояние ComboBox "qualificationTypeComboBox"
