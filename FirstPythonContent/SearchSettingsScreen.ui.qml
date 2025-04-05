@@ -930,7 +930,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 objectName: "sortOpVarComboBox"
-                model: ["По рейтингу RAEX", "По стоимости", "По проходным"]
+                model: ["По умолчанию", "По рейтингу RAEX", "По стоимости", "По проходным"]
                 indicator: Item {
                     width: 20
                     height: 20
@@ -969,6 +969,8 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 45
                 height: 30
+
+                property alias iconSource: sortUpDownImage.source
 
                 font.pixelSize: 21
                 font.family: Constants.font.family

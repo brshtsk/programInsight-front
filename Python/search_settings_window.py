@@ -144,6 +144,20 @@ class SearchSettingsWindow(QObject):
         else:
             print("ComboBox 'filterByExamsComboBox' не найден")
 
+        # Выбор типа фильтрации
+        sort_op_var_combobox = self.window.findChild(QObject, 'sortOpVarComboBox')
+        if sort_op_var_combobox:
+            sort_op_var_combobox.currentIndexChanged.connect(self.sort_op_var_combobox_index_changed)
+        else:
+            print("ComboBox 'sortOpVarComboBox' не найден")
+
+        # Фильтрация сверху вниз или снизу вверх
+        sort_up_down_button = self.window.findChild(QObject, 'sortUpDownButton')
+        if sort_up_down_button:
+            sort_up_down_button.clicked.connect(self.sort_up_down_button_clicked)
+        else:
+            print("Button 'sortUpDownButton' не найден")
+
         # Этот класс является обработчиком сигналов из QML
         # Обработкой занимается handleExamDeleted
         context = self.engine.rootContext()
@@ -263,6 +277,32 @@ class SearchSettingsWindow(QObject):
             filter_by_exams_combobox.setProperty('currentIndex', idx)
         else:
             print("ComboBox 'filterByExamsComboBox' не найден!")
+
+        # Восстанавливаем состояние ComboBox "sortOpVarComboBox"
+        sort_op_var_combobox = self.window.findChild(QObject, 'sortOpVarComboBox')
+        if sort_op_var_combobox:
+            # Значения: 0 - "Без сортировки", 1 - "По рейтингу RAEX", 2 - "По цене", 3 - "По баллам"
+            if self.settings.sort_by == 'raex':
+                idx = 1
+            elif self.settings.sort_by == 'price':
+                idx = 2
+            elif self.settings.sort_by == 'ege_score':
+                idx = 3
+            else:
+                idx = 0
+            sort_op_var_combobox.setProperty('currentIndex', idx)
+        else:
+            print("ComboBox 'sortOpVarComboBox' не найден!")
+
+        # Восстанавливаем состояние Button "sortUpDownButton"
+        sort_up_down_button = self.window.findChild(QObject, 'sortUpDownButton')
+        if sort_up_down_button:
+            if self.settings.sort_from_high_to_low:
+                sort_up_down_button.setProperty('iconSource', 'resources/sort-from-bottom.png')
+            else:
+                sort_up_down_button.setProperty('iconSource', 'resources/sort-from-top.png')
+        else:
+            print("Button 'sortUpDownButton' не найден!")
 
         # Восстанавливаем список экзаменов
         self.update_exams_list()
@@ -512,3 +552,41 @@ class SearchSettingsWindow(QObject):
                 self.settings.filter_by_exams_and_score = True
                 self.settings.filter_by_exams_not_score = False
             self.updateModels.emit()
+
+    @Slot()
+    def sort_op_var_combobox_index_changed(self):
+        sort_op_var_combobox = self.sender()
+        if sort_op_var_combobox is not None:
+            index = sort_op_var_combobox.property('currentIndex')
+            # Варианты: ["По умолчанию", "По рейтингу RAEX", "По стоимости", "По проходным"]
+            v = ["По умолчанию", "По рейтингу RAEX", "По стоимости", "По проходным"]
+            print(f"Выбранный индекс: {index}. Выбрано: {v[index]}")
+            # "default" - без сортировки, "raex" - по рейтингу RAEX, "price" - по цене,
+            # "ege_score" - по проходному баллу на бюджет или платное (в зависимости от show_budget_score)
+            if index == 0:
+                self.settings.sort_by = "default"
+            if index == 1:
+                self.settings.sort_by = "raex"
+            if index == 2:
+                self.settings.sort_by = "price"
+            if index == 3:
+                self.settings.sort_by = "ege_score"
+            self.updateModels.emit()
+
+    @Slot()
+    def sort_up_down_button_clicked(self):
+        print("Кнопка сортировки нажата!")
+        sort_up_down_button = self.sender()
+        if sort_up_down_button is not None:
+            # Переключаем направление сортировки
+            self.settings.sort_from_high_to_low = not self.settings.sort_from_high_to_low
+            # Меняем иконку кнопки
+            if self.settings.sort_from_high_to_low:
+                sort_up_down_button.setProperty('iconSource', 'resources/sort-from-bottom.png')
+                print("Выбрана сортировка от большего к меньшему")
+            else:
+                sort_up_down_button.setProperty('iconSource', 'resources/sort-from-top.png')
+                print("Выбрана сортировка от меньшего к большему")
+            self.updateModels.emit()
+        else:
+            print("sender() не найден")

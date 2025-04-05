@@ -33,6 +33,13 @@ class Settings:
         self.filter_by_exams_not_score = False  # Фильтровать по экзаменам вне зависимости от баллов
         self.filter_by_exams_and_score = False  # Фильтровать по экзаменам и баллам одновременно
 
+        # Способы сортировки
+        self.sort_by = "default"  # Принимает значения:
+        # "default" - без сортировки, "raex" - по рейтингу RAEX, "price" - по цене,
+        # "ege_score" - по проходному баллу на бюджет или платное (в зависимости от show_budget_score)
+
+        self.sort_from_high_to_low = True  # Сортировать от большего к меньшему или наоборот
+
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
 

@@ -34,7 +34,7 @@ Item {
         y: 0
         width: 300
         height: contentHeight
-        spacing: 10
+        spacing: 5
         clip: true
 
         // Добавляем отступ перед первым элементом

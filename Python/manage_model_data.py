@@ -213,7 +213,32 @@ class ModelDataManagement:
                     cost = postup_data['Платное'][paid_info]
         return paid_places_amount, paid_ege_score, cost
 
-    def get_op_model_data(op_list: list[Op], settings=Settings(), unique_values=UniqueValues()) -> (list[dict], list[dict]):
+    def sort_op_list(op_list: list[Op], settings=Settings()) -> list[Op]:
+        """
+        Сортирует список ОП по заданным параметрам
+        :param op_list: список с объектами ОП
+        :param settings: объект настроек
+        :return: отсортированный список с объектами ОП
+        """
+        if settings.sort_by == 'raex':
+            op_list.sort(key=lambda x: x.raex_position if x.raex_position else 999,
+                         reverse=(not settings.sort_from_high_to_low))
+            # Инвертируем, так как чем меньше позиция в RAEX, тем выше рейтинг
+        elif settings.sort_by == 'price':
+            op_list.sort(key=lambda x: x.cost if x.cost else 0, reverse=settings.sort_from_high_to_low)
+        elif settings.sort_by == 'ege_score':
+            if settings.show_budget_score:
+                op_list.sort(key=lambda x: x.budget_ege_score if x.budget_ege_score else 0,
+                             reverse=settings.sort_from_high_to_low)
+            else:
+                op_list.sort(key=lambda x: x.paid_ege_score if x.paid_ege_score else 0,
+                             reverse=settings.sort_from_high_to_low)
+        else:
+            if not settings.sort_from_high_to_low:
+                op_list.reverse()
+
+    def get_op_model_data(op_list: list[Op], settings=Settings(), unique_values=UniqueValues()) -> (
+            list[dict], list[dict]):
         """
         Создает данные для модели ОП и статистики
         :param op_list: список с объектами ОП
@@ -221,6 +246,11 @@ class ModelDataManagement:
         :return: данные для модели ОП, данные для модели статистики
         """
         statistics = Statistics()
+
+        # Сортируем список ОП.
+        # Создаем новый список, чтобы не менять оригинальный.
+        op_list = op_list.copy()
+        ModelDataManagement.sort_op_list(op_list, settings)
 
         op_model_data = []
         for op in op_list:
