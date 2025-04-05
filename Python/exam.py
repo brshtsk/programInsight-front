@@ -1,57 +1,54 @@
-from unique_values import UniqueValues
-
+from typing import List
 
 class Exam:
     """
     Класс, представляющий экзамен, который пользователь указал в списке предметов.
     """
 
-    def __init__(self, name, qualification, score, unique_values: UniqueValues):
-        if type(name) is not str:
+    def __init__(self, name, qualification, score, subjects_bak_or_spec: List[str], subjects_mag: List[str]):
+        # Проверки типов
+        if not isinstance(name, str):
             raise TypeError("name должно быть строкой")
-        self.name = name  # Название экзамена ("математика", "физика"...)
 
-        if type(qualification) is not str:
+        if not isinstance(qualification, str):
             raise TypeError("qualification должно быть строкой")
-        if qualification not in ["ЕГЭ/ДВИ", "Доп баллы ЕГЭ", "Магистратура"]:
-            raise ValueError("qualification должно быть 'ЕГЭ/ДВИ', 'Доп баллы ЕГЭ' или 'Магистратура'")
-        self.qualification = qualification  # Квалификация ("ЕГЭ/ДВИ", "Доп баллы ЕГЭ", "Магистратура")
 
-        if type(score) is not int and score is not None:
-            raise TypeError("score должно быть целым числом или None")
-        if type(score) is int:
+        # Проверка квалификации
+        valid_qualifications = ["ЕГЭ/ДВИ", "Доп баллы ЕГЭ", "Магистратура"]
+        if qualification not in valid_qualifications:
+            raise ValueError(f"qualification должно быть одним из значений: {', '.join(valid_qualifications)}")
+
+        # Проверка баллов
+        max_scores = {"ЕГЭ/ДВИ": 100, "Доп баллы ЕГЭ": 10, "Магистратура": 999}
+
+        if score is not None:
+            if not isinstance(score, int):
+                raise TypeError("score должно быть целым числом или None")
             if score < 0:
                 raise ValueError("score должно быть больше 0")
-            # Если это ЕГЭ/ДВИ, то score не больше 100
-            if qualification == "ЕГЭ/ДВИ" and score > 100:
-                raise ValueError("score для ЕГЭ/ДВИ должно быть меньше 100")
-            # Если это Магистратура, то score не больше 999
-            if qualification == "Магистратура" and score > 999:
-                raise ValueError("score для Магистратуры должно быть меньше 999")
-            # Если это Доп баллы ЕГЭ, то score не больше 10
-            if qualification == "Доп баллы ЕГЭ" and score > 10:
-                raise ValueError("score для Доп баллов ЕГЭ должно быть меньше 10")
+            if score > max_scores[qualification]:
+                raise ValueError(f"score для {qualification} должно быть меньше {max_scores[qualification]}")
+
+        # Сохраняем базовые свойства
+        self.qualification = qualification
         self.score = score
 
-        # Если экзамена с таким названием и типом нет в unique_values, значит его не существует
-        if self.qualification == "ЕГЭ/ДВИ":
-            exists = False
-            for real_exam in unique_values.subjects_bak_or_spec:
-                if self.name.lower() == real_exam.lower():
-                    self.name = real_exam
-                    exists = True
-                    break
-            if not exists:
-                raise ValueError(f"Экзамен '{self.name}' не существует.")
-        if self.qualification == "Магистратура":
-            exists = False
-            for real_exam in unique_values.subjects_mag:
-                if self.name.lower() == real_exam.lower():
-                    self.name = real_exam
-                    exists = True
-                    break
-            if not exists:
-                raise ValueError(f"Экзамен '{self.name}' не существует.")
+        # Проверка и нормализация названия экзамена
+        if qualification == "ЕГЭ/ДВИ":
+            self._verify_exam_exists(name, subjects_bak_or_spec)
+        elif qualification == "Магистратура":
+            self._verify_exam_exists(name, subjects_mag)
+        else:  # "Доп баллы ЕГЭ" - проверка не требуется
+            self.name = name
+
+    def _verify_exam_exists(self, name, exam_list):
+        """Вспомогательный метод для проверки существования экзамена в списке."""
+        for real_exam in exam_list:
+            if name.lower() == real_exam.lower():
+                self.name = real_exam  # Нормализуем название
+                return
+
+        raise ValueError(f"Экзамен '{name}' не существует.")
 
 
 class UserExamsSet:

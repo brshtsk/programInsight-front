@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Slot, QUrl
+from PySide6.QtCore import QObject, Slot, QUrl, Signal
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from unique_values import UniqueValues
@@ -6,6 +6,8 @@ from exam import Exam
 
 
 class NewExamWindow(QObject):
+    examCreated = Signal(Exam)  # Сигнал, который будет испускаться при создании нового экзамена
+
     def __init__(self, engine, unique_values: UniqueValues, search_settings_window_parent):
         super().__init__()
         self.engine = engine
@@ -123,7 +125,7 @@ class NewExamWindow(QObject):
     @Slot()
     def on_exam_name_changed(self):
         exam_name = self.sender().property('text')  # Получаем текст из поля
-        print(f"Введено название экзамена: {exam_name}")
+        # print(f"Введено название экзамена: {exam_name}")
 
     @Slot()
     def exam_type_combobox_index_changed(self):
@@ -158,7 +160,7 @@ class NewExamWindow(QObject):
             score_text = exam_score_text_field.property('text')
             try:
                 score = int(score_text)
-                print(f"Получены баллы экзамена: {score}")
+                # print(f"Получены баллы экзамена: {score}")
             except ValueError:
                 print("Некорректный ввод баллов экзамена!")
         else:
@@ -214,7 +216,10 @@ class NewExamWindow(QObject):
             else:
                 raise ValueError("Недопустимый индекс типа экзамена")
 
-            new_exam = Exam(exam_name, qualification, score, self.unique_values)
+            new_exam = Exam(exam_name, qualification, score, self.unique_values.subjects_bak_or_spec,
+                            self.unique_values.subjects_mag)
             print(f"Создан новый экзамен: {new_exam.name}, {new_exam.qualification}, {new_exam.score}")
+            # Испускаем сигнал о создании экзамена
+            self.examCreated.emit(new_exam)
         except Exception as e:
             print("Ошибка при создании экзамена:", e)

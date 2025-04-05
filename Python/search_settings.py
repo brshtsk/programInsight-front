@@ -1,10 +1,13 @@
+from exam import UserExamsSet
+
+
 class Settings:
     def __init__(self):
         self.show_budget_score = True  # Показывать баллы на бюджет или на платное
         self.show_op_only_with_budget = True
 
         self.filter_by_score = False
-        self.min_average_score = 0 # Минимальный средний проходной балл за ОДИН предмет.
+        self.min_average_score = 0  # Минимальный средний проходной балл за ОДИН предмет.
         self.max_average_score = 100_000_000
 
         # filter_by_price показывает, нужно ли сейчас фильтровать ОП по цене
@@ -23,6 +26,8 @@ class Settings:
         self.city_name = None
         self.op_name = None
         self.university_name = None
+
+        self.exams = UserExamsSet()  # Экзамены, которые указал пользователь
 
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
