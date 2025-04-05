@@ -9,7 +9,7 @@ from exam import Exam
 
 class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
-    searchSettingsClosed = Signal()  # Сигнал для уведомления Frontend о закрытии окна настроек
+    searchSettingsClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна настроек
 
     # ToDo: можно сделать ползунок для выбора диапазона баллов и стоимости
 

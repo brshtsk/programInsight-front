@@ -8,6 +8,7 @@ from search_settings import Settings
 from op_card_handler import PyHandler
 from unique_values import UniqueValues
 from search_settings_window import SearchSettingsWindow
+from dashboards_window import DashboardsWindow
 
 
 class Frontend(QObject):
@@ -18,12 +19,12 @@ class Frontend(QObject):
         super().__init__()
         self.engine = engine
         self.op_list, self.unique_values = ModelDataManagement.get_op_data(
-            Utils.resource_path('Python/small_programs_info_lines.json'))
+            Utils.resource_path('Python/small_programs_info_lines.json'))  # self.op_list - список всех объектов Op
         self.settings = Settings()
+        self.filtered_op_list = None  # Список объектов Op, которые отображаются в главном окне и подходят по фильтрам
         self.op_model = None
         self.statistics_model = None
         self.search_settings_window = None  # Ссылка на окно настроек
-        self.search_settings_window = None
         self.dashboard_window = None  # Ссылка на окно дашбордов
         self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
@@ -33,8 +34,9 @@ class Frontend(QObject):
     def setup_models(self):
         try:
             # Получаем данные для модели
-            op_model_data, statistics_model_data = ModelDataManagement.get_op_model_data(self.op_list, self.settings,
-                                                                                         self.unique_values)
+            op_model_data, statistics_model_data, self.filtered_op_list = ModelDataManagement.get_op_model_data(
+                self.op_list, self.settings,
+                self.unique_values)
             self.op_model = opListModel(op_model_data)
             self.statistics_model = StatisticsListModel(statistics_model_data)
 
@@ -93,34 +95,18 @@ class Frontend(QObject):
 
     @Slot()
     def dashboard_button_clicked(self):
-        # ToDo: отдельный класс для дашбордов
-        # Если окно дашбордов уже открыто, выходим из метода
-        if self.dashboard_window is not None:
-            print("Окно дашбордов уже открыто!")
-            return
-
-        print('Кнопка дашбордов нажата!')
-        dashboard_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
-        component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(dashboard_qml_path)))
-        if component.status() == QQmlComponent.Ready:
-            self.dashboard_window = component.create()
-            if self.dashboard_window:
-                self.dashboard_window.show()
-                # Подключаем сигнал закрытия окна, чтобы обнулить ссылку
-                self.dashboard_window.destroyed.connect(self.on_dashboard_closed)
-            else:
-                print("Не удалось создать окно дашбордов.")
+        # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
+        if self.dashboard_window is None or self.dashboard_window.window is None:
+            print('Кнопка дашбордов нажата!')
+            self.dashboard_window = DashboardsWindow(self.engine, self.filtered_op_list, self)
         else:
-            print("Ошибка при загрузке Dashboard.qml:", component.errorString())
+            try:
+                self.search_settings_window.window.show()
+                self.search_settings_window.restore_view()
+            except Exception as e:
+                print("Окно дашбордов уже открыто:", e)
 
     @Slot()
-    def on_dashboard_closed(self):
-        """Слот, вызываемый при закрытии окна дашбордов, чтобы очистить ссылку."""
-        print("Окно дашбордов закрыто")
-        self.dashboard_window = None
-        # ToDo: не дает открыть дашборды во второй раз
-        # Решается отдельным классом для дашбордов, добавлением self.window.windowClosed.connect(self.on_window_closed)
-
     def on_main_window_closed(self):
         """Слот, вызываемый при закрытии главного окна."""
         print("Главное окно закрыто")
