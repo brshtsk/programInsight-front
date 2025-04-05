@@ -1,56 +1,57 @@
 import QtQuick
 import QtQuick.Controls
+import FirstPython
 
 Item {
     id: root
     width: 280
     height: roundStatsListView.height
 
-    property var donutStatsList: [
-        {
-            propertyNameText: "В топ-30<br>RAEX",
-            propertyValueText: "34",
-            propertyPercentText: "82,1%",
-            floatPercent: 0.821,
-            percentColor: "#53b93f",
-            barBackground: "#ffffff",
-        },
-        {
-            propertyNameText: "Ниже топ-30<br>RAEX",
-            propertyValueText: "8",
-            propertyPercentText: "17,9%",
-            floatPercent: 0.179,
-            percentColor: "#ed9528",
-            barBackground: "#ffffff",
-        },
-        {
-            propertyNameText: "Бакалавриат",
-            propertyValueText: "29",
-            propertyPercentText: "71%",
-            floatPercent: 0.71,
-            percentColor: "#696969",
-            barBackground: "#ffffff",
-        },
-        {
-            propertyNameText: "Специалитет",
-            propertyValueText: "29",
-            propertyPercentText: "29%",
-            floatPercent: 0.29,
-            percentColor: "#000000",
-            barBackground: "#ffffff",
-        }
-    ]
+    // property var donutStatsList: [
+    //     {
+    //         propertyNameText: "В топ-30<br>RAEX",
+    //         propertyValueText: "34",
+    //         propertyPercentText: "82,1%",
+    //         floatPercent: 0.821,
+    //         percentColor: "#53b93f",
+    //         barBackground: "#ffffff",
+    //     },
+    //     {
+    //         propertyNameText: "Ниже топ-30<br>RAEX",
+    //         propertyValueText: "8",
+    //         propertyPercentText: "17,9%",
+    //         floatPercent: 0.179,
+    //         percentColor: "#ed9528",
+    //         barBackground: "#ffffff",
+    //     },
+    //     {
+    //         propertyNameText: "Бакалавриат",
+    //         propertyValueText: "29",
+    //         propertyPercentText: "71%",
+    //         floatPercent: 0.71,
+    //         percentColor: "#696969",
+    //         barBackground: "#ffffff",
+    //     },
+    //     {
+    //         propertyNameText: "Специалитет",
+    //         propertyValueText: "29",
+    //         propertyPercentText: "29%",
+    //         floatPercent: 0.29,
+    //         percentColor: "#000000",
+    //         barBackground: "#ffffff",
+    //     }
+    // ]
 
-    // property var donutStatsList
+    property var donutStatsList
 
     ListView {
         id: roundStatsListView
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 245
+        height: contentHeight
         anchors.verticalCenter: parent.verticalCenter
 
-        spacing: 15 // Добавляем отступ между элементами
+        spacing: 5 // Добавляем отступ между элементами
 
         model: root.donutStatsList
 

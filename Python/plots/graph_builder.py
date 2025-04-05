@@ -5,6 +5,11 @@ from scipy.stats import gaussian_kde
 
 class GraphBuilder:
     GREEN = '#53b93f'
+    ORANGE = '#ed9528'
+    BLUE = '#49c0de'
+    PINK = '#de49a2'
+    GRAY = '#696969'
+    BLACK = '#000000'
     FZ = 12
     TITLE_FZ = 14
 
@@ -32,15 +37,31 @@ class GraphBuilder:
     @staticmethod
     def donut_chart(df):
         fig, ax = GraphBuilder.get_transparent_fig(6, 6)
-        ax.text(0, 0, 'Статистика ОП', ha='center', va='center', fontsize=GraphBuilder.TITLE_FZ)
         forms = df['Форма обучения'].explode()
         counts = forms.value_counts()
         print("Формы обучения:", forms.unique())
-        ax.pie(counts.values, radius=1, wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)})
+        if len(counts) > 4:
+            raise ValueError("Количество форм обучения превышает 4")
+        form_colors = [GraphBuilder.GREEN, GraphBuilder.ORANGE, GraphBuilder.BLUE, GraphBuilder.PINK][:len(counts)]
+        ax.pie(
+            counts.values,
+            radius=1,
+            wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
+            colors=form_colors
+        )
+
         qc = df['Квалификация'].value_counts()
         print("Квалификации:", df['Квалификация'].unique())
+        if len(qc) > 2:
+            raise ValueError("Количество квалификаций превышает 2")
+        qual_colors = [GraphBuilder.GRAY, GraphBuilder.BLACK][:len(qc)]
         if len(qc) > 1:
-            ax.pie(qc.values, radius=0.8, wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)})
+            ax.pie(
+                qc.values,
+                radius=0.8,
+                wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
+                colors=qual_colors
+            )
         return fig
 
     @staticmethod

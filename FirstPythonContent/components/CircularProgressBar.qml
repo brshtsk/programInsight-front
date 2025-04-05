@@ -1,5 +1,6 @@
 import QtQuick 2.15
 
+
 Item {
     id: root
     property real progress: 0.75  // Процент заполнения (0.0 - 1.0)
