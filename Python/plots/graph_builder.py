@@ -35,34 +35,67 @@ class GraphBuilder:
         ax.spines['left'].set_color(color)
 
     @staticmethod
-    def donut_chart(df):
+    def donut_chart(df) -> (Figure, list[dict]):
+        """
+        Создаёт круговую диаграмму с формами обучения и квалификациями,
+        а также возвращает данные для отображения в таблице.
+        :param df:
+        :return:
+        """
         fig, ax = GraphBuilder.get_transparent_fig(6, 6)
+        list_stats_data = []
+
+        # Обработка форм обучения
         forms = df['Форма обучения'].explode()
         counts = forms.value_counts()
         print("Формы обучения:", forms.unique())
         if len(counts) > 4:
             raise ValueError("Количество форм обучения превышает 4")
         form_colors = [GraphBuilder.GREEN, GraphBuilder.ORANGE, GraphBuilder.BLUE, GraphBuilder.PINK][:len(counts)]
+        total_forms = counts.sum()
         ax.pie(
             counts.values,
             radius=1,
             wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
             colors=form_colors
         )
+        for i, (form, count) in enumerate(counts.items()):
+            percent = count / total_forms
+            list_stats_data.append({
+                "propertyNameText": form,
+                "propertyValueText": str(count),
+                "propertyPercentText": f"{percent * 100:.1f}%",
+                "floatPercent": round(percent, 3),
+                "percentColor": form_colors[i],
+                "barBackground": "#ffffff"
+            })
 
+        # Обработка квалификаций
         qc = df['Квалификация'].value_counts()
         print("Квалификации:", df['Квалификация'].unique())
         if len(qc) > 2:
             raise ValueError("Количество квалификаций превышает 2")
-        qual_colors = [GraphBuilder.GRAY, GraphBuilder.BLACK][:len(qc)]
         if len(qc) > 1:
+            qual_colors = [GraphBuilder.GRAY, GraphBuilder.BLACK][:len(qc)]
+            total_quals = qc.sum()
             ax.pie(
                 qc.values,
                 radius=0.8,
                 wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
                 colors=qual_colors
             )
-        return fig
+            for i, (qual, count) in enumerate(qc.items()):
+                percent = count / total_quals
+                list_stats_data.append({
+                    "propertyNameText": qual,
+                    "propertyValueText": str(count),
+                    "propertyPercentText": f"{percent * 100:.1f}%",
+                    "floatPercent": round(percent, 3),
+                    "percentColor": qual_colors[i],
+                    "barBackground": "#ffffff"
+                })
+
+        return fig, list_stats_data
 
     @staticmethod
     def build_kde_layout(var, title, x_label, color='black'):

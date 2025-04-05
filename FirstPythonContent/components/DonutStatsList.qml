@@ -42,7 +42,7 @@ Item {
     //     }
     // ]
 
-    property var donutStatsList
+    property var donutStatsValues
 
     ListView {
         id: roundStatsListView
@@ -53,7 +53,7 @@ Item {
 
         spacing: 5 // Добавляем отступ между элементами
 
-        model: root.donutStatsList
+        model: root.donutStatsValues
 
         delegate: Item {
             id: circleStatisticColumnItem

@@ -23,7 +23,8 @@ Rectangle {
         border.width: 0
 
         Image {
-            id: statisticsSircleImage
+            id: statsDonutImage
+            objectName: "statsDonutImage"
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.rightMargin: 20
@@ -33,8 +34,10 @@ Rectangle {
             source: "resources/circle_diagram.png"
             fillMode: Image.PreserveAspectFit
 
+            property alias headerVisible: statsDonutText.visible
+
             Text {
-                id: statisticSircleText
+                id: statsDonutText
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "#373737"
@@ -57,10 +60,12 @@ Rectangle {
             width: 280
 
             DonutStatsList {
+                id: donutStatsList
+                objectName: "donutStatsList"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                donutStatsList: [{
+                donutStatsValues: [{
                         "propertyNameText": "В топ-30<br>RAEX",
                         "propertyValueText": "34",
                         "propertyPercentText": "82,1%",
@@ -79,20 +84,6 @@ Rectangle {
                         "propertyValueText": "29",
                         "propertyPercentText": "71%",
                         "floatPercent": 0.71,
-                        "percentColor": "#696969",
-                        "barBackground": "#ffffff"
-                    }, {
-                        "propertyNameText": "Специалитет",
-                        "propertyValueText": "9",
-                        "propertyPercentText": "29%",
-                        "floatPercent": 0.29,
-                        "percentColor": "#000000",
-                        "barBackground": "#ffffff"
-                    }, {
-                        "propertyNameText": "Бакалавриат",
-                        "propertyValueText": "29",
-                        "propertyPercentText": "71%",
-                        "floatPercent": 0.71,
                         "percentColor": "#49c0de",
                         "barBackground": "#ffffff"
                     }, {
@@ -101,6 +92,20 @@ Rectangle {
                         "propertyPercentText": "29%",
                         "floatPercent": 0.29,
                         "percentColor": "#de49a2",
+                        "barBackground": "#ffffff"
+                    }, {
+                        "propertyNameText": "Бакалавриат",
+                        "propertyValueText": "29",
+                        "propertyPercentText": "71%",
+                        "floatPercent": 0.71,
+                        "percentColor": "#696969",
+                        "barBackground": "#ffffff"
+                    }, {
+                        "propertyNameText": "Специалитет",
+                        "propertyValueText": "9",
+                        "propertyPercentText": "29%",
+                        "floatPercent": 0.29,
+                        "percentColor": "#000000",
                         "barBackground": "#ffffff"
                     }]
             }

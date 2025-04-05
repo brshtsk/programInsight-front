@@ -14,6 +14,7 @@ from dashboards_window import DashboardsWindow
 class Frontend(QObject):
     unique_values: UniqueValues  # Явно указываем тип атрибута
     mainWindowClosed = Signal()  # Сигнал, который будет испускаться при закрытии главного окна
+    modelChanged = Signal()  # Сигнал, который будет испускаться при изменении модели
 
     def __init__(self, engine):
         super().__init__()
@@ -52,6 +53,9 @@ class Frontend(QObject):
             context = self.engine.rootContext()
             context.setContextProperty("opModel", self.op_model)
             context.setContextProperty("statisticsModel", self.statistics_model)
+
+            # Сигнализируем об изменении модели
+            self.modelChanged.emit()
         except Exception as e:
             print("Ошибка при создании моделей! Модели не изменены. Текст ошибки:", e)
 
@@ -98,7 +102,7 @@ class Frontend(QObject):
         # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
         if self.dashboard_window is None or self.dashboard_window.window is None:
             print('Кнопка дашбордов нажата!')
-            self.dashboard_window = DashboardsWindow(self.engine, self.filtered_op_list, self)
+            self.dashboard_window = DashboardsWindow(self.engine, self)
         else:
             try:
                 self.search_settings_window.window.show()

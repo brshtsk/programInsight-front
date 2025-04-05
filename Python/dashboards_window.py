@@ -9,10 +9,9 @@ import os
 
 
 class DashboardsWindow(QObject):
-    def __init__(self, engine, op_list: List[Op], frontend_parent):
+    def __init__(self, engine, frontend_parent):
         super().__init__()
         self.engine = engine
-        self.op_list = op_list
         self.frontend_parent = frontend_parent
         self.component = None
         self.window = None
@@ -20,6 +19,7 @@ class DashboardsWindow(QObject):
         self.load_window()
 
         self.frontend_parent.mainWindowClosed.connect(self.on_main_window_closed)
+        self.frontend_parent.modelChanged.connect(self.on_model_changed)
 
     def load_window(self):
         settings_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
@@ -28,6 +28,7 @@ class DashboardsWindow(QObject):
             self.window = self.component.create()
             if self.window:
                 self.window.show()
+                self.set_default_properties()
                 self.build_plots()
                 self.window.windowClosed.connect(self.on_window_closed)
             else:
@@ -35,16 +36,68 @@ class DashboardsWindow(QObject):
         else:
             print("Ошибка при загрузке SearchSettings.qml:", self.component.errorString())
 
-    def build_plots(self):
-        """Создаёт графики на основе данных из op_list."""
-        # Преобразуем список объектов Op в DataFrame
-        df = DataConverter.list_op_to_dataframe(self.op_list)
+    def set_default_properties(self):
+        """
+        Когда открывается окно дашбордов, никакие графики не должны отображаться.
+        Логика отображения графиков прописана далее.
+        """
+        # Нужно, чтобы при пустом списке не отображался график-заглушка
 
-        # Сохраним donut_chart
-        output_path = Utils.resource_path('FirstPythonContent/plots_images/donut_chart.png')
-        os.makedirs(output_path.parent, exist_ok=True)
-        fig = GraphBuilder.donut_chart(df)
-        fig.savefig(output_path)
+        # Обнуляем список с информацией о донате
+        donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
+        if donut_stats_list:
+            donut_stats_list.setProperty('donutStatsValues', [])
+        else:
+            print("Элемент с objectName 'donutStatsList' не найден")
+
+        stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
+        if stats_donut_image:
+            stats_donut_image.setProperty('source', '')
+            stats_donut_image.setProperty('headerVisible', False)
+        else:
+            print("Элемент с objectName 'statsDonutImage' не найден")
+
+    def build_plots(self):
+        """
+        Создаёт графики на основе данных из op_list.
+        """
+        op_list = self.frontend_parent.filtered_op_list
+
+        try:
+            # Преобразуем список объектов Op в DataFrame
+            df = DataConverter.list_op_to_dataframe(op_list)
+
+            # Сохраним donut_chart
+            output_path = Utils.resource_path('FirstPythonContent/plots_images/donut_chart.png')
+            os.makedirs(output_path.parent, exist_ok=True)
+            fig, list_stats_data = GraphBuilder.donut_chart(df)
+            fig.savefig(output_path, bbox_inches='tight')
+            self.update_donut(list_stats_data)
+        except:
+            print("Ошибка, donut не изменён")
+
+    def update_donut(self, list_stats_data):
+        donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
+        if donut_stats_list:
+            donut_stats_list.setProperty('donutStatsValues', list_stats_data)
+        else:
+            print("Элемент с objectName 'donutStatsList' не найден")
+
+        stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
+        if stats_donut_image:
+            stats_donut_image.setProperty('source', 'plots_images/donut_chart.png')
+            stats_donut_image.setProperty('headerVisible', True)
+        else:
+            print("Элемент с objectName 'statsDonutImage' не найден")
+
+    @Slot()
+    def on_model_changed(self):
+        """
+        Слот, вызываемый при изменении модели.
+        Обновляет графики на основе новых данных.
+        """
+        print("Модель обновлена, обновляем графики")
+        self.build_plots()
 
     @Slot()
     def on_window_closed(self):
