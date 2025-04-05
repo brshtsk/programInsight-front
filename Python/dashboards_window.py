@@ -3,6 +3,9 @@ from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from typing import List
 from op import Op
+from plots.graph_builder import GraphBuilder
+from data_converter import DataConverter
+import os
 
 
 class DashboardsWindow(QObject):
@@ -34,9 +37,14 @@ class DashboardsWindow(QObject):
 
     def build_plots(self):
         """Создаёт графики на основе данных из op_list."""
-        # Здесь вы можете добавить код для создания графиков на основе self.op_list
-        # Например, используя библиотеку matplotlib или другую библиотеку для визуализации
-        pass
+        # Преобразуем список объектов Op в DataFrame
+        df = DataConverter.list_op_to_dataframe(self.op_list)
+
+        # Сохраним donut_chart
+        output_path = Utils.resource_path('FirstPythonContent/plots_images/donut_chart.png')
+        os.makedirs(output_path.parent, exist_ok=True)
+        fig = GraphBuilder.donut_chart(df)
+        fig.savefig(output_path)
 
     @Slot()
     def on_window_closed(self):
