@@ -137,6 +137,13 @@ class SearchSettingsWindow(QObject):
         else:
             print("ListView 'chosenUserExamsList' не найден")
 
+        # Выбор способа фильтрации по своим предметам
+        filter_by_exams_combobox = self.window.findChild(QObject, 'filterByExamsComboBox')
+        if filter_by_exams_combobox:
+            filter_by_exams_combobox.currentIndexChanged.connect(self.filter_by_exams_combobox_index_changed)
+        else:
+            print("ComboBox 'filterByExamsComboBox' не найден")
+
         # Этот класс является обработчиком сигналов из QML
         # Обработкой занимается handleExamDeleted
         context = self.engine.rootContext()
@@ -262,6 +269,7 @@ class SearchSettingsWindow(QObject):
         try:
             self.settings.exams.add_exam(exam)
             self.update_exams_list()
+            self.updateModels.emit()  # Уведомляем Frontend об изменениях
         except Exception as e:
             print(f"Ошибка при добавлении экзамена {exam.name} в список:", e)
 
@@ -469,3 +477,24 @@ class SearchSettingsWindow(QObject):
         self.settings.exams.delete_exam(exam_name, exam_type)
         # Обновляем список экзаменов
         self.update_exams_list()
+        # Обновляем модели
+        self.updateModels.emit()
+
+    @Slot()
+    def filter_by_exams_combobox_index_changed(self):
+        filter_by_exams_combobox = self.sender()
+        if filter_by_exams_combobox is not None:
+            index = filter_by_exams_combobox.property('currentIndex')
+            # Варианты: "Выключен", "Включен, без баллов", "Включен, с баллами"
+            v = ["Выключен", "Включен, без баллов", "Включен, с баллами"]
+            print(f"Выбранный индекс: {index}. Выбрано: {v[index]}")
+            if index == 0:
+                self.settings.filter_by_exams_and_score = False
+                self.settings.filter_by_exams_not_score = False
+            if index == 1:
+                self.settings.filter_by_exams_and_score = False
+                self.settings.filter_by_exams_not_score = True
+            if index == 2:
+                self.settings.filter_by_exams_and_score = True
+                self.settings.filter_by_exams_not_score = False
+            self.updateModels.emit()

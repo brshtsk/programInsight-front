@@ -37,7 +37,9 @@ class Op:
 
         if not isinstance(op_type, str):
             raise TypeError("op_type должно быть строкой")
-        self.op_type = op_type
+        if op_type not in ["Бакалавриат", "Специалитет", "Магистратура"]:
+            raise ValueError("op_type должно быть одним из значений: 'Бакалавриат', 'Специалитет', 'Магистратура'")
+        self.op_type = op_type  # Тип ОП ("Бакалавриат", "Специалитет", "Магистратура")
 
         if budget_ege_score is not None and not isinstance(budget_ege_score, int):
             raise TypeError("budget_ege_score должно быть целым числом или None")
@@ -146,6 +148,54 @@ class Op:
         }
         return op_dict
 
+    def is_possible_to_pass(self, settings: Settings):
+        """
+        Проверяет, можно ли поступить на эту ОП по предметам из settings.exams
+        """
+        max_score_gained = 0
+
+        if self.op_type == "Бакалавриат" or self.op_type == "Специалитет":
+            needed_exams_type = "ЕГЭ/ДВИ"
+            # Зачтем доп. баллы
+            extra_exams = list(exam for exam in settings.exams if exam.qualification == "Доп баллы ЕГЭ")
+            try:
+                max_score_gained += extra_exams[0].score
+            except:
+                max_score_gained += 0
+        if self.op_type == "Магистратура":
+            needed_exams_type = "Магистратура"
+
+        available_user_exams = list(exam for exam in settings.exams if exam.qualification == needed_exams_type)
+
+        # Пройдемся по вариантам экзаменов, которые нужно сдать для поступления на ОП
+        for exam_vars in self.exams:
+            max_score_for_exam_vars = 0
+            best_user_exam = None
+            # Для каждого экзамена из варианта для поступления на ОП ищем, найдется ли он среди экзаменов пользователя
+            for wanted_exam in exam_vars:
+                for user_exam in available_user_exams:
+                    if wanted_exam == user_exam.name:
+                        user_score = user_exam.score if user_exam.score else 0
+                        if user_score >= max_score_for_exam_vars:
+                            max_score_for_exam_vars = user_score
+                            best_user_exam = user_exam
+            if best_user_exam is None:
+                return False
+            # Для этого варианта найден подходящий экзамен пользователя.
+            # Удаляем его из списка доступных экзаменов, чтобы не использовать его повторно
+            available_user_exams.remove(best_user_exam)
+            # Сохраним максимальный балл, который можно получить на этом экзамене
+            max_score_gained += best_user_exam.score if best_user_exam.score else 0
+
+        if settings.filter_by_exams_not_score:
+            return True
+        elif settings.filter_by_exams_and_score:
+            if settings.show_op_only_with_budget:
+                return self.budget_ege_score <= max_score_gained
+            else:
+                return self.paid_ege_score <= max_score_gained
+        raise ValueError("Вызвана неверная функция для фильтрации экзаменов")
+
     # Не указан тип UniqueValues, чтобы не было циклической зависимости
     def suits(self, settings: Settings, unique_values) -> bool:
         """
@@ -197,17 +247,21 @@ class Op:
 
                 if not self.paid_ege_score:
                     return False
-                return settings.min_average_score <= average_paid_score <= settings.max_average_score
+                if not (settings.min_average_score <= average_paid_score <= settings.max_average_score):
+                    return False
 
         if settings.show_op_only_with_budget:
-            if self.budget_ege_score:
-                return True
-            else:
+            if not self.budget_ege_score:
+                return False
+        else:
+            if not self.cost:
                 return False
 
         if settings.filter_by_price and settings.price_range_is_ok() and self.cost:
             return settings.min_price <= self.cost <= settings.max_price
 
-        if not self.cost:
-            return False
+        if settings.filter_by_exams_not_score or settings.filter_by_exams_and_score:
+            if not self.is_possible_to_pass(settings):
+                return False
+
         return True

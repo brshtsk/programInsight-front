@@ -29,6 +29,10 @@ class Settings:
 
         self.exams = UserExamsSet()  # Экзамены, которые указал пользователь
 
+        # Фильтры для работы с вариантами обработки экзаменов: "Выключен", "Включен, без баллов", "Включен, с баллами"
+        self.filter_by_exams_not_score = False  # Фильтровать по экзаменам вне зависимости от баллов
+        self.filter_by_exams_and_score = False  # Фильтровать по экзаменам и баллам одновременно
+
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
 

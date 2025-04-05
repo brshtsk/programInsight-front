@@ -103,3 +103,9 @@ class UserExamsSet:
             if exam.name == exam_name and exam.qualification == exam_type:
                 self.exams.remove(exam)
                 return
+
+    def __iter__(self):
+        """
+        Возвращает итератор для перебора экзаменов.
+        """
+        return iter(self.exams)
