@@ -250,6 +250,20 @@ class SearchSettingsWindow(QObject):
         else:
             print("TextField 'universityNameTextField' не найден!")
 
+        # Восстанавливаем состояние ComboBox "filterByExamsComboBox"
+        filter_by_exams_combobox = self.window.findChild(QObject, 'filterByExamsComboBox')
+        if filter_by_exams_combobox:
+            # Значения: 0 - "Выключен", 1 - "Включен, без баллов", 2 - "Включен, с баллами"
+            if self.settings.filter_by_exams_not_score:
+                idx = 1
+            elif self.settings.filter_by_exams_and_score:
+                idx = 2
+            else:
+                idx = 0
+            filter_by_exams_combobox.setProperty('currentIndex', idx)
+        else:
+            print("ComboBox 'filterByExamsComboBox' не найден!")
+
         # Восстанавливаем список экзаменов
         self.update_exams_list()
 
