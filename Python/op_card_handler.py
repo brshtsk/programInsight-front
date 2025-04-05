@@ -5,10 +5,14 @@ from PySide6.QtCore import QUrl
 
 
 class PyHandler(QObject):
-    def __init__(self, engine):
+    def __init__(self, engine, frontend_parent):
         super().__init__()
         self.engine = engine
-        # ToDo: отлов закрытия главного окна. Если оно закрылось, закрываем окна с информацией об ОП
+        self.frontend_parent = frontend_parent
+        self.components = []
+        self.windows = []
+
+        self.frontend_parent.mainWindowClosed.connect(self.on_main_window_closed)
 
     @Slot(int, str, str, str, str, str, str, str, int, int, int, int, int, list, list, str)
     def handleCardClicked(self, index, op_name, university_name, op_type, length_text,
@@ -52,9 +56,15 @@ class PyHandler(QObject):
         """
         widget_qml_path = Utils.resource_path('FirstPythonContent/OpWidget.qml')
         component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(widget_qml_path)))
+
+        # Сохраняем компонент в списке, чтобы в будущем можно было его удалить
+        self.components.append(component)
+
         if component.status() == QQmlComponent.Ready:
             window = component.create()
             if window:
+                # Сохраняем ссылку на окно в списке для предотвращения сборки мусора
+                self.windows.append(window)
                 text_fields = {
                     "opNameText": op_name,
                     "opTimeText": op_time,
@@ -110,3 +120,19 @@ class PyHandler(QObject):
                 print("Не удалось создать окно.")
         else:
             print("Ошибка при загрузке OpWidget.qml:", component.errorString())
+
+    @Slot()
+    def on_main_window_closed(self):
+        """
+        Слот, вызываемый при закрытии главного окна.
+        Закрывает все дочерние окна и очищает список компонентов.
+        """
+        for window in self.windows:
+            if window:
+                try:
+                    window.destroy()
+                    print("Карточка ОП закрыта вслед за закрытием главного окна.")
+                except:
+                    print("Не удалось закрыть карточку ОП. Вероятно, она уже закрыта.")
+        self.components.clear()
+        self.windows.clear()

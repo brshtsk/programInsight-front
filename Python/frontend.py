@@ -25,7 +25,7 @@ class Frontend(QObject):
         self.search_settings_window = None  # Ссылка на окно настроек
         self.search_settings_window = None
         self.dashboard_window = None  # Ссылка на окно дашбордов
-        self.pyHandler = PyHandler(engine)  # Создаем экземпляр обработчика (для объектов в ListView)
+        self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
         self.setup_models()
         self.setup_connections()
