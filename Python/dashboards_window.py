@@ -1,11 +1,10 @@
 from PySide6.QtCore import QObject, Slot
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
-from typing import List
-from op import Op
 from plots.graph_builder import GraphBuilder
 from data_converter import DataConverter
 import os
+from time import time
 
 
 class DashboardsWindow(QObject):
@@ -85,7 +84,7 @@ class DashboardsWindow(QObject):
 
         stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
         if stats_donut_image:
-            stats_donut_image.setProperty('source', 'plots_images/donut_chart.png')
+            stats_donut_image.setProperty('source', f'plots_images/donut_chart.png?cacheBust={time()}')
             stats_donut_image.setProperty('headerVisible', True)
         else:
             print("Элемент с objectName 'statsDonutImage' не найден")
