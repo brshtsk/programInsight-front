@@ -116,7 +116,7 @@ class GraphBuilder:
         GraphBuilder.set_scatter_signs(ax, title, x_label, 'Плотность', color)
         ls = np.linspace(min(var), max(var), 200)
         kde = gaussian_kde(var)
-        ax.plot(ls, kde(ls), color=color, linewidth=3)
+        ax.plot(ls, kde(ls), color=color, linewidth=4)
         return fig
 
     @staticmethod

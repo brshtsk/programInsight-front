@@ -293,6 +293,15 @@ Rectangle {
             font.styleName: "SemiBold"
             font.family: Constants.font.family
         }
+
+        Rectangle {
+            id: deleteArtifactsScore
+            x: 0
+            y: 57
+            width: 20
+            height: 198
+            color: parent.color
+        }
     }
 
     Rectangle {
@@ -331,6 +340,15 @@ Rectangle {
             verticalAlignment: Text.AlignTop
             font.styleName: "SemiBold"
             font.family: Constants.font.family
+        }
+
+        Rectangle {
+            id: deleteArtifactsPrice
+            x: 0
+            y: 57
+            width: 20
+            height: 198
+            color: parent.color
         }
     }
 
