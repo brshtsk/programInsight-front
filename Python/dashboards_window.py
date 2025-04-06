@@ -2,7 +2,6 @@ from PySide6.QtCore import QObject, Slot
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from plots.graph_builder import GraphBuilder
-from data_converter import DataConverter
 import os
 from time import time
 
@@ -126,13 +125,7 @@ class DashboardsWindow(QObject):
         except Exception as e:
             print("Список не изменен. Ошибка при получении данных для списка ВУЗов:", e)
 
-        # Работа с графиками. Для начала нужен df
-        try:
-            # Преобразуем список объектов Op в DataFrame
-            df = DataConverter.list_op_to_dataframe(op_list)
-        except:
-            print('Новые графики построить не получится')
-            return
+        df = self.frontend_parent.df
 
         # График donut
         try:

@@ -619,11 +619,11 @@ Rectangle {
         }
 
         Image {
-            id: graphicImage
-            x: 0
-            y: 429
-            width: parent.width
-            height: 234
+            id: scorePriceImage
+            objectName: "scorePriceImage"
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 410
+            height: 270
             source: "resources/example-plot.png"
             fillMode: Image.PreserveAspectFit
         }

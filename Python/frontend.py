@@ -1,5 +1,4 @@
-from PySide6.QtCore import QObject, Slot, QUrl, Signal
-from PySide6.QtQml import QQmlComponent
+from PySide6.QtCore import QObject, Slot, Signal
 from op_model import opListModel
 from statistics_model import StatisticsListModel
 from manage_model_data import ModelDataManagement
@@ -10,6 +9,10 @@ from unique_values import UniqueValues
 from search_settings_window import SearchSettingsWindow
 from dashboards_window import DashboardsWindow
 from statistics import Statistics
+from data_converter import DataConverter
+from plots.graph_builder import GraphBuilder
+import os
+from time import time
 
 
 class Frontend(QObject):
@@ -21,9 +24,12 @@ class Frontend(QObject):
         super().__init__()
         self.engine = engine
         self.op_list, self.unique_values = ModelDataManagement.get_op_data(
-            Utils.resource_path('Python/small_programs_info_lines.json'))  # self.op_list - список всех объектов Op
+            Utils.resource_path('Python/small_programs_info_lines.json'),
+            Utils.resource_path('Python/raex.json'),
+        )  # self.op_list - список всех объектов Op
         self.settings = Settings()
         self.statistics = Statistics()  # Экземпляр класса Statistics для хранения статистики
+        self.df = None  # DataFrame для графиков
         self.filtered_op_list = None  # Список объектов Op, которые отображаются в главном окне и подходят по фильтрам
         self.op_model = None
         self.statistics_model = None
@@ -55,6 +61,15 @@ class Frontend(QObject):
             context = self.engine.rootContext()
             context.setContextProperty("opModel", self.op_model)
             context.setContextProperty("statisticsModel", self.statistics_model)
+
+            # Работа с графиками. Для начала нужен df
+            try:
+                # Преобразуем список объектов Op в DataFrame
+                self.df = DataConverter.list_op_to_dataframe(self.filtered_op_list)
+            except:
+                print('Новые графики построить не получится')
+
+            self.update_price_plot()
 
             # Сигнализируем об изменении модели
             self.modelChanged.emit()
@@ -111,6 +126,25 @@ class Frontend(QObject):
                 self.search_settings_window.restore_view()
             except Exception as e:
                 print("Окно дашбордов уже открыто:", e)
+
+    def update_price_plot(self):
+        """
+        Обновляем график цен/проходных баллов в зависимости от выбранного фильтра.
+        """
+        try:
+            output_path = Utils.resource_path('FirstPythonContent/plots_images/price_to_points_scatter.png')
+            os.makedirs(output_path.parent, exist_ok=True)
+            fig = GraphBuilder.price_to_points_scatter(self.df, self.settings.show_op_only_with_budget)
+            fig.savefig(output_path, bbox_inches='tight')
+
+            root_object = self.engine.rootObjects()[0]
+            score_price_image = root_object.findChild(QObject, 'scorePriceImage')
+            if score_price_image:
+                score_price_image.setProperty('source', f'plots_images/price_to_points_scatter.png?cacheBust={time()}')
+            else:
+                print("Элемент 'scorePriceImage' не найден")
+        except Exception as e:
+            print("Ошибка при обновлении графика цен:", e)
 
     @Slot()
     def on_main_window_closed(self):

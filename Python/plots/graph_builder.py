@@ -23,6 +23,9 @@ class GraphBuilder:
 
     @staticmethod
     def set_scatter_signs(ax, title, x_label, y_label, color='black'):
+        """
+        Для графиков с плотностью распределения
+        """
         # Не устанавливаем заголовок и подписи к осям
         # ax.set_title(title, fontsize=GraphBuilder.TITLE_FZ, color=color)
         # ax.set_xlabel(x_label, fontsize=GraphBuilder.FZ, color=color)
@@ -43,6 +46,22 @@ class GraphBuilder:
         ax.spines['left'].set_visible(False)
         ax.spines['bottom'].set_visible(False)
 
+        ax.spines['bottom'].set_color(color)
+        ax.spines['left'].set_color(color)
+
+    @staticmethod
+    def set_scatter_signs_points(ax, title, x_label, y_label, color='black'):
+        """
+        Для графиков с точками
+        """
+        ax.set_title(title, fontsize=GraphBuilder.TITLE_FZ, color=color)
+        ax.set_xlabel(x_label, fontsize=GraphBuilder.FZ, color=color)
+        ax.set_ylabel(y_label, fontsize=GraphBuilder.FZ, color=color)
+        ax.ticklabel_format(style='plain', axis='x')
+        ax.tick_params(axis='both', colors=color)
+        ax.grid(True, linestyle='--', alpha=0.5, color=color)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_color(color)
         ax.spines['left'].set_color(color)
 
@@ -137,22 +156,27 @@ class GraphBuilder:
         return GraphBuilder.build_kde_layout(points, title, 'Баллы', 'white')
 
     @staticmethod
-    def price_to_points_scatter(df):
+    def price_to_points_scatter(df, budget: bool):
+        if budget:
+            score_type = 'Проходной балл на бюджет'
+        else:
+            score_type = 'Проходной балл на платное'
+
         title = 'Зависимость стоимости и проходного балла лучших вузов\n'
         fig, ax = GraphBuilder.get_transparent_fig(9, 6)
-        GraphBuilder.set_scatter_signs(ax, title, 'Стоимость, тыс. руб', 'Проходной балл на бюджет')
+        GraphBuilder.set_scatter_signs_points(ax, title, 'Стоимость, тыс. руб', score_type)
         filtered_df = df[df['Место в топе'] < 13].copy()
         filtered_df['Кол-во экзаменов'] = filtered_df['Кол-во экзаменов'].replace(0, np.nan)
-        filtered_df['Проходной балл на бюджет'] = filtered_df['Проходной балл на бюджет'] / filtered_df[
+        filtered_df[score_type] = filtered_df[score_type] / filtered_df[
             'Кол-во экзаменов']
         grouped = filtered_df.groupby('Университет').agg(
-            {'Стоимость (в год)': 'mean', 'Проходной балл на бюджет': 'mean'})
+            {'Стоимость (в год)': 'mean', score_type: 'mean'})
         grouped['Стоимость (в год)'] = grouped['Стоимость (в год)'] / 1000
-        ax.scatter(grouped['Стоимость (в год)'], grouped['Проходной балл на бюджет'], color=GraphBuilder.GREEN, s=70)
+        ax.scatter(grouped['Стоимость (в год)'], grouped[score_type], color=GraphBuilder.GREEN, s=70)
         for uni, row in grouped.iterrows():
             ax.text(
                 row['Стоимость (в год)'] + 10,
-                row['Проходной балл на бюджет'],
+                row[score_type],
                 uni,
                 fontsize=10,
                 fontweight='bold',

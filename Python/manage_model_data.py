@@ -7,20 +7,27 @@ from typing import Optional
 
 
 class ModelDataManagement:
-    def get_op_data(file_name: str) -> (list[Op], UniqueValues):
+    def get_op_data(file_name: str, raex_file_name: str) -> (list[Op], UniqueValues):
         """
-        Получение объектов ОП из файла
+        Получение объектов ОП из файла, получение данных RAEX
         :param file_name: json-файл
         :return: список с объектами ОП, объект уникальных значений
         """
+        with open(raex_file_name, encoding='utf-8') as json_file:
+            raex_data = json.load(json_file)
+
+        raex_dict = {}  # Словарь для хранения позиции ВУЗа в рейтинге RAEX
+
+        for i in range(len(raex_data)):
+            for name in raex_data[i]:
+                raex_dict[name] = i + 1
+
         with open(file_name, encoding='utf-8') as json_file:
             json_data = json.load(json_file)
 
         data = []
 
         unique_values = UniqueValues()
-
-        # ToDo: искать именно вариант поступления на основе 11 классов
 
         # ОП с ошибками
         bad_ops = set()
@@ -52,6 +59,9 @@ class ModelDataManagement:
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
+
+                    if university in raex_dict:
+                        raex_position = raex_dict[university]
 
                     exams = []
                     for exam_var in op_data['ЕГЭ']:
