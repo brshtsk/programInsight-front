@@ -125,9 +125,13 @@ class ModelDataManagement:
                     city = op_data['Город']
                     length = op_data['Срок обучения']
                     attendance = op_data['Форма обучения']
+                    university = op_data['Университет']
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
+
+                    if university in raex_dict:
+                        raex_position = raex_dict[university]
 
                     exams = []
                     for exam_var in op_data['Вступительные']:

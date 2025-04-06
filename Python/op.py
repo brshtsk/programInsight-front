@@ -263,7 +263,8 @@ class Op:
                 return False
 
         if settings.filter_by_price and settings.price_range_is_ok() and self.cost:
-            return settings.min_price <= self.cost <= settings.max_price
+            if not (settings.min_price <= self.cost <= settings.max_price):
+                return False
 
         if settings.filter_by_exams_not_score or settings.filter_by_exams_and_score:
             if not self.is_possible_to_pass(settings):

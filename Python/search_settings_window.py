@@ -398,7 +398,7 @@ class SearchSettingsWindow(QObject):
                 self.updateModels.emit()
         except:
             print(f"Минимальный балл {min_average_score} не может быть задан! Сбросим до 0")
-            self.settings.min_score = 0
+            self.settings.min_average_score = 0
             if self.settings.filter_by_score:
                 self.updateModels.emit()
 
@@ -408,12 +408,12 @@ class SearchSettingsWindow(QObject):
         print(f"Максимальный балл введен: {max_average_score}")
         try:
             max_average_score = int(max_average_score)
-            self.settings.max_score = max_average_score
+            self.settings.max_average_score = max_average_score
             if self.settings.filter_by_score:
                 self.updateModels.emit()
         except:
             print(f"Максимальный балл {max_average_score} не может быть задан! Сбросим до 100000000")
-            self.settings.max_score = 100000000
+            self.settings.max_average_score = 100000000
             if self.settings.filter_by_score:
                 self.updateModels.emit()
 

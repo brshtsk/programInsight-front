@@ -167,7 +167,7 @@ class GraphBuilder:
         title = 'Зависимость стоимости и проходного балла лучших вузов\n'
         fig, ax = GraphBuilder.get_transparent_fig(9, 6)
         GraphBuilder.set_scatter_signs_points(ax, title, 'Стоимость, тыс. руб', score_type)
-        filtered_df = df[df['Место в топе'] < 13].copy()
+        filtered_df = df[df['Место в топе'].notnull() & (df['Место в топе'] < 10)].copy()
         if filtered_df.empty:
             raise ValueError("Нет данных для построения графика")
         filtered_df['Кол-во экзаменов'] = filtered_df['Кол-во экзаменов'].replace(0, np.nan)
