@@ -626,6 +626,25 @@ Rectangle {
             height: 290
             source: "resources/example-plot.png"
             fillMode: Image.PreserveAspectFit
+
+            property alias headerVisible: scorePriceText.visible
+            property alias headerText: scorePriceText.text
+        }
+
+        Text {
+            id: scorePriceText
+            y: 550
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "#373737"
+            text: "Статистика ОП"
+            font.pixelSize: 18
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            textFormat: Text.RichText
+            font.family: Constants.font.family
+            font.styleName: "Condensed SemiBold"
+
+            visible: false
         }
 
         Button {

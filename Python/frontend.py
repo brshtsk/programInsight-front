@@ -140,11 +140,20 @@ class Frontend(QObject):
             root_object = self.engine.rootObjects()[0]
             score_price_image = root_object.findChild(QObject, 'scorePriceImage')
             if score_price_image:
+                score_price_image.setProperty('headerVisible', False)
                 score_price_image.setProperty('source', f'plots_images/price_to_points_scatter.png?cacheBust={time()}')
             else:
                 print("Элемент 'scorePriceImage' не найден")
         except Exception as e:
             print("Ошибка при обновлении графика цен:", e)
+            root_object = self.engine.rootObjects()[0]
+            score_price_image = root_object.findChild(QObject, 'scorePriceImage')
+            if score_price_image:
+                score_price_image.setProperty('headerVisible', True)
+                score_price_image.setProperty('source', f'')
+                score_price_image.setProperty('headerText', 'По указанным фильтром<br>нет ОП в топ-100 RAEX')
+            else:
+                print("Элемент 'scorePriceImage' не найден")
 
     @Slot()
     def on_main_window_closed(self):
