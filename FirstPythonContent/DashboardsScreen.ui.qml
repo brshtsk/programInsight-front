@@ -155,7 +155,8 @@ Rectangle {
                 }
 
                 Text {
-                    id: typeOpText
+                    id: opTypeText
+                    objectName: "opTypeText"
                     x: 185
                     y: 20
                     width: 170
@@ -181,6 +182,7 @@ Rectangle {
 
                 Text {
                     id: opNumText
+                    objectName: "opNumText"
                     x: 0
                     y: 20
                     width: 130
@@ -235,7 +237,8 @@ Rectangle {
                 }
 
                 Text {
-                    id: settingsTypeText
+                    id: opPaymentText
+                    objectName: "opPaymentText"
                     width: 140
                     height: 50
                     color: "#ffffff"

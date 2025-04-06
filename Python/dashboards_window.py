@@ -62,6 +62,25 @@ class DashboardsWindow(QObject):
         """
         op_list = self.frontend_parent.filtered_op_list
 
+        # Заголовки
+        op_num_text = self.window.findChild(QObject, 'opNumText')
+        if op_num_text:
+            op_num_text.setProperty('text', str(len(op_list)))
+        else:
+            print("Элемент с objectName 'opNumText' не найден")
+
+        op_type_text = self.window.findChild(QObject, 'opTypeText')
+        if op_type_text:
+            op_type_text.setProperty('text', '<br>и '.join(self.frontend_parent.settings.qualifications))
+        else:
+            print("Элемент с objectName 'opTypeText' не найден")
+
+        op_payment_text = self.window.findChild(QObject, 'opPaymentText')
+        if op_payment_text:
+            op_payment_text.setProperty('text',
+                                        'Бюджет' if self.frontend_parent.settings.show_op_only_with_budget else 'Платное')
+
+        # График donut
         try:
             # Преобразуем список объектов Op в DataFrame
             df = DataConverter.list_op_to_dataframe(op_list)
@@ -78,7 +97,6 @@ class DashboardsWindow(QObject):
     def update_donut(self, list_stats_data):
         donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
         if donut_stats_list:
-            print(type(list_stats_data[0]['floatPercent']))
             donut_stats_list.setProperty('donutStatsValues', list_stats_data)
         else:
             print("Элемент с objectName 'donutStatsList' не найден")
