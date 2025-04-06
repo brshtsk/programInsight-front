@@ -144,6 +144,21 @@ class DashboardsWindow(QObject):
             self.update_donut(list_stats_data)
         except Exception as e:
             print("Ошибка, donut не изменён", e)
+            # Убираем donut, показываем текст об ошибке
+            stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
+            if stats_donut_image:
+                stats_donut_image.setProperty('source', '')
+                stats_donut_image.setProperty('headerVisible', True)
+                stats_donut_image.setProperty('headerText',
+                                              'Ошибка при построении графика<br>ОП по вашим настройкам не найдены')
+            else:
+                print("Элемент с objectName 'statsDonutImage' не найден")
+            # Очищаем список с информацией о донате
+            donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
+            if donut_stats_list:
+                donut_stats_list.setProperty('donutStatsValues', [])
+            else:
+                print("Элемент с objectName 'donutStatsList' не найден")
 
         # График распределения цен
         try:
@@ -154,6 +169,15 @@ class DashboardsWindow(QObject):
             self.update_price_kde()
         except Exception as e:
             print("Ошибка, bar не изменён:", e)
+            # Убираем график, показываем текст об ошибке
+            price_kde_image = self.window.findChild(QObject, 'priceDistributionImage')
+            if price_kde_image:
+                price_kde_image.setProperty('source', '')
+                price_kde_image.setProperty('headerVisible', True)
+                price_kde_image.setProperty('headerText',
+                                            'Не удалось построить график плотности<br>Возможно, выбрано слишком мало ОП')
+            else:
+                print("Элемент с objectName 'priceDistributionImage' не найден")
 
         # График распределения проходных баллов
         try:
@@ -164,6 +188,15 @@ class DashboardsWindow(QObject):
             self.update_score_kde()
         except Exception as e:
             print("Ошибка, bar не изменён:", e)
+            # Убираем график, показываем текст об ошибке
+            score_kde_image = self.window.findChild(QObject, 'scoreDistributionImage')
+            if score_kde_image:
+                score_kde_image.setProperty('source', '')
+                score_kde_image.setProperty('headerVisible', True)
+                score_kde_image.setProperty('headerText',
+                                            'Не удалось построить график плотности<br>Возможно, выбрано слишком мало ОП')
+            else:
+                print("Элемент с objectName 'scoreDistributionImage' не найден")
 
     def update_donut(self, list_stats_data):
         donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
@@ -175,6 +208,7 @@ class DashboardsWindow(QObject):
         stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
         if stats_donut_image:
             stats_donut_image.setProperty('source', f'plots_images/donut_chart.png?cacheBust={time()}')
+            stats_donut_image.setProperty('headerText', 'Статистика ОП')
             stats_donut_image.setProperty('headerVisible', True)
         else:
             print("Элемент с objectName 'statsDonutImage' не найден")
@@ -183,6 +217,7 @@ class DashboardsWindow(QObject):
         price_kde_image = self.window.findChild(QObject, 'priceDistributionImage')
         if price_kde_image:
             price_kde_image.setProperty('source', f'plots_images/price_kde.png?cacheBust={time()}')
+            price_kde_image.setProperty('headerVisible', False)
         else:
             print("Элемент с objectName 'priceKdeImage' не найден")
 
@@ -190,6 +225,7 @@ class DashboardsWindow(QObject):
         score_kde_image = self.window.findChild(QObject, 'scoreDistributionImage')
         if score_kde_image:
             score_kde_image.setProperty('source', f'plots_images/score_kde.png?cacheBust={time()}')
+            score_kde_image.setProperty('headerVisible', False)
         else:
             print("Элемент с objectName 'scoreDistributionImage' не найден")
 

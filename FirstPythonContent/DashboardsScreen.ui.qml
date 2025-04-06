@@ -35,6 +35,7 @@ Rectangle {
             fillMode: Image.PreserveAspectFit
 
             property alias headerVisible: statsDonutText.visible
+            property alias headerText: statsDonutText.text
 
             Text {
                 id: statsDonutText
@@ -43,6 +44,8 @@ Rectangle {
                 color: "#373737"
                 text: "Статистика ОП"
                 font.pixelSize: 18
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 textFormat: Text.RichText
                 font.family: Constants.font.family
                 font.styleName: "Condensed SemiBold"
@@ -275,6 +278,25 @@ Rectangle {
             anchors.rightMargin: 10
             source: "resources/scores_distribution.png"
             fillMode: Image.PreserveAspectFit
+
+            property alias headerVisible: scoreDistributionHeaderText.visible
+            property alias headerText: scoreDistributionHeaderText.text
+        }
+
+        Text {
+            id: scoreDistributionHeaderText
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "#ffffff"
+            text: "Статистика ОП"
+            font.pixelSize: 14
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            textFormat: Text.RichText
+            font.family: Constants.font.family
+            font.styleName: "Condensed SemiBold"
+
+            visible: false
         }
 
         Text {
@@ -323,6 +345,25 @@ Rectangle {
             anchors.bottomMargin: 10
             source: "resources/price_distribution.png"
             fillMode: Image.PreserveAspectFit
+
+            property alias headerVisible: priceDistributionHeaderText.visible
+            property alias headerText: priceDistributionHeaderText.text
+        }
+
+        Text {
+            id: priceDistributionHeaderText
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "#373737"
+            text: "Статистика ОП"
+            font.pixelSize: 14
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            textFormat: Text.RichText
+            font.family: Constants.font.family
+            font.styleName: "Condensed SemiBold"
+
+            visible: false
         }
 
         Text {
