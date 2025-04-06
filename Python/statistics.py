@@ -17,6 +17,8 @@ class Statistics:
         self.sum_budget_ege_subjects = 0  # Количество предметов ЕГЭ для бюджета
         self.sum_paid_ege_subjects = 0  # Количество предметов ЕГЭ для платного
 
+        self.university_count = {}  # Сколько ОП в каждом университете
+
     def add(self, op: Op) -> None:
         """
         Засчитывает новую ОП в статистику
@@ -34,6 +36,10 @@ class Statistics:
             self.sum_paid_places += op.paid_places_amount
             self.sum_paid_ege_scores += op.paid_ege_score
             self.sum_paid_ege_subjects += op.exams_amount
+
+        if op.university not in self.university_count:
+            self.university_count[op.university] = 0
+        self.university_count[op.university] += 1
 
     def to_model_dict(self, settings=Settings()) -> list[dict]:
         """
@@ -118,3 +124,28 @@ class Statistics:
                 }
             ]
             return statistics_data
+
+    def get_top_3_universities(self) -> list[tuple]:
+        """
+        Возвращает список из 3 наиболее популярных университетов в формате (университет, количество ОП).
+        Если университетов меньше 3, возвращает столько, сколько доступно.
+        """
+        # Сортировка словаря по значению в обратном порядке и получение первых 3 элементов
+        sorted_universities = sorted(self.university_count.items(), key=lambda item: item[1], reverse=True)
+        return sorted_universities[:3]
+
+    def top_3_universities_to_model_dict(self) -> list[dict]:
+        """
+        Создает словарь с информацией о количестве ОП в каждо�� университете для statistics_model
+        :return:
+        """
+        university_data = []
+        sorted_universities = self.get_top_3_universities()
+        for university, count in sorted_universities:
+            university_data.append({
+                "universityNameText": university,
+                "thisOpAmountStr": str(count),
+                "thisOpAmountInt": count,
+                "maxOpAmountInt": sorted_universities[0][1],
+            })
+        return university_data

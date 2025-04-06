@@ -71,6 +71,13 @@ class DashboardsWindow(QObject):
         else:
             print("Элемент с objectName 'scoreDistributionImage' не найден")
 
+        # Убираем список частых вузов
+        popular_universities_list = self.window.findChild(QObject, 'popularUniversitiesList')
+        if popular_universities_list:
+            popular_universities_list.setProperty('universityValues', [])
+        else:
+            print("Элемент с objectName 'popularUniversitiesList' не найден")
+
     def build_plots(self):
         """
         Создаёт графики на основе данных из op_list.
@@ -105,6 +112,19 @@ class DashboardsWindow(QObject):
                                                                                                              ',') + '%')
         else:
             print("Элемент с objectName 'percentageValueText' не найден")
+
+        # Показываем список частых вузов
+        try:
+            # Находим список ВУЗов
+            popular_universities_list = self.window.findChild(QObject, 'popularUniversitiesList')
+            if popular_universities_list:
+                # Получаем данные для списка
+                popular_universities_list.setProperty('universityValues',
+                                                      self.frontend_parent.statistics.top_3_universities_to_model_dict())
+            else:
+                print("Элемент с objectName 'popularUniversitiesList' не найден")
+        except Exception as e:
+            print("Список не изменен. Ошибка при получении данных для списка ВУЗов:", e)
 
         # Работа с графиками. Для начала нужен df
         try:

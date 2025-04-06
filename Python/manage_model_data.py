@@ -238,12 +238,12 @@ class ModelDataManagement:
                 op_list.reverse()
 
     def get_op_model_data(op_list: list[Op], settings=Settings(), unique_values=UniqueValues()) -> (
-            list[dict], list[dict], list[Op]):
+            list[dict], list[dict], list[Op], Statistics):
         """
         Создает данные для модели ОП и статистики
         :param op_list: список с объектами ОП
         :param settings: объект настроек
-        :return: данные для модели ОП, данные для модели статистики, отфильтрованный список с объектами ОП
+        :return: данные для модели ОП, данные для модели статистики, отфильтрованный список с объектами ОП, объект статистики
         """
         statistics = Statistics()
 
@@ -259,4 +259,4 @@ class ModelDataManagement:
 
         statistics_model_data = statistics.to_model_dict(settings)
 
-        return op_model_data, statistics_model_data, filtered_op_list
+        return op_model_data, statistics_model_data, filtered_op_list, statistics

@@ -9,6 +9,7 @@ from op_card_handler import PyHandler
 from unique_values import UniqueValues
 from search_settings_window import SearchSettingsWindow
 from dashboards_window import DashboardsWindow
+from statistics import Statistics
 
 
 class Frontend(QObject):
@@ -22,6 +23,7 @@ class Frontend(QObject):
         self.op_list, self.unique_values = ModelDataManagement.get_op_data(
             Utils.resource_path('Python/small_programs_info_lines.json'))  # self.op_list - список всех объектов Op
         self.settings = Settings()
+        self.statistics = Statistics()  # Экземпляр класса Statistics для хранения статистики
         self.filtered_op_list = None  # Список объектов Op, которые отображаются в главном окне и подходят по фильтрам
         self.op_model = None
         self.statistics_model = None
@@ -35,7 +37,7 @@ class Frontend(QObject):
     def setup_models(self):
         try:
             # Получаем данные для модели
-            op_model_data, statistics_model_data, self.filtered_op_list = ModelDataManagement.get_op_model_data(
+            op_model_data, statistics_model_data, self.filtered_op_list, self.statistics = ModelDataManagement.get_op_model_data(
                 self.op_list, self.settings,
                 self.unique_values)
             self.op_model = opListModel(op_model_data)

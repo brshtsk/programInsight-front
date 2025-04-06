@@ -419,150 +419,29 @@ Rectangle {
             anchors.bottomMargin: 10
             height: 130
 
-            // Item {
-            //     id: universityColumnItem
-            //     y: 0
-            //     anchors.left: parent.left
-            //     anchors.right: parent.right
-            //     height: 35
+            PopularUniversitiesList {
+                id: popularUniversitiesList
+                objectName: "popularUniversitiesList"
 
-            //     Text {
-            //         id: universityNameText
-            //         width: 130
-            //         height: 20
-            //         color: "#ffffff"
-            //         text: "НИУ ВШЭ"
-            //         anchors.left: parent.left
-            //         anchors.verticalCenter: parent.verticalCenter
-            //         font.pixelSize: 16
-            //         horizontalAlignment: Text.AlignRight
-            //         verticalAlignment: Text.AlignVCenter
-            //         font.styleName: "SemiBold"
-            //         font.family: Constants.font.family
-            //     }
-
-            //     Item {
-            //         id: barZoneItem
-            //         anchors.right: parent.right
-            //         anchors.top: parent.top
-            //         width: 190
-            //         height: parent.height
-
-            //         Rectangle {
-            //             id: frequencyBarRectangle
-            //             anchors.left: parent.left
-            //             anchors.verticalCenter: parent.verticalCenter
-            //             width: 150
-            //             height: 10
-            //             color: "#ffffff"
-            //             radius: 5
-            //         }
-
-            //         Text {
-            //             id: frequencyAmountText
-            //             width: 30
-            //             height: 20
-            //             color: "#ffffff"
-            //             text: "14"
-            //             anchors.left: frequencyBarRectangle.right
-            //             anchors.leftMargin: 5
-            //             anchors.verticalCenter: parent.verticalCenter
-            //             font.pixelSize: 16
-            //             horizontalAlignment: Text.AlignLeft
-            //             verticalAlignment: Text.AlignVCenter
-            //             font.styleName: "SemiBold"
-            //             font.family: Constants.font.family
-            //         }
-            //     }
-            // }
-            ListView {
-                id: diagramStatsListView
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: parent.height
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
 
-                spacing: 10 // Добавляем отступ между элементами
-
-                model: ListModel {
-                    ListElement {
-                        universityNameText: "НИУ ВШЭ"
-                        thisOpAmountStr: "12"
-                        thisOpAmountInt: 12
-                        maxOpAmountInt: 12
-                    }
-
-                    ListElement {
-                        universityNameText: "НИЯУ МИФИ"
-                        thisOpAmountStr: "10"
-                        thisOpAmountInt: 10
-                        maxOpAmountInt: 12
-                    }
-
-                    ListElement {
-                        universityNameText: "МГУ"
-                        thisOpAmountStr: "6"
-                        thisOpAmountInt: 6
-                        maxOpAmountInt: 12
-                    }
-                }
-
-                delegate: Item {
-                    id: universityColumnItem
-                    y: 0
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 35
-
-                    Text {
-                        id: universityNameText
-                        width: 130
-                        height: 20
-                        color: "#ffffff"
-                        text: model.universityNameText
-                        anchors.left: parent.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 16
-                        horizontalAlignment: Text.AlignRight
-                        verticalAlignment: Text.AlignVCenter
-                        font.styleName: "SemiBold"
-                        font.family: Constants.font.family
-                    }
-
-                    Item {
-                        id: barZoneItem
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        width: 190
-                        height: parent.height
-
-                        Rectangle {
-                            id: frequencyBarRectangle
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: 150 * thisOpAmountInt / maxOpAmountInt
-                            height: 10
-                            color: "#ffffff"
-                            radius: 5
-                        }
-
-                        Text {
-                            id: frequencyAmountText
-                            width: 30
-                            height: 20
-                            color: "#ffffff"
-                            text: model.thisOpAmountStr
-                            anchors.left: frequencyBarRectangle.right
-                            anchors.leftMargin: 5
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            horizontalAlignment: Text.AlignLeft
-                            verticalAlignment: Text.AlignVCenter
-                            font.styleName: "SemiBold"
-                            font.family: Constants.font.family
-                        }
-                    }
-                }
+                universityValues: [{
+                        "universityNameText": "НИУ ВШЭ",
+                        "thisOpAmountStr": "12",
+                        "thisOpAmountInt": 12,
+                        "maxOpAmountInt": 12
+                    }, {
+                        "universityNameText": "НИЯУ МИФИ",
+                        "thisOpAmountStr": "10",
+                        "thisOpAmountInt": 10,
+                        "maxOpAmountInt": 12
+                    }, {
+                        "universityNameText": "МГУ",
+                        "thisOpAmountStr": "6",
+                        "thisOpAmountInt": 6,
+                        "maxOpAmountInt": 12
+                    }]
             }
         }
     }
