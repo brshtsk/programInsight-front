@@ -21,6 +21,9 @@ class Op:
                  attendance: Optional[List[str]],
                  exams: Optional[List[str]],
                  raex_position: Optional[int]):
+        Op.objects_count += 1
+        self.id = Op.objects_count
+
         # Проверка типа строки через isinstance
         if not isinstance(name, str):
             raise TypeError("name должно быть строкой")
@@ -98,9 +101,6 @@ class Op:
         # Если нет данных ни о бюджетных, ни о платных местах, такой ОП не подходит.
         if self.budget_places_amount is None and self.paid_places_amount is None:
             raise ValueError("Недостаточно данных о бюджетных и платных местах")
-
-        Op.objects_count += 1
-        self.id = Op.objects_count
 
     def to_model_dict(self, settings=Settings()) -> dict:
         """
