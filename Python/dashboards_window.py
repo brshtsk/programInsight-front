@@ -78,6 +78,7 @@ class DashboardsWindow(QObject):
     def update_donut(self, list_stats_data):
         donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
         if donut_stats_list:
+            print(type(list_stats_data[0]['floatPercent']))
             donut_stats_list.setProperty('donutStatsValues', list_stats_data)
         else:
             print("Элемент с objectName 'donutStatsList' не найден")

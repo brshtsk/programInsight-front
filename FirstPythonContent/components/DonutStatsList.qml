@@ -113,6 +113,7 @@ Item {
                 anchors.bottom: parent.bottom
                 width: 70
                 height: 5
+
                 value: modelData.floatPercent
 
                 background: Rectangle {

@@ -65,7 +65,7 @@ class GraphBuilder:
                 "propertyNameText": form,
                 "propertyValueText": str(count),
                 "propertyPercentText": f"{percent * 100:.1f}%",
-                "floatPercent": round(percent, 3),
+                "floatPercent": float(round(percent, 3)),  # Перевод из numpy.float64 в float
                 "percentColor": form_colors[i],
                 "barBackground": "#ffffff"
             })
@@ -90,7 +90,7 @@ class GraphBuilder:
                     "propertyNameText": qual,
                     "propertyValueText": str(count),
                     "propertyPercentText": f"{percent * 100:.1f}%",
-                    "floatPercent": round(percent, 3),
+                    "floatPercent": float(round(percent, 3)), # Перевод из numpy.float64 в float
                     "percentColor": qual_colors[i],
                     "barBackground": "#ffffff"
                 })
