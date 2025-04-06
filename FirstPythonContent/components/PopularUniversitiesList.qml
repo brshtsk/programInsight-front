@@ -51,19 +51,32 @@ Item {
             anchors.right: parent.right
             height: 35
 
-            Text {
-                id: universityNameText
+            Flickable {
+                id: universityNameContainerFlickable
                 width: 130
-                height: 20
-                color: "#ffffff"
-                text: modelData.universityNameText
-                anchors.left: parent.left
+                height: universityNameText.height
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 16
-                horizontalAlignment: Text.AlignRight
-                verticalAlignment: Text.AlignVCenter
-                font.styleName: "SemiBold"
-                font.family: Constants.font.family
+                anchors.left: parent.left
+                clip: true
+                contentWidth: universityNameText.width < width ? width : universityNameText.width
+
+                Text {
+                    id: universityNameText
+                    height: 20
+                    color: "#ffffff"
+                    text: modelData.universityNameText
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    horizontalAlignment: Text.AlignRight
+                    verticalAlignment: Text.AlignVCenter
+                    font.styleName: "SemiBold"
+                    font.family: Constants.font.family
+                }
+
+                ScrollBar.horizontal: ScrollBar {
+                    policy: ScrollBar.Auto // или ScrollBar.Always для постоянного отображения
+                }
             }
 
             Item {
