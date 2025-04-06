@@ -23,14 +23,26 @@ class GraphBuilder:
 
     @staticmethod
     def set_scatter_signs(ax, title, x_label, y_label, color='black'):
-        ax.set_title(title, fontsize=GraphBuilder.TITLE_FZ, color=color)
-        ax.set_xlabel(x_label, fontsize=GraphBuilder.FZ, color=color)
-        ax.set_ylabel(y_label, fontsize=GraphBuilder.FZ, color=color)
+        # Не устанавливаем заголовок и подписи к осям
+        # ax.set_title(title, fontsize=GraphBuilder.TITLE_FZ, color=color)
+        # ax.set_xlabel(x_label, fontsize=GraphBuilder.FZ, color=color)
+        # ax.set_ylabel(y_label, fontsize=GraphBuilder.FZ, color=color)
         ax.ticklabel_format(style='plain', axis='x')
         ax.tick_params(axis='both', colors=color)
-        ax.grid(True, linestyle='--', alpha=0.5, color=color)
+        ax.grid(True, axis='x', linestyle='--', linewidth=3, alpha=0.5, color=color)
+
+        # Убираем отображение значений оси Y
+        ax.tick_params(axis='y', labelleft=False)
+
+        # Увеличиваем размер подписей по оси x
+        ax.tick_params(axis='x', labelsize=26)
+
+        # Убираем рамку графика
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+
         ax.spines['bottom'].set_color(color)
         ax.spines['left'].set_color(color)
 
@@ -90,7 +102,7 @@ class GraphBuilder:
                     "propertyNameText": qual,
                     "propertyValueText": str(count),
                     "propertyPercentText": f"{percent * 100:.1f}%",
-                    "floatPercent": float(round(percent, 3)), # Перевод из numpy.float64 в float
+                    "floatPercent": float(round(percent, 3)),  # Перевод из numpy.float64 в float
                     "percentColor": qual_colors[i],
                     "barBackground": "#ffffff"
                 })
@@ -99,11 +111,12 @@ class GraphBuilder:
 
     @staticmethod
     def build_kde_layout(var, title, x_label, color='black'):
-        fig, ax = GraphBuilder.get_transparent_fig(8, 6)
+        # Задаём размеры графика с соотношением 5:3 (ширина: 10, высота: 6)
+        fig, ax = GraphBuilder.get_transparent_fig(10, 6)
         GraphBuilder.set_scatter_signs(ax, title, x_label, 'Плотность', color)
         ls = np.linspace(min(var), max(var), 200)
         kde = gaussian_kde(var)
-        ax.plot(ls, kde(ls), color=color, linewidth=2)
+        ax.plot(ls, kde(ls), color=color, linewidth=3)
         return fig
 
     @staticmethod

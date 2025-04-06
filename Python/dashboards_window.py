@@ -49,12 +49,20 @@ class DashboardsWindow(QObject):
         else:
             print("Элемент с objectName 'donutStatsList' не найден")
 
+        # Убираем donut
         stats_donut_image = self.window.findChild(QObject, 'statsDonutImage')
         if stats_donut_image:
             stats_donut_image.setProperty('source', '')
             stats_donut_image.setProperty('headerVisible', False)
         else:
             print("Элемент с objectName 'statsDonutImage' не найден")
+
+        # Убираем график распределения цен
+        price_kde_image = self.window.findChild(QObject, 'priceDistributionImage')
+        if price_kde_image:
+            price_kde_image.setProperty('source', '')
+        else:
+            print("Элемент с objectName 'priceDistributionImage' не найден")
 
     def build_plots(self):
         """
@@ -79,20 +87,46 @@ class DashboardsWindow(QObject):
         if op_payment_text:
             op_payment_text.setProperty('text',
                                         'Бюджет' if self.frontend_parent.settings.show_op_only_with_budget else 'Платное')
+        else:
+            print("Элемент с objectName 'opPaymentText' не найден")
 
-        # График donut
+        percentage_value_text = self.window.findChild(QObject, 'percentageValueText')
+        if percentage_value_text:
+            percentage_value_text.setProperty('text',
+                                              str(round(len(op_list) /
+                                                        len(self.frontend_parent.op_list) * 100, 1)).replace('.',
+                                                                                                             ',') + '%')
+        else:
+            print("Элемент с objectName 'percentageValueText' не найден")
+
+        # Работа с графиками. Для начала нужен df
         try:
             # Преобразуем список объектов Op в DataFrame
             df = DataConverter.list_op_to_dataframe(op_list)
+        except:
+            print('Новые графики построить не получится')
+            return
 
+        # График donut
+        try:
             # Сохраним donut_chart
             output_path = Utils.resource_path('FirstPythonContent/plots_images/donut_chart.png')
             os.makedirs(output_path.parent, exist_ok=True)
             fig, list_stats_data = GraphBuilder.donut_chart(df)
             fig.savefig(output_path, bbox_inches='tight')
             self.update_donut(list_stats_data)
-        except:
-            print("Ошибка, donut не изменён")
+        except Exception as e:
+            print("Ошибка, donut не изменён", e)
+
+        # График распределения цен
+        try:
+            output_path = Utils.resource_path('FirstPythonContent/plots_images/price_kde.png')
+            os.makedirs(output_path.parent, exist_ok=True)
+            fig = GraphBuilder.price_kde(df)
+            fig.savefig(output_path, bbox_inches='tight')
+            self.update_price_kde()
+        except Exception as e:
+            print("Ошибка, bar не изменён:", e)
 
     def update_donut(self, list_stats_data):
         donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
@@ -107,6 +141,13 @@ class DashboardsWindow(QObject):
             stats_donut_image.setProperty('headerVisible', True)
         else:
             print("Элемент с objectName 'statsDonutImage' не найден")
+
+    def update_price_kde(self):
+        price_kde_image = self.window.findChild(QObject, 'priceDistributionImage')
+        if price_kde_image:
+            price_kde_image.setProperty('source', f'plots_images/price_kde.png?cacheBust={time()}')
+        else:
+            print("Элемент с objectName 'priceKdeImage' не найден")
 
     @Slot()
     def on_model_changed(self):

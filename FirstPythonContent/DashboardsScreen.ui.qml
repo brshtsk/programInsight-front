@@ -304,6 +304,7 @@ Rectangle {
         radius: 10
         Image {
             id: priceDistributionImage
+            objectName: "priceDistributionImage"
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
@@ -575,6 +576,7 @@ Rectangle {
 
         Text {
             id: percentageValueText
+            objectName: "percentageValueText"
             anchors.left: parent.left
             anchors.top: percentageInfoText.bottom
             anchors.leftMargin: 20
