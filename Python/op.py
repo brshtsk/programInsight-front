@@ -4,6 +4,8 @@ from typing import Optional, List
 
 
 class Op:
+    objects_count = 0  # статическая переменная класса
+
     def __init__(self,
                  name: str,
                  university: str,
@@ -96,6 +98,9 @@ class Op:
         # Если нет данных ни о бюджетных, ни о платных местах, такой ОП не подходит.
         if self.budget_places_amount is None and self.paid_places_amount is None:
             raise ValueError("Недостаточно данных о бюджетных и платных местах")
+
+        Op.objects_count += 1
+        self.id = Op.objects_count
 
     def to_model_dict(self, settings=Settings()) -> dict:
         """
