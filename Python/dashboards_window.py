@@ -64,6 +64,13 @@ class DashboardsWindow(QObject):
         else:
             print("Элемент с objectName 'priceDistributionImage' не найден")
 
+        # Убираем график распределения проходных
+        score_kde_image = self.window.findChild(QObject, 'scoreDistributionImage')
+        if score_kde_image:
+            score_kde_image.setProperty('source', '')
+        else:
+            print("Элемент с objectName 'scoreDistributionImage' не найден")
+
     def build_plots(self):
         """
         Создаёт графики на основе данных из op_list.
@@ -128,6 +135,16 @@ class DashboardsWindow(QObject):
         except Exception as e:
             print("Ошибка, bar не изменён:", e)
 
+        # График распределения проходных баллов
+        try:
+            output_path = Utils.resource_path('FirstPythonContent/plots_images/score_kde.png')
+            os.makedirs(output_path.parent, exist_ok=True)
+            fig = GraphBuilder.points_kde(df)
+            fig.savefig(output_path, bbox_inches='tight')
+            self.update_score_kde()
+        except Exception as e:
+            print("Ошибка, bar не изменён:", e)
+
     def update_donut(self, list_stats_data):
         donut_stats_list = self.window.findChild(QObject, 'donutStatsList')
         if donut_stats_list:
@@ -148,6 +165,13 @@ class DashboardsWindow(QObject):
             price_kde_image.setProperty('source', f'plots_images/price_kde.png?cacheBust={time()}')
         else:
             print("Элемент с objectName 'priceKdeImage' не найден")
+
+    def update_score_kde(self):
+        score_kde_image = self.window.findChild(QObject, 'scoreDistributionImage')
+        if score_kde_image:
+            score_kde_image.setProperty('source', f'plots_images/score_kde.png?cacheBust={time()}')
+        else:
+            print("Элемент с objectName 'scoreDistributionImage' не найден")
 
     @Slot()
     def on_model_changed(self):

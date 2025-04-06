@@ -266,6 +266,7 @@ Rectangle {
 
         Image {
             id: scoreDistributionImage
+            objectName: "scoreDistributionImage"
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
