@@ -623,7 +623,7 @@ Rectangle {
             objectName: "scorePriceImage"
             anchors.horizontalCenter: parent.horizontalCenter
             y: 410
-            height: 270
+            height: 290
             source: "resources/example-plot.png"
             fillMode: Image.PreserveAspectFit
         }

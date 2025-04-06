@@ -51,15 +51,17 @@ class GraphBuilder:
 
     @staticmethod
     def set_scatter_signs_points(ax, title, x_label, y_label, color='black'):
-        """
-        Для графиков с точками
-        """
-        ax.set_title(title, fontsize=GraphBuilder.TITLE_FZ, color=color)
-        ax.set_xlabel(x_label, fontsize=GraphBuilder.FZ, color=color)
-        ax.set_ylabel(y_label, fontsize=GraphBuilder.FZ, color=color)
+        # Устанавливаем заголовок и подписи с увеличенным шрифтом и жирным начертанием
+        ax.set_title(title, fontsize=18, fontweight='bold', color=color)
+        ax.set_xlabel(x_label, fontsize=16, fontweight='bold', color=color)
+        ax.set_ylabel(y_label, fontsize=16, fontweight='bold', color=color)
+
         ax.ticklabel_format(style='plain', axis='x')
-        ax.tick_params(axis='both', colors=color)
-        ax.grid(True, linestyle='--', alpha=0.5, color=color)
+        # Устанавливаем размеры и цвет подписей осей
+        ax.tick_params(axis='both', colors=color, labelsize=16)
+        ax.grid(True, linestyle='--', linewidth=1.5, alpha=0.5, color=GraphBuilder.GRAY)
+
+        # Отключаем видимость лишних рамок
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_color(color)
@@ -167,18 +169,21 @@ class GraphBuilder:
         GraphBuilder.set_scatter_signs_points(ax, title, 'Стоимость, тыс. руб', score_type)
         filtered_df = df[df['Место в топе'] < 13].copy()
         filtered_df['Кол-во экзаменов'] = filtered_df['Кол-во экзаменов'].replace(0, np.nan)
-        filtered_df[score_type] = filtered_df[score_type] / filtered_df[
-            'Кол-во экзаменов']
+        filtered_df[score_type] = filtered_df[score_type] / filtered_df['Кол-во экзаменов']
         grouped = filtered_df.groupby('Университет').agg(
             {'Стоимость (в год)': 'mean', score_type: 'mean'})
         grouped['Стоимость (в год)'] = grouped['Стоимость (в год)'] / 1000
-        ax.scatter(grouped['Стоимость (в год)'], grouped[score_type], color=GraphBuilder.GREEN, s=70)
+
+        # Увеличен размер точек (s=150)
+        ax.scatter(grouped['Стоимость (в год)'], grouped[score_type], color=GraphBuilder.GREEN, s=150)
+
+        # Увеличен размер шрифта для подписей (fontsize=14)
         for uni, row in grouped.iterrows():
             ax.text(
                 row['Стоимость (в год)'] + 10,
                 row[score_type],
                 uni,
-                fontsize=10,
+                fontsize=14,
                 fontweight='bold',
                 ha='left',
                 va='center',
