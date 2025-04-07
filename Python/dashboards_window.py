@@ -81,6 +81,10 @@ class DashboardsWindow(QObject):
         """
         Создаёт графики на основе данных из op_list.
         """
+        if self.window is None:
+            print("Окно дашбордов закрыто, не могу обновить графики")
+            return
+
         op_list = self.frontend_parent.filtered_op_list
 
         # Заголовки
