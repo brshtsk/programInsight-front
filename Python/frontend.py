@@ -24,9 +24,7 @@ class Frontend(QObject):
         super().__init__()
         self.engine = engine
         self.op_list, self.unique_values = ModelDataManagement.get_op_data(
-            Utils.resource_path('Python/data_sci_programs.json'),
-            Utils.resource_path('Python/raex.json'),
-        )  # self.op_list - список всех объектов Op
+            Utils.resource_path('Python/data_sci_programs.json'))  # self.op_list - список всех объектов Op
         self.settings = Settings()
         self.statistics = Statistics()  # Экземпляр класса Statistics для хранения статистики
         self.df = None  # DataFrame для графиков
