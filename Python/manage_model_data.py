@@ -62,6 +62,11 @@ class ModelDataManagement:
 
                     if university in raex_dict:
                         raex_position = raex_dict[university]
+                    else:
+                        for raex_name in raex_dict:
+                            if university.lower() == raex_name.lower():
+                                raex_position = raex_dict[raex_name]
+                                break
 
                     exams = []
                     for exam_var in op_data['ЕГЭ']:
@@ -132,6 +137,11 @@ class ModelDataManagement:
 
                     if university in raex_dict:
                         raex_position = raex_dict[university]
+                    else:
+                        for raex_name in raex_dict:
+                            if university.lower() == raex_name.lower():
+                                raex_position = raex_dict[raex_name]
+                                break
 
                     exams = []
                     for exam_var in op_data['Вступительные']:
@@ -204,7 +214,7 @@ class ModelDataManagement:
             for budget_info in postup_data['Бюджет']:
                 if 'балл' in budget_info:
                     budget_ege_score = postup_data['Бюджет'][budget_info]
-                if 'мест' in budget_info:
+                if 'Мест' in budget_info:
                     budget_places_amount = postup_data['Бюджет'][budget_info]
         return budget_places_amount, budget_ege_score
 
@@ -221,7 +231,7 @@ class ModelDataManagement:
             for paid_info in postup_data['Платное']:
                 if 'балл' in paid_info:
                     paid_ege_score = postup_data['Платное'][paid_info]
-                if 'мест' in paid_info:
+                if 'Мест' in paid_info:
                     paid_places_amount = postup_data['Платное'][paid_info]
                 if 'Стоимость' in paid_info:
                     cost = postup_data['Платное'][paid_info]

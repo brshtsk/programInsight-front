@@ -25,6 +25,7 @@ class DataConverter:
                 'Срок обучения': op.length,
                 'Форма обучения': op.attendance,
                 'ЕГЭ': op.exams,
-                'Место в топе': op.raex_position
+                'Место в топе': op.raex_position,
+                'Входит в топ-100': op.raex_position is not None
             })
         return pd.DataFrame(data)

@@ -65,6 +65,7 @@ class GraphBuilder:
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_color(color)
+        ax.spines['bottom'].set_linewidth(1.2)
         ax.spines['left'].set_color(color)
 
     @staticmethod
@@ -103,30 +104,30 @@ class GraphBuilder:
                 "barBackground": "#ffffff"
             })
 
-        # Обработка квалификаций
-        qc = df['Квалификация'].value_counts()
-        print("Квалификации:", df['Квалификация'].unique())
-        if len(qc) > 2:
-            raise ValueError("Количество квалификаций превышает 2")
-        if len(qc) > 1:
-            qual_colors = [GraphBuilder.GRAY, GraphBuilder.BLACK][:len(qc)]
-            total_quals = qc.sum()
-            ax.pie(
-                qc.values,
-                radius=0.8,
-                wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
-                colors=qual_colors
-            )
-            for i, (qual, count) in enumerate(qc.items()):
-                percent = count / total_quals
-                list_stats_data.append({
-                    "propertyNameText": qual,
-                    "propertyValueText": str(count),
-                    "propertyPercentText": f"{percent * 100:.1f}%",
-                    "floatPercent": float(round(percent, 3)),  # Перевод из numpy.float64 в float
-                    "percentColor": qual_colors[i],
-                    "barBackground": "#ffffff"
-                })
+        # Обработка raex
+
+        ra = df['Входит в топ-100'].value_counts()
+        print("Входит в топ-100:", df['Входит в топ-100'].unique())
+        if len(ra) > 2:
+            raise ValueError("Количество вариантов для 'Входит в топ-100' превышает 2")
+        qual_colors = [GraphBuilder.GRAY, GraphBuilder.BLACK][:len(ra)]
+        total_quals = ra.sum()
+        ax.pie(
+            ra.values,
+            radius=0.8,
+            wedgeprops={'width': 0.2, 'edgecolor': (1, 1, 1, 0.3)},
+            colors=qual_colors
+        )
+        for i, (qual, count) in enumerate(ra.items()):
+            percent = count / total_quals
+            list_stats_data.append({
+                "propertyNameText": 'Входит в<br>топ-100 RAEX' if qual else 'Не входит<br>в топ-100 RAEX',
+                "propertyValueText": str(count),
+                "propertyPercentText": f"{percent * 100:.1f}%",
+                "floatPercent": float(round(percent, 3)),  # Перевод из numpy.float64 в float
+                "percentColor": qual_colors[i],
+                "barBackground": "#ffffff"
+            })
 
         return fig, list_stats_data
 

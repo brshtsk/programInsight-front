@@ -321,7 +321,7 @@ Rectangle {
             x: 0
             y: 57
             width: 20
-            height: 198
+            height: 180
             color: parent.color
         }
     }
@@ -388,7 +388,7 @@ Rectangle {
             x: 0
             y: 57
             width: 20
-            height: 198
+            height: 180
             color: parent.color
         }
     }
