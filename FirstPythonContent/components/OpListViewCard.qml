@@ -164,7 +164,7 @@ Rectangle {
         width: 72
         height: 16
         color: "#ffffff"
-        text: qsTr("Стоимость")
+        text: model.typeInfo2Text
         font.pixelSize: 12
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

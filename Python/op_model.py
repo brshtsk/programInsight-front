@@ -24,6 +24,8 @@ class opListModel(QAbstractListModel):
 
     FullUniversityNameRole = Qt.UserRole + 17
 
+    TypeInfo2TextRole = Qt.UserRole + 18
+
     def __init__(self, data=None):
         super().__init__()
         self._data = data or []
@@ -75,6 +77,9 @@ class opListModel(QAbstractListModel):
         elif role == self.FullUniversityNameRole:
             return item.get("fullUniversityNameText")
 
+        elif role == self.TypeInfo2TextRole:
+            return item.get("typeInfo2Text")
+
         return None
 
     def roleNames(self):
@@ -98,7 +103,9 @@ class opListModel(QAbstractListModel):
             self.SingleExamsRole: b"singleExams",
             self.ChoiceExamsRole: b"choiceExams",
 
-            self.FullUniversityNameRole: b"fullUniversityNameText"
+            self.FullUniversityNameRole: b"fullUniversityNameText",
+
+            self.TypeInfo2TextRole: b"typeInfo2Text"
         }
 
 # Данные для списка ОП. Пример

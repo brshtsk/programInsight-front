@@ -33,7 +33,7 @@ class PyHandler(QObject):
             length_text,  # opTimeText
             university_name,  # universityNameText
             location_text,  # opLocationText
-            "Не в топ-10 RAEX" if (raex_position == 0 or raex_position > 10) else f"Входит в топ-{raex_position} RAEX",
+            "Не в топ-100 RAEX" if (raex_position == 0 or raex_position > 10) else f"На {raex_position} месте в RAEX",
             # opRatingText
             attendance_text,  # opAttendanceText
             price_text + " за год обучения",  # opPriceText (значение можно задать по необходимости)

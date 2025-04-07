@@ -133,7 +133,8 @@ class Op:
             "opNameText": DataManipulations.split_line(self.name),
             "info1Text": score_to_str(self.budget_ege_score) if show_budget_score else score_to_str(
                 self.paid_ege_score),
-            "info2Text": cost_text,
+            "info2Text": self.budget_places_amount if show_budget_score else cost_text,
+            "typeInfo2Text": "Бюдж. мест" if settings.show_op_only_with_budget else "Стоимость",
             "universityNameText": self.university if len(self.university) <= 20 else DataManipulations.cut_extra(
                 self.university),
             "opCodeText": self.op_type,
