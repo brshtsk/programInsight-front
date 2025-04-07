@@ -244,7 +244,8 @@ class Op:
 
                 if not self.budget_ege_score:
                     return False
-                return settings.min_average_score <= average_budget_score <= settings.max_average_score
+                if not (settings.min_average_score <= average_budget_score <= settings.max_average_score):
+                    return False
             else:
                 if not self.paid_ege_score:
                     return False

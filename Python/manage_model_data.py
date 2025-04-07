@@ -103,9 +103,9 @@ class ModelDataManagement:
                                    raex_position))
                     unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
-                except:
+                except Exception as e:
                     # print(f"Ошибка при обработке ОП: {op_name} в {university}")
-                    bad_ops.add(("Бакалавриат/Специалитет", op_name))
+                    bad_ops.add(("Бакалавриат/Специалитет", op_name, e))
 
             if op_type == 'Магистратура':
                 try:
@@ -173,9 +173,9 @@ class ModelDataManagement:
                                    raex_position))
                     unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
-                except:
+                except Exception as e:
                     # print(f"Ошибка при обработке ОП: {op_name} в {university}")
-                    bad_ops.add(("Магистратура", op_name))
+                    bad_ops.add(("Магистратура", op_name, e))
 
         print(f"Количество ОП с ошибками: {len(bad_ops)}")
         print(f"Ошибки: {bad_ops}")
