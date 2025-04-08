@@ -319,7 +319,7 @@ Rectangle {
             y: 10
             width: 300
             height: 30
-            text: "Запустить анализ!"
+            text: "Запустить анализ"
             font.pixelSize: 18
             objectName: "dashboardButton"
             font.styleName: "SemiBold"
