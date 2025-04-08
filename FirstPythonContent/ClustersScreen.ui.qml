@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import FirstPython
+import "components"
 
 Rectangle {
     id: clustersContent
@@ -269,7 +270,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 objectName: "filterByExamsComboBox"
-                model: ["Стоимость / Проходной бюджет", "Стоимость / Проходной платное"]
+                model: ["Стоимость / Проходной бюдж.", "Стоимость / Проходной платное"]
                 indicator: Item {
                     width: 20
                     height: 20
@@ -366,16 +367,124 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle1
+        id: clustersChoiceRectangle
         x: 20
-        y: 400
+        y: 360
         width: 320
-        height: 220
-        color: "#ffffff"
-
+        height: 260
+        color: "#dde9db"
         radius: 10
-        border.color: "#53b93f"
-        border.width: 2
+
+        ScrollView {
+            height: 200
+            anchors.bottom: parent.bottom
+            width: 300
+            anchors.horizontalCenter: parent.horizontalCenter
+            contentHeight: clustersList.height
+            clip: true
+
+            ClustersList {
+                id: clustersList
+                objectName: "clustersList"
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                clusters: [{
+                        "clusterNameText": "Розовый кластер",
+                        "clusterSizeText": "16",
+                        "clusterCardColor": "#ff69b4",
+                        "clusterNameColor": "#ffffff"
+                    }, {
+                        "clusterNameText": "Фиолетовый кластер",
+                        "clusterSizeText": "14",
+                        "clusterCardColor": "#b415ed",
+                        "clusterNameColor": "#ffffff"
+                    }, {
+                        "clusterNameText": "Желтый кластер",
+                        "clusterSizeText": "21",
+                        "clusterCardColor": "#e0f520",
+                        "clusterNameColor": "#000000"
+                    }, {
+                        "clusterNameText": "Зеленый кластер",
+                        "clusterSizeText": "21",
+                        "clusterCardColor": "#53b93f",
+                        "clusterNameColor": "#ffffff"
+                    }]
+            }
+        }
+
+        Item {
+            id: searchInfoZoneItem
+            x: 10
+            y: 10
+            width: parent.width - 20
+            height: 50
+
+            Text {
+                id: searchOpText
+                text: "Выбор кластеров"
+                font.pixelSize: 24
+                textFormat: Text.RichText
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+                anchors.left: parent.left
+                anchors.top: parent.top
+            }
+
+            Text {
+                id: resultAmountText
+                objectName: "resultAmountText"
+                color: "#373737"
+                text: "Получено 7 результатов"
+                anchors.left: parent.left
+                font.pixelSize: 14
+                textFormat: Text.RichText
+                font.family: Constants.font.family
+                font.styleName: "Condensed SemiBold"
+                anchors.bottom: parent.bottom
+            }
+
+            Button {
+                id: searchSettingsButton
+                objectName: "searchSettingsButton"
+                width: 30
+                height: 45
+                font.pixelSize: 16
+                icon.color: "#ffffff"
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+
+                contentItem: Image {
+                    scale: searchSettingsButton.hovered ? 1.58 : 1.5
+                    id: searchSettingsImage
+                    source: "resources/cancel.svg"
+                    width: 25
+                    height: 25
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectFit // опционально, если нужно сохранить пропорции
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+
+                background: Rectangle {
+                    color: searchSettingsButton.pressed ? "#7dd96b" : "#53b93f" // Изменение цвета при нажатии
+                    radius: 10
+                    scale: searchSettingsButton.hovered ? 1.05 : 1.0 // Увеличение кнопки при наведении
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -432,25 +541,6 @@ Rectangle {
                 text: "Подсказка:<br><br>В данном разделе можно провести кластерый анализ<br>по выборке, заданной вашими настройками поиска."
                 visible: scoreHelpMouseArea.containsMouse
             }
-        }
-    }
-
-    Item {
-        id: choiceItem
-        x: 20
-        y: 360
-        width: 320
-        height: 30
-
-        Text {
-            id: choiceText
-            text: "Выбор кластера"
-            font.pixelSize: 21
-            textFormat: Text.RichText
-            font.family: Constants.font.family
-            font.styleName: "SemiBold"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }
