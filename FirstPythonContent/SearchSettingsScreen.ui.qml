@@ -8,7 +8,7 @@ import "components"
 Rectangle {
     id: settingsContent
     width: 740
-    height: 600
+    height: 670
     color: "#ffffff"
 
     Item {
@@ -562,7 +562,7 @@ Rectangle {
         x: 420
         y: 80
         width: 300
-        height: 280
+        height: 350
         color: "#dde9db"
         radius: 10
 
@@ -756,7 +756,7 @@ Rectangle {
     Rectangle {
         id: searchByNameRectangle
         x: 20
-        y: 420
+        y: 490
         width: 390
         height: 160
         color: "#0053b93f"
@@ -879,7 +879,7 @@ Rectangle {
     Rectangle {
         id: sortOpRectangle
         x: 420
-        y: 480
+        y: 550
         width: 300
         height: 100
         color: "#dde9db"
@@ -1015,7 +1015,7 @@ Rectangle {
     Rectangle {
         id: filterByExamsRectangle
         x: 420
-        y: 370
+        y: 440
         width: 300
         height: 100
         color: "#dde9db"
@@ -1090,6 +1090,82 @@ Rectangle {
                         width: parent.width - 20
                         color: "#ffffff"
                         text: filterByExamsComboBox.currentText
+                        font.pixelSize: 18
+                        font.styleName: "SemiBold"
+                        font.family: Constants.font.family
+                        anchors.centerIn: parent
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: attendanceSettingsRectangle
+        x: 20
+        y: 420
+        width: 390
+        height: 60
+        color: "#dde9db"
+        radius: 10
+
+        Item {
+            id: attendanceSettingsItem
+            x: 10
+            y: 10
+            width: 200
+            height: 40
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            Text {
+                id: attendanceTypeSettingsText
+                x: 0
+                height: 30
+                color: "#373737"
+                text: "Форма обучения"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                font.pixelSize: 21
+                verticalAlignment: Text.AlignVCenter
+                textFormat: Text.RichText
+                font.styleName: "SemiBold"
+                font.family: Constants.font.family
+            }
+
+            ComboBox {
+                id: attendanceTypeComboBox
+                width: 180
+                height: 30
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                objectName: "attendanceTypeComboBox"
+                model: ["Любая", "Очная", "Очно-заочная", "Дистанционная"]
+                indicator: Item {
+                    width: 20
+                    height: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    Text {
+                        color: "#ffffff"
+                        text: "\u25be"
+                        font.pixelSize: 24
+                        anchors.centerIn: parent
+                    }
+                }
+                contentItem: Rectangle {
+                    id: attendanceComboBoxBackground
+                    color: "#53b93f"
+                    radius: 10
+                    anchors.fill: parent
+                    anchors.leftMargin: -5
+                    anchors.rightMargin: -5
+                    Text {
+                        width: parent.width - 20
+                        color: "#ffffff"
+                        text: attendanceTypeComboBox.currentText
                         font.pixelSize: 18
                         font.styleName: "SemiBold"
                         font.family: Constants.font.family
