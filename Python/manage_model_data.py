@@ -51,7 +51,10 @@ class ModelDataManagement:
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
 
-                    raex_position = int(op_data['Место в топе'])
+                    try:
+                        raex_position = int(op_data['Место в топе'])
+                    except:
+                        raex_position = None
 
                     exams = []
                     for exam_var in op_data['ЕГЭ']:
@@ -120,7 +123,10 @@ class ModelDataManagement:
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
 
-                    raex_position = int(op_data['Место в топе'])
+                    try:
+                        raex_position = int(op_data['Место в топе'])
+                    except:
+                        raex_position = None
 
                     exams = []
                     for exam_var in op_data['Вступительные']:
