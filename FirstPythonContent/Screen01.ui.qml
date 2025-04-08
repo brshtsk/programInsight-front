@@ -432,7 +432,7 @@ Rectangle {
 
             Item {
                 id: userAccountItem
-                width: 165
+                width: 120
                 height: parent.height
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
@@ -467,10 +467,10 @@ Rectangle {
                 }
                 Text {
                     id: userNameText
-                    width: 120
+                    width: 80
                     height: 48
                     color: "#696969"
-                    text: "Митя<br>Бершицкий"
+                    text: "Личный<br>кабинет"
                     anchors.left: parent.left
                     font.pixelSize: 18
                     horizontalAlignment: Text.AlignLeft
