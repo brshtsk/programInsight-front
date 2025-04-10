@@ -406,8 +406,8 @@ Rectangle {
                 icon.height: 32
                 icon.width: 32
                 wheelEnabled: true
-                icon.color: pressed ? "#ff8a8a" : (hovered ? "#ff0707" : "#d5d5d5") // Бледно-красный при нажатии
-                icon.source: "resources/heart-gray.svg"
+                icon.color: pressed ? "#7dd96b" : (hovered ? "#53b93f" : "#d5d5d5") // Бледно-красный при нажатии
+                icon.source: "resources/info.svg"
                 background: Rectangle {
                     color: "#00FFFFFF"
                 }
