@@ -5,7 +5,7 @@ class opListModel(QAbstractListModel):
     # Определяем роли модели для всех полей
     OpNameRole = Qt.UserRole + 1
     Info1TextRole = Qt.UserRole + 2
-    Info2TextRole = Qt.UserRole + 3
+    PriceTextRole = Qt.UserRole + 3
     UniversityNameRole = Qt.UserRole + 4
     OpCodeRole = Qt.UserRole + 5
     ImageSourceRole = Qt.UserRole + 6
@@ -43,8 +43,8 @@ class opListModel(QAbstractListModel):
             return item["opNameText"]
         elif role == self.Info1TextRole:
             return item["info1Text"]
-        elif role == self.Info2TextRole:
-            return item["info2Text"]
+        elif role == self.PriceTextRole:
+            return item["priceText"]
         elif role == self.UniversityNameRole:
             return item["universityNameText"]
         elif role == self.OpCodeRole:
@@ -86,7 +86,7 @@ class opListModel(QAbstractListModel):
         return {
             self.OpNameRole: b"opNameText",
             self.Info1TextRole: b"info1Text",
-            self.Info2TextRole: b"info2Text",
+            self.PriceTextRole: b"priceText",
             self.UniversityNameRole: b"universityNameText",
             self.OpCodeRole: b"opCodeText",
             self.ImageSourceRole: b"imageSource",

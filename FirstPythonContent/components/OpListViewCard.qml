@@ -15,7 +15,7 @@ Rectangle {
     property string lengthText: model.lengthText
     property string locationText: model.locationText
     property string attendanceText: model.attendanceText
-    property string priceText: model.info2Text
+    property string priceText: model.priceText
     property int raexPosition: model.raexPosition
     property int budgetScore: model.budgetScore
     property int paidScore: model.paidScore
@@ -139,7 +139,7 @@ Rectangle {
             font.styleName: "SemiBold"
             anchors.fill: parent
             color: "#53b93f"
-            text: model.info2Text
+            text: model.typeInfo2Text === "Стоимость" ? model.priceText : model.budgetPlaces
         }
     }
 
