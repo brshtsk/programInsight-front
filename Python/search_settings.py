@@ -40,6 +40,8 @@ class Settings:
 
         self.sort_from_high_to_low = True  # Сортировать от большего к меньшему или наоборот
 
+        self.attendance = None  # Форма обучения (None/"Очная"/"Заочная"/...)
+
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
 

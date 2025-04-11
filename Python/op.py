@@ -234,6 +234,10 @@ class Op:
         if self.op_type not in settings.qualifications:
             return False
 
+        if settings.attendance:
+            if settings.attendance not in self.attendance:
+                return False
+
         if settings.filter_by_score:
             if not self.exams_amount:
                 return False

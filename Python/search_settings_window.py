@@ -11,8 +11,6 @@ class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
     searchSettingsClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна настроек
 
-    # ToDo: имплемент выбора формы обучения
-
     def __init__(self, engine, settings: Settings, unique_values: UniqueValues, frontend_parent):
         super().__init__()
         self.engine = engine
@@ -157,6 +155,13 @@ class SearchSettingsWindow(QObject):
             sort_up_down_button.clicked.connect(self.sort_up_down_button_clicked)
         else:
             print("Button 'sortUpDownButton' не найден")
+
+        # Выбор формы обучения
+        attendance_type_combobox = self.window.findChild(QObject, 'attendanceTypeComboBox')
+        if attendance_type_combobox:
+            attendance_type_combobox.currentIndexChanged.connect(self.attendance_type_combobox_index_changed)
+        else:
+            print("ComboBox 'attendanceTypeComboBox' не найден")
 
         # Этот класс является обработчиком сигналов из QML
         # Обработкой занимается handleExamDeleted
@@ -587,6 +592,19 @@ class SearchSettingsWindow(QObject):
             else:
                 sort_up_down_button.setProperty('iconSource', 'resources/sort-from-top.png')
                 print("Выбрана сортировка от меньшего к большему")
+            self.updateModels.emit()
+        else:
+            print("sender() не найден")
+
+    @Slot()
+    def attendance_type_combobox_index_changed(self):
+        attendance_type_combobox = self.sender()
+        if attendance_type_combobox is not None:
+            index = attendance_type_combobox.property('currentIndex')
+            # 0 - Любая, 1 - Очная, 2 - Очно-заочная, 3 - Заочная, 4 - Дистанционная
+            v = [None, "Очная", "Заочная", "Очно-заочная", "Дистанционная"]
+            print(f"Выбранный индекс: {index}. Выбрано: {v[index]}")
+            self.settings.attendance = v[index]
             self.updateModels.emit()
         else:
             print("sender() не найден")

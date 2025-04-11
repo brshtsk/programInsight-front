@@ -1142,7 +1142,7 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 objectName: "attendanceTypeComboBox"
-                model: ["Любая", "Очная", "Очно-заочная", "Дистанционная"]
+                model: ["Любая", "Очная", "Заочная", "Очно-заочная", "Дистанционная"]
                 indicator: Item {
                     width: 20
                     height: 20
