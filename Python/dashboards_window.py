@@ -20,8 +20,8 @@ class DashboardsWindow(QObject):
         self.frontend_parent.modelChanged.connect(self.on_model_changed)
 
     def load_window(self):
-        settings_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
-        self.component = QQmlComponent(self.engine, str(settings_qml_path))
+        dashboards_qml_path = Utils.resource_path('FirstPythonContent/Dashboards.qml')
+        self.component = QQmlComponent(self.engine, str(dashboards_qml_path))
         if self.component.status() == QQmlComponent.Ready:
             self.window = self.component.create()
             if self.window:
@@ -30,9 +30,9 @@ class DashboardsWindow(QObject):
                 self.build_plots()
                 self.window.windowClosed.connect(self.on_window_closed)
             else:
-                print("Не удалось создать окно настроек.")
+                print("Не удалось создать окно дашбордов.")
         else:
-            print("Ошибка при загрузке SearchSettings.qml:", self.component.errorString())
+            print("Ошибка при загрузке Dashboards.qml:", self.component.errorString())
 
     def set_default_properties(self):
         """
@@ -243,7 +243,7 @@ class DashboardsWindow(QObject):
 
     @Slot()
     def on_main_window_closed(self):
-        print("Главное окно закрыто, закрываем окно настроек")
+        print("Главное окно закрыто, закрываем окно дашбордов")
         if self.window is not None:
             self.window.close()
             # self.on_window_closed() - выполняется автоматически

@@ -8,6 +8,7 @@ from op_card_handler import PyHandler
 from unique_values import UniqueValues
 from search_settings_window import SearchSettingsWindow
 from dashboards_window import DashboardsWindow
+from clusters_window import ClustersWindow
 from statistics import Statistics
 from data_converter import DataConverter
 from plots.graph_builder import GraphBuilder
@@ -33,6 +34,7 @@ class Frontend(QObject):
         self.statistics_model = None
         self.search_settings_window = None  # Ссылка на окно настроек
         self.dashboard_window = None  # Ссылка на окно дашбордов
+        self.clusters_window = None  # Ссылка на окно кластеров
         self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
         self.setup_models()
@@ -95,6 +97,13 @@ class Frontend(QObject):
         else:
             print('Кнопка дашбордов не найдена!')
 
+        # Кнопка кластеров
+        clusters_button = root_object.findChild(QObject, 'clustersButton')
+        if clusters_button:
+            clusters_button.clicked.connect(self.clusters_button_clicked)
+        else:
+            print('Кнопка кластеров не найдена!')
+
         # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
         root_object.windowClosed.connect(self.on_main_window_closed)
 
@@ -124,6 +133,18 @@ class Frontend(QObject):
                 self.search_settings_window.restore_view()
             except Exception as e:
                 print("Окно дашбордов уже открыто:", e)
+
+    @Slot()
+    def clusters_button_clicked(self):
+        # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
+        if self.clusters_window is None or self.clusters_window.window is None:
+            print('Кнопка кластеров нажата!')
+            self.clusters_window = ClustersWindow(self.engine, self)
+        else:
+            try:
+                self.clusters_window.window.show()
+            except Exception as e:
+                print("Окно кластеров уже открыто:", e)
 
     def update_price_plot(self):
         """

@@ -732,56 +732,107 @@ Rectangle {
             }
         }
 
-        ListView {
-            id: menuBarListView
+        Item {
             width: parent.width
             height: 200
             y: 95
-            spacing: 25
-            model: ListModel {
 
-                ListElement {
-                    text: "Кластеры"
-                }
-
-                ListElement {
-                    text: "Экспорт"
-                }
-
-                ListElement {
-                    text: "Настройки"
-                }
-            }
-            delegate: Button {
-                id: menuRowButton
-                width: 120
-                height: 20
+            Column {
+                spacing: 25
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
 
-                contentItem: Text {
-                    font.pixelSize: 18 // Увеличенный размер шрифта
-                    font.family: Constants.font.family
-                    font.styleName: "SemiBold"
-                    text: model.text
-                    // icon.color: pressed ? "#ff8a8a" : (hovered ? "#ff0707" : "#d5d5d5") // Бледно-красный при нажатии
-                    color: menuRowButton.pressed ? "#7dd96b" : (menuRowButton.hovered ? "53b93f" : "#696969")
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    scale: menuRowButton.hovered ? 1.05 : 1.0
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 100
+                Button {
+                    id: clustersButton
+                    width: 120
+                    height: 20
+                    text: "Кластеры"
+                    objectName: "clustersButton"
+                    contentItem: Text {
+                        text: clustersButton.text
+                        font.pixelSize: 18
+                        font.family: Constants.font.family
+                        font.styleName: "SemiBold"
+                        color: clustersButton.pressed ? "#7dd96b" : (clustersButton.hovered ? "53b93f" : "#696969")
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+                        scale: clustersButton.hovered ? 1.05 : 1.0
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
                         }
                     }
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 200
-                        }
+                    background: Rectangle {
+                        color: "#00FFFFFF"
                     }
                 }
 
-                background: Rectangle {
-                    color: "#00FFFFFF"
+                Button {
+                    id: exportButton
+                    width: 120
+                    height: 20
+                    text: "Экспорт"
+                    objectName: "exportButton"
+                    contentItem: Text {
+                        text: exportButton.text
+                        font.pixelSize: 18
+                        font.family: Constants.font.family
+                        font.styleName: "SemiBold"
+                        color: exportButton.pressed ? "#7dd96b" : (exportButton.hovered ? "53b93f" : "#696969")
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+                        scale: exportButton.hovered ? 1.05 : 1.0
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                    }
+                    background: Rectangle {
+                        color: "#00FFFFFF"
+                    }
+                }
+
+                Button {
+                    id: dataSettingsButton
+                    width: 120
+                    height: 20
+                    text: "Настройки"
+                    objectName: "dataSettingsButton"
+                    contentItem: Text {
+                        text: dataSettingsButton.text
+                        font.pixelSize: 18
+                        font.family: Constants.font.family
+                        font.styleName: "SemiBold"
+                        color: dataSettingsButton.pressed ? "#7dd96b" : (dataSettingsButton.hovered ? "53b93f" : "#696969")
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+                        scale: dataSettingsButton.hovered ? 1.05 : 1.0
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                    }
+                    background: Rectangle {
+                        color: "#00FFFFFF"
+                    }
                 }
             }
         }
