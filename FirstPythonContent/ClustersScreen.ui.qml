@@ -263,14 +263,14 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             ComboBox {
-                id: filterByExamsComboBox
+                id: pairComboBox
                 width: 290
                 height: 30
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 5
-                objectName: "filterByExamsComboBox"
-                model: ["Стоимость / Проходной бюдж.", "Стоимость / Проходной платное"]
+                objectName: "pairComboBox"
+                model: ["Стоимость / Проходной бюдж.", "Стоимость / Проходной платн."]
                 indicator: Item {
                     width: 20
                     height: 20
@@ -293,7 +293,7 @@ Rectangle {
                     Text {
                         width: parent.width - 20
                         color: "#ffffff"
-                        text: filterByExamsComboBox.currentText
+                        text: pairComboBox.currentText
                         font.pixelSize: 18
                         font.styleName: "SemiBold"
                         font.family: Constants.font.family
@@ -305,7 +305,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: rectangle
+        id: runBackgroundRectangle
         x: 20
         y: 300
         width: 320
@@ -314,40 +314,40 @@ Rectangle {
         radius: 10
 
         Button {
-            id: dashboardButton
+            id: runClustersButton
             x: 10
             y: 10
             width: 300
             height: 30
             text: "Запустить анализ"
             font.pixelSize: 18
-            objectName: "dashboardButton"
+            objectName: "runClustersButton"
             font.styleName: "SemiBold"
             font.family: Constants.font.family
             contentItem: Text {
                 color: "#ffffff"
-                text: dashboardButton.text
+                text: runClustersButton.text
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                scale: dashboardButton.hovered ? 1.05 : 1.0
-                font: dashboardButton.font
-                Behavior {
+                scale: runClustersButton.hovered ? 1.05 : 1.0
+                font: runClustersButton.font
+                Behavior on scale {
                     NumberAnimation {
                         duration: 100
                     }
                 }
             }
             background: Rectangle {
-                color: dashboardButton.pressed ? "#7dd96b" : "#53b93f"
+                color: runClustersButton.pressed ? "#7dd96b" : "#53b93f"
                 radius: 10
-                scale: dashboardButton.hovered ? 1.05 : 1.0
-                Behavior {
+                scale: runClustersButton.hovered ? 1.05 : 1.0
+                Behavior on scale {
                     NumberAnimation {
                         duration: 100
                     }
                 }
 
-                Behavior {
+                Behavior on color {
                     ColorAnimation {
                         duration: 200
                     }
@@ -444,8 +444,8 @@ Rectangle {
             }
 
             Button {
-                id: searchSettingsButton
-                objectName: "searchSettingsButton"
+                id: cancelClusterChoiceButton
+                objectName: "cancelClusterChoiceButton"
                 width: 30
                 height: 45
                 font.pixelSize: 16
@@ -454,8 +454,8 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 contentItem: Image {
-                    scale: searchSettingsButton.hovered ? 1.58 : 1.5
-                    id: searchSettingsImage
+                    scale: cancelClusterChoiceButton.hovered ? 1.58 : 1.5
+                    id: cancelClusterImage
                     source: "resources/cancel.svg"
                     width: 25
                     height: 25
@@ -469,9 +469,9 @@ Rectangle {
                 }
 
                 background: Rectangle {
-                    color: searchSettingsButton.pressed ? "#7dd96b" : "#53b93f" // Изменение цвета при нажатии
+                    color: cancelClusterChoiceButton.pressed ? "#7dd96b" : "#53b93f" // Изменение цвета при нажатии
                     radius: 10
-                    scale: searchSettingsButton.hovered ? 1.05 : 1.0 // Увеличение кнопки при наведении
+                    scale: cancelClusterChoiceButton.hovered ? 1.05 : 1.0 // Увеличение кнопки при наведении
                     Behavior on scale {
                         NumberAnimation {
                             duration: 100
@@ -538,7 +538,7 @@ Rectangle {
             }
 
             ToolTip {
-                text: "Подсказка:<br><br>В данном разделе можно провести кластерый анализ<br>по выборке, заданной вашими настройками поиска."
+                text: "Подсказка:<br><br>В данном разделе можно провести кластерый анализ<br>по выборке, заданной вашими настройками поиска.<br><br>Символ '₽' обозначает, что переменная относится<br>к поступлению на платное. Например,<br><b>'Проходной ₽'</b> - проходной на платное.<br><br>После проведения анализа, вы можете выбрать кластер,<br>ОП которого отобразятся в главном меню.<br>Нажмите кнопку '∅', чтобы отменить ваш выбор."
                 visible: scoreHelpMouseArea.containsMouse
             }
         }

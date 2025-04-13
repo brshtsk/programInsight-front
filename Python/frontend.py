@@ -127,6 +127,7 @@ class Frontend(QObject):
         if self.dashboard_window is None or self.dashboard_window.window is None:
             print('Кнопка дашбордов нажата!')
             self.dashboard_window = DashboardsWindow(self.engine, self)
+            self.clusters_window.updateModels.connect(self.setup_models)
         else:
             try:
                 self.search_settings_window.window.show()
