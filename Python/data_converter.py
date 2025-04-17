@@ -26,6 +26,7 @@ class DataConverter:
                 'Форма обучения': op.attendance,
                 'ЕГЭ': op.exams,
                 'Место в топе': op.raex_position,
-                'Входит в топ-100': op.raex_position is not None
+                'Входит в топ-100': op.raex_position is not None,
+                'Ссылка': op.url
             })
         return pd.DataFrame(data)

@@ -20,7 +20,8 @@ class Op:
                  length: Optional[List[float]],
                  attendance: Optional[List[str]],
                  exams: Optional[List[str]],
-                 raex_position: Optional[int]):
+                 raex_position: Optional[int],
+                 url: str):
         Op.objects_count += 1
         self.id = Op.objects_count
 
@@ -85,6 +86,10 @@ class Op:
         if raex_position is not None and not isinstance(raex_position, int):
             raise TypeError("raex_position должно быть целым числом или None")
         self.raex_position = raex_position
+
+        if not isinstance(url, str):
+            raise TypeError("url должно быть строкой")
+        self.url = url
 
         # Дополнительные проверки:
         # Если некоторые данные о бюджетных местах отсутствуют, все они должны отсутствовать.

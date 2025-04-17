@@ -41,12 +41,14 @@ class ModelDataManagement:
                     attendance = None
                     exams = None
                     raex_position = None
+                    url = None
 
                     exams_amount = len(op_data['ЕГЭ'])
                     city = op_data['Город']
                     length = op_data['Срок обучения']
                     attendance = op_data['Форма обучения']
                     university = op_data['Университет']
+                    url = op_data['Ссылка']
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
@@ -93,7 +95,7 @@ class ModelDataManagement:
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
-                                   raex_position))
+                                   raex_position, url))
                     unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
                 except Exception as e:
@@ -113,12 +115,14 @@ class ModelDataManagement:
                     attendance = None
                     exams = None
                     raex_position = None
+                    url = None
 
                     exams_amount = len(op_data['Вступительные'])
                     city = op_data['Город']
                     length = op_data['Срок обучения']
                     attendance = op_data['Форма обучения']
                     university = op_data['Университет']
+                    url = op_data['Ссылка']
 
                     if exams_amount == 0:
                         raise Exception("Нет экзаменов")
@@ -165,7 +169,7 @@ class ModelDataManagement:
 
                     data.append(Op(op_name, university, exams_amount, op_type, budget_ege_score, budget_places_amount,
                                    paid_ege_score, paid_places_amount, cost, city, length, attendance, exams,
-                                   raex_position))
+                                   raex_position, url))
                     unique_values.add_op(data[-1])
                     # print(f"Получена ОП: {op_name} в {university}")
                 except Exception as e:

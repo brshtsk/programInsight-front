@@ -4,6 +4,10 @@ from scipy.stats import gaussian_kde
 
 
 class GraphBuilder:
+    """
+    Класс для визуализации в окне дашбордов.
+    """
+
     GREEN = '#53b93f'
     ORANGE = '#ed9528'
     BLUE = '#49c0de'

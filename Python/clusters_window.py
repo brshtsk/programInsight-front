@@ -1,6 +1,8 @@
 from PySide6.QtCore import QObject, Slot, Signal
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
+from clusters_manager import ClustersManager
+from time import time
 
 
 class ClustersWindow(QObject):
@@ -13,8 +15,6 @@ class ClustersWindow(QObject):
         self.component = None
         self.window = None
         self.new_exam_window = None
-        # ToDo: рабочий список кластеров
-        self.available_clusters = []
 
         self.load_window()
 
@@ -59,6 +59,13 @@ class ClustersWindow(QObject):
         else:
             print("Кнопка 'cancelClusterChoiceButton' не найдена!")
 
+        # Запустить кластерный анализ
+        run_clusters_button = self.window.findChild(QObject, 'runClustersButton')
+        if run_clusters_button:
+            run_clusters_button.clicked.connect(self.on_run_clusters_button_clicked)
+        else:
+            print("Кнопка 'runClustersButton' не найдена!")
+
     def set_properties(self):
         # Доступные пары переменных
         pair_combobox = self.window.findChild(QObject, "pairComboBox")
@@ -71,6 +78,15 @@ class ClustersWindow(QObject):
             pair_combobox.setProperty('model', pair_model)
         else:
             print("ComboBox 'pairComboBox' не найден!")
+
+        # Скрытие графика кластеров, уведомление пользователю
+        clusters_image = self.window.findChild(QObject, 'clustersImage')
+        if clusters_image:
+            clusters_image.setProperty('visible', False)
+            clusters_image.setProperty('headerVisible', True)
+            clusters_image.setProperty('headerText', 'Запустите анализ, чтобы продолжить')
+        else:
+            print("Элемент 'clustersImage' не найден!")
 
         op_list = self.frontend_parent.filtered_op_list
 
@@ -89,9 +105,15 @@ class ClustersWindow(QObject):
 
         result_amount_text = self.window.findChild(QObject, 'resultAmountText')
         if result_amount_text:
-            result_amount_text.setProperty('text', f'Получено {len(self.available_clusters)} результатов')
+            result_amount_text.setProperty('text', 'Получено 0 результатов')
         else:
             print("Элемент с objectName 'resultAmountText' не найден")
+
+        clusters_list = self.window.findChild(QObject, 'clustersList')
+        if clusters_list:
+            clusters_list.setProperty('clusters', [])
+        else:
+            print("Элемент с objectName 'clustersList' не найден")
 
     @Slot()
     def on_model_changed(self):
@@ -125,9 +147,111 @@ class ClustersWindow(QObject):
             print("ComboBox 'pairComboBox' не найден!")
 
     @Slot()
+    def on_run_clusters_button_clicked(self):
+        try:
+            # Получаем выбранный индекс
+            run_cluster_button = self.window.findChild(QObject, 'runClustersButton')
+            if run_cluster_button:
+                print("Запускаем кластерный анализ...")
+
+                # Убираем отображение кластеров
+                clusters_image = self.window.findChild(QObject, 'clustersImage')
+                if clusters_image:
+                    clusters_image.setProperty('visible', False)
+                    clusters_image.setProperty('headerVisible', True)
+                    clusters_image.setProperty('headerText', 'Запускаем анализ...')
+                else:
+                    print("Элемент 'clustersImage' не найден!")
+
+                # Получаем алгоритм и пару переменных
+                algorithm_type_combobox = self.window.findChild(QObject, 'algorithmTypeComboBox')
+                if algorithm_type_combobox:
+                    index = algorithm_type_combobox.property('currentIndex')
+                    v = ["Автоматически", "K-Means", "Mean Shift", "DBSCAN"]
+                    algorithm = v[index]
+                else:
+                    print("ComboBox 'algorithmTypeComboBox' не найден!")
+
+                pair_combobox = self.window.findChild(QObject, 'pairComboBox')
+                if pair_combobox:
+                    index = pair_combobox.property('currentIndex')
+
+                    if 'Магистратура' not in self.frontend_parent.settings.qualifications:
+                        #     pair_model = ["Стоимость / Проходной", "Стоимость / Проходной ₽", "Места / Проходной",
+                        #                   "Места ₽ / Проходной ₽", "Стоимость / Места ₽", "Стоимость / Рейтинг"]
+                        df_pairs = [('Стоимость (в год)', 'Проходной балл на бюджет'),
+                                    ('Стоимость (в год)', 'Проходной балл на платное'),
+                                    ('Кол-во бюджетных мест', 'Проходной балл на бюджет'),
+                                    ('Кол-во платных мест', 'Проходной балл на платное'),
+                                    ('Стоимость (в год)', 'Кол-во платных мест'),
+                                    ('Стоимость (в год)', 'Место в топе')]
+                    else:
+                        #     pair_model = ["Стоимость / Места ₽", "Стоимость / Рейтинг"]
+                        df_pairs = [('Стоимость (в год)', 'Кол-во платных мест'),
+                                    ('Стоимость (в год)', 'Место в топе')]
+
+                    vars = df_pairs[index]
+                else:
+                    print("ComboBox 'pairComboBox' не найден!")
+
+                # Создаем менеджера кластеров
+                clusters_manager = ClustersManager(self.frontend_parent.filtered_op_list, algorithm, vars)
+
+                print()
+                print('=================================')
+                print('Запускаем кластерный анализ...')
+                print('Алгоритм:', clusters_manager.algorithm)
+                print('Пара переменных:', clusters_manager.vars)
+                print('=================================')
+                print()
+
+                # Запускаем алгоритм
+                clusters_manager.run_algorithm()
+
+                # Выводим информацию в модель
+                model = clusters_manager.get_model()
+
+                clusters_list = self.window.findChild(QObject, 'clustersList')
+                if clusters_list:
+                    clusters_list.setProperty('clusters', model)
+                else:
+                    print("Элемент с objectName 'clustersList' не найден")
+
+                result_amount_text = self.window.findChild(QObject, 'resultAmountText')
+                if result_amount_text:
+                    result_amount_text.setProperty('text', f'Получено {len(clusters_manager.clusters)} результатов')
+                else:
+                    print("Элемент с objectName 'resultAmountText' не найден")
+
+                # Отображаем график кластеров
+                clusters_image = self.window.findChild(QObject, 'clustersImage')
+                if clusters_image:
+                    clusters_image.setProperty('visible', True)
+                    clusters_image.setProperty('headerVisible', False)
+                    clusters_image.setProperty('source',
+                                               f'plots_images/clusters_result.png?cacheBust={time()}')
+                else:
+                    print("Элемент 'clustersImage' не найден!")
+            else:
+                print("Кнопка 'runClustersButton' не найдена!")
+        except Exception as e:
+            print("Ошибка при запуске кластерного анализа, возможно:", e)
+            try:
+                clusters_image = self.window.findChild(QObject, 'clustersImage')
+                if clusters_image:
+                    clusters_image.setProperty('visible', False)
+                    clusters_image.setProperty('headerVisible', True)
+                    clusters_image.setProperty('headerText', 'Не удалось провести кластерный анализ<br>Вероятно, недостаточно данных')
+                else:
+                    print("Элемент 'clustersImage' не найден!")
+            except Exception as e:
+                print("Ошибка при выводе сообщения пользователю (вероятно, окно закрыто):", e)
+
+    @Slot()
     def on_cancel_cluster_choice_button_clicked(self):
         cancel_cluster_choice_button = self.window.findChild(QObject, 'cancelClusterChoiceButton')
         if cancel_cluster_choice_button:
+            # ToDo: работа с выбором/отменой кластеров
             pass
         else:
             print("Кнопка 'cancelClusterChoiceButton' не найдена!")

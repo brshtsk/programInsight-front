@@ -357,13 +357,35 @@ Rectangle {
     }
 
     Image {
-        id: clustrersImage
+        id: clustersImage
+        objectName: "clustersImage"
         x: 350
         y: 120
         width: 580
         height: 500
         source: "resources/clusters.png"
         fillMode: Image.PreserveAspectFit
+
+        property alias headerVisible: clustrersHeaderText.visible
+        property alias headerText: clustrersHeaderText.text
+    }
+
+    Text {
+        id: clustrersHeaderText
+        x: 350
+        y: 120
+        width: 580
+        height: 500
+        color: "#373737"
+        text: "Запустите анализ, чтобы продолжить"
+        font.pixelSize: 21
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        textFormat: Text.RichText
+        font.family: Constants.font.family
+        font.styleName: "Condensed SemiBold"
+
+        visible: true
     }
 
     Rectangle {
