@@ -65,7 +65,8 @@ Rectangle {
         radius: 10
 
         Text {
-            id: qualificationTypeSettingsText
+            id: infoText
+            objectName: "infoText"
             x: 10
             y: 10
             width: 280
@@ -82,14 +83,13 @@ Rectangle {
     }
 
     Button {
-        id: dashboardButton
+        id: updateButton
         x: 20
         y: 150
         width: 300
         height: 30
-        text: "Запустить анализ!"
         font.pixelSize: 18
-        objectName: "dashboardButton"
+        objectName: "updateButton"
         font.styleName: "SemiBold"
         font.family: Constants.font.family
         contentItem: Text {
@@ -97,8 +97,8 @@ Rectangle {
             text: "Обновить"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            scale: dashboardButton.hovered ? 1.05 : 1.0
-            font: dashboardButton.font
+            scale: updateButton.hovered ? 1.05 : 1.0
+            font: updateButton.font
             Behavior {
                 NumberAnimation {
                     duration: 100
@@ -106,9 +106,9 @@ Rectangle {
             }
         }
         background: Rectangle {
-            color: dashboardButton.pressed ? "#7dd96b" : "#53b93f"
+            color: updateButton.pressed ? "#7dd96b" : "#53b93f"
             radius: 10
-            scale: dashboardButton.hovered ? 1.05 : 1.0
+            scale: updateButton.hovered ? 1.05 : 1.0
             Behavior {
                 NumberAnimation {
                     duration: 100

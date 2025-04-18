@@ -12,7 +12,6 @@ class ExportWindow(QObject):
         self.frontend_parent = frontend_parent
         self.component = None
         self.window = None
-        self.new_exam_window = None
         self.format = "XLSX"
 
         self.load_window()
@@ -128,12 +127,12 @@ class ExportWindow(QObject):
     @Slot()
     def on_window_closed(self):
         """Слот, вызываемый при закрытии окна, чтобы очистить ссылку."""
-        print("Окно Dashboards закрыто (либо пользователем, либо программно)")
+        print("Окно ExportWindow закрыто (либо пользователем, либо программно)")
         self.window = None
 
     @Slot()
     def on_main_window_closed(self):
-        print("Главное окно закрыто, закрываем окно дашбордов")
+        print("Главное окно закрыто, закрываем окно экспорта")
         if self.window is not None:
             self.window.close()
             # self.on_window_closed() - выполняется автоматически

@@ -15,6 +15,7 @@ from plots.graph_builder import GraphBuilder
 import os
 from time import time
 from export_window import ExportWindow
+from data_settings_window import DataSettingsWindow
 
 
 class Frontend(QObject):
@@ -38,6 +39,7 @@ class Frontend(QObject):
         self.dashboard_window = None  # Ссылка на окно дашбордов
         self.clusters_window = None  # Ссылка на окно кластеров
         self.export_window = None  # Ссылка на окно экспорта
+        self.data_settings_window = None  # Ссылка на окно настроек данных
         self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
         self.setup_models()
@@ -124,6 +126,13 @@ class Frontend(QObject):
         else:
             print('Кнопка экспорта не найдена!')
 
+        # Кнопка настроек данных (обновления)
+        data_settings_button = root_object.findChild(QObject, 'dataSettingsButton')
+        if data_settings_button:
+            data_settings_button.clicked.connect(self.data_settings_button_clicked)
+        else:
+            print('Кнопка настроек данных не найдена!')
+
         # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
         root_object.windowClosed.connect(self.on_main_window_closed)
 
@@ -177,6 +186,18 @@ class Frontend(QObject):
                 self.export_window.window.raise_()
             except Exception as e:
                 print("Окно экспорта уже открыто:", e)
+
+    @Slot()
+    def data_settings_button_clicked(self):
+        # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
+        if self.data_settings_window is None or self.data_settings_window.window is None:
+            print('Кнопка настроек данных нажата!')
+            self.data_settings_window = DataSettingsWindow(self.engine, self)
+        else:
+            try:
+                self.data_settings_window.window.raise_()
+            except Exception as e:
+                print("Окно настроек данных уже открыто:", e)
 
     def update_price_plot(self):
         """
