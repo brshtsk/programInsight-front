@@ -1,5 +1,6 @@
 from typing import List
 
+
 class Exam:
     """
     Класс, представляющий экзамен, который пользователь указал в списке предметов.
@@ -56,8 +57,11 @@ class UserExamsSet:
     Класс, представляющий набор экзаменов, который пользователь указал в списке предметов.
     """
 
-    def __init__(self):
+    def __init__(self, parent_nickname: str):
         self.exams = []
+        if parent_nickname not in ["settings", "cabinet"]:
+            raise ValueError("parent_nickname должно быть 'settings' или 'cabinet'")
+        self.parent_nickname = parent_nickname
 
     def add_exam(self, exam: Exam):
         """
@@ -88,9 +92,28 @@ class UserExamsSet:
                 'examNameText': exam.name,
                 'examTypeText': exam.qualification,
                 'scoreText': exam.score if exam.score is not None else '-',
+                'parent': self.parent_nickname
             })
 
         return d
+
+    def load_from_model_dict(self, data: list[dict]):
+        """
+        Загружает экзамены из словаря в список экзаменов.
+        :param data: Словарь с данными об экзаменах
+        :return:
+        """
+        self.exams = []  # Очищаем текущий список экзаменов
+
+        for exam_data in data:
+            exam = Exam(
+                name=exam_data['examNameText'],
+                qualification=exam_data['examTypeText'],
+                score=exam_data['scoreText'] if exam_data['scoreText'] != '-' else None,
+                subjects_bak_or_spec=[exam_data['examNameText']],
+                subjects_mag=[exam_data['examNameText']]
+            )
+            self.add_exam(exam)
 
     def delete_exam(self, exam_name, exam_type):
         """

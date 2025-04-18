@@ -130,7 +130,8 @@ Rectangle {
 
             // Сигнал для удаления объекта
             onClicked: {
-                examHandler.handleExamDeleted(modelData.examNameText, modelData.examTypeText)
+                examHandler.handleExamDeleted(modelData.examNameText, modelData.examTypeText, modelData.parent)
+                // parent - "settings"/"cabinet"
             }
         }
 

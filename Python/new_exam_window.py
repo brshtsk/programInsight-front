@@ -8,16 +8,16 @@ from exam import Exam
 class NewExamWindow(QObject):
     examCreated = Signal(Exam)  # Сигнал, который будет испускаться при создании нового экзамена
 
-    def __init__(self, engine, unique_values: UniqueValues, search_settings_window_parent):
+    def __init__(self, engine, unique_values: UniqueValues, parent_window):
         super().__init__()
         self.engine = engine
         self.unique_values = unique_values
-        self.search_settings_window_parent = search_settings_window_parent
+        self.parent_window = parent_window
         self.component = None
         self.window = None
         self.load_window()
 
-        self.search_settings_window_parent.searchSettingsClosed.connect(self.on_search_settings_closed)
+        self.parent_window.newExamParentClosed.connect(self.on_search_settings_closed)
 
     def load_window(self):
         exam_card_path = Utils.resource_path('FirstPythonContent/NewExamProperties.qml')

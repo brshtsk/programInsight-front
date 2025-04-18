@@ -439,6 +439,7 @@ Rectangle {
 
                 Button {
                     id: userCabinetButton
+                    objectName: "userCabinetButton"
                     x: 152
                     y: 349
                     width: 40
@@ -446,7 +447,6 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     font.pixelSize: 16
-                    objectName: "button"
                     icon.source: "resources/user-icon.svg"
                     icon.color: "#ffffff"
                     background: Rectangle {

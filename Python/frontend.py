@@ -9,13 +9,14 @@ from unique_values import UniqueValues
 from search_settings_window import SearchSettingsWindow
 from dashboards_window import DashboardsWindow
 from clusters_window import ClustersWindow
+from export_window import ExportWindow
+from data_settings_window import DataSettingsWindow
+from user_cabinet_window import UserCabinetWindow
 from statistics import Statistics
 from data_converter import DataConverter
 from plots.graph_builder import GraphBuilder
 import os
 from time import time
-from export_window import ExportWindow
-from data_settings_window import DataSettingsWindow
 
 
 class Frontend(QObject):
@@ -39,6 +40,7 @@ class Frontend(QObject):
         self.dashboard_window = None  # Ссылка на окно дашбордов
         self.clusters_window = None  # Ссылка на окно кластеров
         self.export_window = None  # Ссылка на окно экспорта
+        self.user_cabinet_window = None  # Ссылка на окно личного кабинета
         self.data_settings_window = None  # Ссылка на окно настроек данных
         self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
@@ -133,6 +135,18 @@ class Frontend(QObject):
         else:
             print('Кнопка настроек данных не найдена!')
 
+        # Кнопка личного кабинета
+        user_cabinet_button = root_object.findChild(QObject, 'userCabinetButton')
+        if user_cabinet_button:
+            user_cabinet_button.clicked.connect(self.user_cabinet_button_clicked)
+        else:
+            print('Кнопка личного кабинета не найдена!')
+
+        # Этот класс является обработчиком сигналов из QML
+        # Обработкой занимается handleExamDeleted
+        context = self.engine.rootContext()
+        context.setContextProperty("examHandler", self)
+
         # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
         root_object.windowClosed.connect(self.on_main_window_closed)
 
@@ -198,6 +212,33 @@ class Frontend(QObject):
                 self.data_settings_window.window.raise_()
             except Exception as e:
                 print("Окно настроек данных уже открыто:", e)
+
+    @Slot()
+    def user_cabinet_button_clicked(self):
+        # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
+        if self.user_cabinet_window is None or self.user_cabinet_window.window is None:
+            print('Кнопка личного кабинета нажата!')
+            self.user_cabinet_window = UserCabinetWindow(self.engine, self.unique_values, self)
+        else:
+            try:
+                self.user_cabinet_window.window.raise_()
+            except Exception as e:
+                print("Окно личного кабинета уже открыто:", e)
+
+    @Slot(str, str, str)
+    def handleExamDeleted(self, exam_name, exam_type, exam_parent_window):
+        print(
+            f"Нажата кнопка удаления экзамена: {exam_name}, тип: {exam_type}, родительское окно: {exam_parent_window}")
+        if exam_parent_window == "settings":
+            try:
+                self.search_settings_window.delete_exam(exam_name, exam_type)
+            except Exception as e:
+                print("Ошибка при удалении экзамена из окна настроек", e)
+        if exam_parent_window == "cabinet":
+            try:
+                self.user_cabinet_window.delete_exam(exam_name, exam_type)
+            except Exception as e:
+                print("Ошибка при удалении экзамена из окна личного кабинета", e)
 
     def update_price_plot(self):
         """

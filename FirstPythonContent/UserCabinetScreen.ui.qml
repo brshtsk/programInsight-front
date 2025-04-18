@@ -231,19 +231,23 @@ Rectangle {
                 exams: [{
                         "examNameText": "Математика (профиль)",
                         "examTypeText": "ЕГЭ/ДВИ",
-                        "scoreText": "82"
+                        "scoreText": "82",
+                        "parent": "cabinet"
                     }, {
                         "examNameText": "Русский язык",
                         "examTypeText": "ЕГЭ/ДВИ",
-                        "scoreText": "97"
+                        "scoreText": "97",
+                        "parent": "cabinet"
                     }, {
                         "examNameText": "Личные достижения",
                         "examTypeText": "Доп баллы ЕГЭ",
-                        "scoreText": "10"
+                        "scoreText": "10",
+                        "parent": "cabinet"
                     }, {
                         "examNameText": "Физика",
                         "examTypeText": "ЕГЭ/ДВИ",
-                        "scoreText": "100"
+                        "scoreText": "100",
+                        "parent": "cabinet"
                     }]
             }
         }

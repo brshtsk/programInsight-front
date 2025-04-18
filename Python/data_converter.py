@@ -1,5 +1,6 @@
 import pandas as pd
 from op import Op
+from exam import UserExamsSet
 
 
 class DataConverter:
@@ -29,4 +30,13 @@ class DataConverter:
                 'Входит в топ-100': op.raex_position is not None,
                 'Ссылка': op.url
             })
+        return pd.DataFrame(data)
+
+    def exams_set_to_dataframe(exams_set: UserExamsSet) -> pd.DataFrame:
+        """
+        Преобразует объект UserExamsSet в DataFrame
+        :param exams_set: объект UserExamsSet
+        :return: DataFrame с данными об экзаменах
+        """
+        data = exams_set.to_model_dict()
         return pd.DataFrame(data)

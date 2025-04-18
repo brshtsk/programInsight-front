@@ -5,11 +5,12 @@ from search_settings import Settings
 from unique_values import UniqueValues
 from new_exam_window import NewExamWindow
 from exam import Exam
+from update_data.import_data import DataImporter
 
 
 class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
-    searchSettingsClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна настроек
+    newExamParentClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна настроек
 
     def __init__(self, engine, settings: Settings, unique_values: UniqueValues, frontend_parent):
         super().__init__()
@@ -163,10 +164,12 @@ class SearchSettingsWindow(QObject):
         else:
             print("ComboBox 'attendanceTypeComboBox' не найден")
 
-        # Этот класс является обработчиком сигналов из QML
-        # Обработкой занимается handleExamDeleted
-        context = self.engine.rootContext()
-        context.setContextProperty("examHandler", self)
+        # Загрузить экзамены из ЛК
+        load_profile_exams_button = self.window.findChild(QObject, 'loadProfileExamsButton')
+        if load_profile_exams_button:
+            load_profile_exams_button.clicked.connect(self.load_profile_exams_button_clicked)
+        else:
+            print("Button 'loadProfileExamsButton' не найден")
 
     def restore_view(self):
         # Восстанавливаем состояние ComboBox "qualificationTypeComboBox"
@@ -316,7 +319,7 @@ class SearchSettingsWindow(QObject):
     def on_window_closed(self):
         print("Окно настроек закрыто (либо пользователем, либо программно)")
         self.window = None
-        self.searchSettingsClosed.emit()  # Уведомляем NewExamWindow о закрытии окна настроек
+        self.newExamParentClosed.emit()  # Уведомляем NewExamWindow о закрытии окна настроек
 
     @Slot(Exam)
     def on_exam_created(self, exam: Exam):
@@ -324,7 +327,7 @@ class SearchSettingsWindow(QObject):
         Слот, вызываемый при создании нового экзамена.
         Добавляет экзамен в список и обновляет модель.
         """
-        print(f"Создан новый экзамен: {exam.name}")
+        print(f"Получен новый экзамен: {exam.name}")
         try:
             self.settings.exams.add_exam(exam)
             self.update_exams_list()
@@ -528,10 +531,8 @@ class SearchSettingsWindow(QObject):
             self.window.close()
             # self.on_window_closed() - выполняется автоматически
 
-    # Обработчик сигнала из QML
-    @Slot(str, str)
-    def handleExamDeleted(self, exam_name, exam_type):
-        print(f"Нажата кнопка удаления экзамена: {exam_name}, тип: {exam_type}")
+    # Вызывается обработчиком сигнала из QML
+    def delete_exam(self, exam_name, exam_type):
         # Удаляем экзамен из списка
         self.settings.exams.delete_exam(exam_name, exam_type)
         # Обновляем список экзаменов
@@ -608,3 +609,20 @@ class SearchSettingsWindow(QObject):
             self.updateModels.emit()
         else:
             print("sender() не найден")
+
+    @Slot()
+    def load_profile_exams_button_clicked(self):
+        print("Кнопка загрузки экзаменов из ЛК нажата!")
+        try:
+            path = Utils.resource_path("user_data/user_exams.json")
+            importer = DataImporter(path)
+            model_dict = importer.from_json_to_list_of_dicts()
+            self.settings.exams.load_from_model_dict(model_dict)
+        except Exception as e:
+            print("Ошибка при восстановлении состояния ЛК:", e)
+
+        chosen_user_exams_list = self.window.findChild(QObject, 'chosenUserExamsList')
+        if chosen_user_exams_list:
+            chosen_user_exams_list.setProperty('exams', self.settings.exams.to_model_dict())
+        else:
+            print("ListView 'chosenUserExamsList' не найден")

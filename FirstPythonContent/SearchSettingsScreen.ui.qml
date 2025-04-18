@@ -678,19 +678,23 @@ Rectangle {
                 exams: [{
                         "examNameText": "Математика (профиль)",
                         "examTypeText": "ЕГЭ",
-                        "scoreText": "82"
+                        "scoreText": "82",
+                        "parent": "settings"
                     }, {
                         "examNameText": "Русский язык",
                         "examTypeText": "ЕГЭ",
-                        "scoreText": "97"
+                        "scoreText": "97",
+                        "parent": "settings"
                     }, {
                         "examNameText": "Собеседование",
                         "examTypeText": "Магистратура",
-                        "scoreText": "-"
+                        "scoreText": "-",
+                        "parent": "settings"
                     }, {
                         "examNameText": "ГТО",
                         "examTypeText": "Доп. к ЕГЭ",
-                        "scoreText": "-"
+                        "scoreText": "-",
+                        "parent": "settings"
                     }]
             }
         }

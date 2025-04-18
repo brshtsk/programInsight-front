@@ -27,7 +27,7 @@ class Settings:
         self.op_name = None
         self.university_name = None
 
-        self.exams = UserExamsSet()  # Экзамены, которые указал пользователь
+        self.exams = UserExamsSet('settings')  # Экзамены, которые указал пользователь
 
         # Фильтры для работы с вариантами обработки экзаменов: "Выключен", "Включен, без баллов", "Включен, с баллами"
         self.filter_by_exams_not_score = False  # Фильтровать по экзаменам вне зависимости от баллов

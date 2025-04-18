@@ -11,17 +11,20 @@ Item {
     //     {
     //         examNameText: "Математика (профиль)",
     //         examTypeText: "ЕГЭ",
-    //         scoreText: "82"
+    //         scoreText: "82",
+    //         parent: "settings"
     //     },
     //     {
     //         examNameText: "Русский язык",
     //         examTypeText: "ЕГЭ",
-    //         scoreText: "97"
+    //         scoreText: "97",
+    //         parent: "settings"
     //     },
     //     {
     //         examNameText: "Иностранный",
     //         examTypeText: "ЕГЭ",
-    //         scoreText: "88"
+    //         scoreText: "88",
+    //         parent: "settings"
     //     },
     // ]
 
