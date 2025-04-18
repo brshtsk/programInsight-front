@@ -1,5 +1,6 @@
 import numpy as np
 from .base_plot_config import BasePlotConfig # Точка, так как каталог тот же
+from cluster_templates import Templates # ToDo: разобраться с импортами
 from sklearn.cluster import KMeans, MeanShift, DBSCAN, estimate_bandwidth
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.neighbors import NearestNeighbors
@@ -19,13 +20,25 @@ class ClusterAnalyzer(BasePlotConfig):
         self.y_label = y_label
 
     def show_clusters(self):
-        title = f'Кластеризация методом {self.method.__name__}'
+        title = f"Кластеризация методом {self.method.__name__}"
         fig, ax = BasePlotConfig._get_transparent_fig(8, 6)
         self._set_scatter_signs(ax, title, self.x_label, self.y_label)
         mask = self.clusters != -1
         X_filtered = self.X[mask]
-        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=self.clusters[mask], cmap='viridis', alpha=0.7,
-                   edgecolor='black')
+
+        # Создаём словарь для соответствия номера кластера и цвета
+        unique_labels = np.unique(self.clusters[mask])
+        color_mapping = {}
+        for label in unique_labels:
+            try:
+                # Приводим label к целому числу и получаем соответствующий шаблон
+                color_mapping[label] = Templates.cluster_templates[int(label)].rgb_background
+            except (IndexError, ValueError):
+                color_mapping[label] = "#373737"  # дефолтный цвет, если шаблон отсутствует
+
+        # Формируем список цветов для каждой точки
+        colors = [color_mapping[label] for label in self.clusters[mask]]
+        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=colors, alpha=0.7, edgecolor="black")
         return fig
 
     def _cluster_data(self, method, params=None):
