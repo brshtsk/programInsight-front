@@ -27,5 +27,9 @@ class ClusterHandler(QObject):
             self.frontend_parent.settings.cluster_urls = cluster.op_urls
             # Обновляем модель
             self.clusters_window.updateModels.emit()
+            # Выделим выбранный кластер
+            self.clusters_window.clusters_manager.highlight_cluster(cluster)
+            # Обновляем окно кластеров
+            self.clusters_window._show_clusters_plot()
         else:
             print(f"Кластер {cluster_name} не найден")

@@ -17,6 +17,7 @@ class ClustersWindow(QObject):
         self.window = None
         self.new_exam_window = None
         self.clusters = []  # Список объектов кластеров
+        self.clusters_manager = None  # Экземпляр класса ClustersManager
         self.clusterHandler = ClusterHandler(engine, frontend_parent, self)
 
         self.load_window()
@@ -162,7 +163,7 @@ class ClustersWindow(QObject):
 
     class ClusterThreadWorker(QObject):
         started = Signal()
-        finished = Signal(list, list)  # вернёт модель кластеров
+        finished = Signal(list, list, object)  # вернёт модель кластеров, список кластеров и экземпляр ClustersManager
 
         def __init__(self, data, algorithm, vars):
             super().__init__()
@@ -186,76 +187,76 @@ class ClustersWindow(QObject):
 
                 clusters_manager.run_algorithm()
                 model = clusters_manager.get_model()
-                self.finished.emit(model, clusters_manager.clusters)
+                self.finished.emit(model, clusters_manager.clusters, clusters_manager)
                 return
             except Exception as e:
                 print("Ошибка в кластерном анализе, возможно:", e)
                 model = []
-                self.finished.emit(model, [])
+                self.finished.emit(model, [], None)
                 return
 
     @Slot()
     def on_run_clusters_button_clicked(self):
         try:
-            # Получаем выбранный индекс
-            run_cluster_button = self.window.findChild(QObject, 'runClustersButton')
-            if run_cluster_button:
-                print("Запускаем кластерный анализ...")
+            print("Запускаем кластерный анализ...")
 
-                # Убираем отображение кластеров
-                clusters_image = self.window.findChild(QObject, 'clustersImage')
-                if clusters_image:
-                    clusters_image.setProperty('visible', False)
-                    clusters_image.setProperty('headerVisible', True)
-                    clusters_image.setProperty('headerText', 'Запускаем анализ...')
+            # Обновляем модель, чтобы убрать прошлые фильтры
+            self.updateModels.emit()
+
+            # Убираем отображение кластеров
+            clusters_image = self.window.findChild(QObject, 'clustersImage')
+            if clusters_image:
+                clusters_image.setProperty('visible', False)
+                clusters_image.setProperty('headerVisible', True)
+                clusters_image.setProperty('headerText', 'Запускаем анализ...')
+            else:
+                print("Элемент 'clustersImage' не найден!")
+
+            # Получаем алгоритм и пару переменных
+            algorithm_type_combobox = self.window.findChild(QObject, 'algorithmTypeComboBox')
+            if algorithm_type_combobox:
+                index = algorithm_type_combobox.property('currentIndex')
+                v = ["Автоматически", "K-Means", "Mean Shift", "DBSCAN"]
+                algorithm = v[index]
+            else:
+                print("ComboBox 'algorithmTypeComboBox' не найден!")
+
+            pair_combobox = self.window.findChild(QObject, 'pairComboBox')
+            if pair_combobox:
+                index = pair_combobox.property('currentIndex')
+
+                if 'Магистратура' not in self.frontend_parent.settings.qualifications:
+                    #     pair_model = ["Стоимость / Проходной", "Стоимость / Проходной ₽", "Места / Проходной",
+                    #                   "Места ₽ / Проходной ₽", "Стоимость / Места ₽", "Стоимость / Рейтинг"]
+                    df_pairs = [('Стоимость (в год)', 'Проходной балл на бюджет'),
+                                ('Стоимость (в год)', 'Проходной балл на платное'),
+                                ('Кол-во бюджетных мест', 'Проходной балл на бюджет'),
+                                ('Кол-во платных мест', 'Проходной балл на платное'),
+                                ('Стоимость (в год)', 'Кол-во платных мест'),
+                                ('Стоимость (в год)', 'Место в топе')]
                 else:
-                    print("Элемент 'clustersImage' не найден!")
+                    #     pair_model = ["Стоимость / Места ₽", "Стоимость / Рейтинг"]
+                    df_pairs = [('Стоимость (в год)', 'Кол-во платных мест'),
+                                ('Стоимость (в год)', 'Место в топе')]
 
-                # Получаем алгоритм и пару переменных
-                algorithm_type_combobox = self.window.findChild(QObject, 'algorithmTypeComboBox')
-                if algorithm_type_combobox:
-                    index = algorithm_type_combobox.property('currentIndex')
-                    v = ["Автоматически", "K-Means", "Mean Shift", "DBSCAN"]
-                    algorithm = v[index]
-                else:
-                    print("ComboBox 'algorithmTypeComboBox' не найден!")
+                vars = df_pairs[index]
+            else:
+                print("ComboBox 'pairComboBox' не найден!")
 
-                pair_combobox = self.window.findChild(QObject, 'pairComboBox')
-                if pair_combobox:
-                    index = pair_combobox.property('currentIndex')
+            self.worker = self.ClusterThreadWorker(self.frontend_parent.filtered_op_list,
+                                                   algorithm, vars)
+            self.thread = QThread(self)
+            self.worker.moveToThread(self.thread)
 
-                    if 'Магистратура' not in self.frontend_parent.settings.qualifications:
-                        #     pair_model = ["Стоимость / Проходной", "Стоимость / Проходной ₽", "Места / Проходной",
-                        #                   "Места ₽ / Проходной ₽", "Стоимость / Места ₽", "Стоимость / Рейтинг"]
-                        df_pairs = [('Стоимость (в год)', 'Проходной балл на бюджет'),
-                                    ('Стоимость (в год)', 'Проходной балл на платное'),
-                                    ('Кол-во бюджетных мест', 'Проходной балл на бюджет'),
-                                    ('Кол-во платных мест', 'Проходной балл на платное'),
-                                    ('Стоимость (в год)', 'Кол-во платных мест'),
-                                    ('Стоимость (в год)', 'Место в топе')]
-                    else:
-                        #     pair_model = ["Стоимость / Места ₽", "Стоимость / Рейтинг"]
-                        df_pairs = [('Стоимость (в год)', 'Кол-во платных мест'),
-                                    ('Стоимость (в год)', 'Место в топе')]
+            self.worker.started.connect(lambda: self._show_message("Запускаем анализ..."))
+            # Когда закончили — обновим GUI
+            self.worker.finished.connect(self._on_clusters_ready)
+            self.worker.finished.connect(self.thread.quit)
+            self.worker.finished.connect(self.worker.deleteLater)
+            self.thread.finished.connect(self.thread.deleteLater)
 
-                    vars = df_pairs[index]
-                else:
-                    print("ComboBox 'pairComboBox' не найден!")
-
-                self.worker = self.ClusterThreadWorker(self.frontend_parent.filtered_op_list,
-                                                       algorithm, vars)
-                self.thread = QThread(self)
-                self.worker.moveToThread(self.thread)
-
-                self.worker.started.connect(lambda: self._show_message("Запускаем анализ..."))
-                # Когда закончили — обновим GUI
-                self.worker.finished.connect(self._on_clusters_ready)
-                self.worker.finished.connect(self.thread.quit)
-                self.worker.finished.connect(self.worker.deleteLater)
-                self.thread.finished.connect(self.thread.deleteLater)
-
-                self.thread.started.connect(self.worker.run)
-                self.thread.start()
+            self.thread.started.connect(self.worker.run)
+            self.thread.start()
 
         except Exception as e:
             print("Ошибка при запуске кластерного анализа, возможно:", e)
@@ -280,8 +281,9 @@ class ClustersWindow(QObject):
         else:
             print("Элемент 'clustersImage' не найден!")
 
-    def _on_clusters_ready(self, model, clusters):
+    def _on_clusters_ready(self, model, clusters, manager):
         self.clusters = clusters
+        self.clusters_manager = manager
 
         # Если модель пустая, то произошла ошибка
         if not model:
@@ -305,6 +307,11 @@ class ClustersWindow(QObject):
             result_amount_text.setProperty('text', f'Получено {len(model)} результатов')
         else:
             print("Элемент с objectName 'resultAmountText' не найден")
+
+        self._show_clusters_plot()
+
+    def _show_clusters_plot(self):
+        print(self.clusters_manager)
 
         # Отображаем график кластеров
         clusters_image = self.window.findChild(QObject, 'clustersImage')

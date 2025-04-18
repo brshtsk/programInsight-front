@@ -31,6 +31,7 @@ class ClustersManager:
         self.algorithm = algorithm  # ("Автоматически"/"K-Means"/"Mean Shift"/"DBSCAN")
         self.vars = vars  # (('Проходной балл на бюджет', 'Стоимость (в год)')/...) - пара переменных,
         self.clusters = []
+        self.analyzer = None
 
     def run_algorithm(self):
         """
@@ -41,7 +42,7 @@ class ClustersManager:
         if len(df) == 0:
             raise ValueError("Нет данных для кластеризации")
 
-        analyzer = ClusterAnalyzer(df, self.vars[0], self.vars[1])
+        self.analyzer = ClusterAnalyzer(df, self.vars[0], self.vars[1])
 
         if self.algorithm == "Автоматически":
             n = len(df)
@@ -53,11 +54,11 @@ class ClustersManager:
                 self.algorithm = "DBSCAN"
 
         if self.algorithm == "K-Means":
-            clusters_dict = analyzer.kmeans_cluster_data()
+            clusters_dict = self.analyzer.kmeans_cluster_data()
         elif self.algorithm == "Mean Shift":
-            clusters_dict = analyzer.mean_shift_cluster_data()
+            clusters_dict = self.analyzer.mean_shift_cluster_data()
         else:
-            clusters_dict = analyzer.dbscan_cluster_data()
+            clusters_dict = self.analyzer.dbscan_cluster_data()
 
         self.clusters = []
 
@@ -76,8 +77,17 @@ class ClustersManager:
             self.clusters.append(Cluster(other_template, other_template_urls))
 
         # График кластеров
-        fig = analyzer.show_clusters()
+        fig = self.analyzer.show_clusters()
         fig.savefig(Utils.resource_path('FirstPythonContent/plots_images/clusters_result.png'))
+
+    def highlight_cluster(self, cluster: Cluster):
+        """
+        Подсвечивает кластер на графике.
+        """
+        cluster_color = cluster.rgb_background
+        if self.analyzer:
+            fig = self.analyzer.show_clusters(cluster_color)
+            fig.savefig(Utils.resource_path('FirstPythonContent/plots_images/clusters_result.png'))
 
     def get_model(self):
         model = []

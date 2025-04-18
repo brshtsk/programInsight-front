@@ -19,7 +19,7 @@ class ClusterAnalyzer(BasePlotConfig):
         self.x_label = x_label
         self.y_label = y_label
 
-    def show_clusters(self):
+    def show_clusters(self, this_color_bigger=None):
         title = f"Кластеризация методом {self.method.__name__}"
         fig, ax = BasePlotConfig._get_transparent_fig(8, 6)
         self._set_scatter_signs(ax, title, self.x_label, self.y_label)
@@ -36,9 +36,18 @@ class ClusterAnalyzer(BasePlotConfig):
             except (IndexError, ValueError):
                 color_mapping[label] = "#373737"  # дефолтный цвет, если шаблон отсутствует
 
-        # Формируем список цветов для каждой точки
-        colors = [color_mapping[label] for label in self.clusters[mask]]
-        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=colors, s=120, alpha=0.8, edgecolor="black")
+        # Формирование списка цветов для каждой точки и вычисление соответствующего размера
+        colors = []
+        sizes = []
+        for label in self.clusters[mask]:
+            color = color_mapping[label]
+            colors.append(color)
+            if this_color_bigger is not None and color == this_color_bigger:
+                sizes.append(190)
+            else:
+                sizes.append(120)
+
+        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=colors, s=sizes, alpha=0.8, edgecolor="black")
         return fig
 
     def _cluster_data(self, method, params=None):
