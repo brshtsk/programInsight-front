@@ -191,14 +191,15 @@ class GraphBuilder:
 
         # Увеличен размер шрифта для подписей (fontsize=14)
         for uni, row in grouped.iterrows():
-            ax.text(
-                row['Стоимость (в год)'] + 10,
-                row[score_type],
+            ax.annotate(
                 uni,
+                xy=(row['Стоимость (в год)'], row[score_type]),  # точка данных
+                xytext=(10, 0),  # смещение подписи: 5 пунктов вправо
+                textcoords='offset points',  # единицы смещения — точки экрана
+                ha='left', va='center',
                 fontsize=14,
                 fontweight='bold',
-                ha='left',
-                va='center',
-                color=GraphBuilder.GREEN
+                color=GraphBuilder.GREEN,
+                clip_on=False  # чтобы текст не обрезался
             )
         return fig

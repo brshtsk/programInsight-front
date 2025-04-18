@@ -127,7 +127,7 @@ class Frontend(QObject):
             self.search_settings_window.updateModels.connect(self.setup_models)
         else:
             try:
-                self.search_settings_window.window.show()
+                self.search_settings_window.window.raise_()
                 self.search_settings_window.restore_view()
             except Exception as e:
                 print("Окно настроек уже открыто, восстановление настроек не выполнено:", e)
@@ -140,8 +140,7 @@ class Frontend(QObject):
             self.dashboard_window = DashboardsWindow(self.engine, self)
         else:
             try:
-                self.search_settings_window.window.show()
-                self.search_settings_window.restore_view()
+                self.dashboard_window.window.raise_()
             except Exception as e:
                 print("Окно дашбордов уже открыто:", e)
 
@@ -154,7 +153,7 @@ class Frontend(QObject):
             self.clusters_window.updateModels.connect(self.setup_models)
         else:
             try:
-                self.clusters_window.window.show()
+                self.clusters_window.window.raise_()
             except Exception as e:
                 print("Окно кластеров уже открыто:", e)
 

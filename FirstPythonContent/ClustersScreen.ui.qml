@@ -359,10 +359,10 @@ Rectangle {
     Image {
         id: clustersImage
         objectName: "clustersImage"
-        x: 350
-        y: 120
-        width: 580
-        height: 500
+        anchors.verticalCenter: clustrersHeaderText.verticalCenter
+        anchors.horizontalCenter: clustrersHeaderText.horizontalCenter
+        width: 630
+        height: 530
         source: "resources/clusters.png"
         fillMode: Image.PreserveAspectFit
 
