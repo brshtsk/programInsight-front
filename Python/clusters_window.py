@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Slot, Signal
+from PySide6.QtCore import QObject, Slot, Signal, QThread
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from clusters_manager import ClustersManager
@@ -146,6 +146,37 @@ class ClustersWindow(QObject):
         else:
             print("ComboBox 'pairComboBox' не найден!")
 
+    class ClusterThreadWorker(QObject):
+        started = Signal()
+        finished = Signal(list)  # вернёт модель кластеров
+
+        def __init__(self, data, algorithm, vars):
+            super().__init__()
+            self.data = data
+            self.algorithm = algorithm
+            self.vars = vars
+
+        @Slot()
+        def run(self):
+            self.started.emit()
+            try:
+                clusters_manager = ClustersManager(self.data, self.algorithm, self.vars)
+
+                print()
+                print('=================================')
+                print('Запускаем кластерный анализ...')
+                print('Алгоритм:', clusters_manager.algorithm)
+                print('Пара переменных:', clusters_manager.vars)
+                print('=================================')
+                print()
+
+                clusters_manager.run_algorithm()
+                model = clusters_manager.get_model()
+            except Exception as e:
+                print("Ошибка в кластерном анализе, возможно:", e)
+                model = []
+            self.finished.emit(model)
+
     @Slot()
     def on_run_clusters_button_clicked(self):
         try:
@@ -194,46 +225,61 @@ class ClustersWindow(QObject):
                 else:
                     print("ComboBox 'pairComboBox' не найден!")
 
-                # Создаем менеджера кластеров
-                clusters_manager = ClustersManager(self.frontend_parent.filtered_op_list, algorithm, vars)
+                self.worker = self.ClusterThreadWorker(self.frontend_parent.filtered_op_list,
+                                                       algorithm, vars)
+                self.thread = QThread(self)
+                self.worker.moveToThread(self.thread)
 
-                print()
-                print('=================================')
-                print('Запускаем кластерный анализ...')
-                print('Алгоритм:', clusters_manager.algorithm)
-                print('Пара переменных:', clusters_manager.vars)
-                print('=================================')
-                print()
+                self.worker.started.connect(lambda: self._show_message("Запускаем анализ..."))
+                # Когда закончили — обновим GUI
+                self.worker.finished.connect(self._on_clusters_ready)
+                self.worker.finished.connect(self.thread.quit)
+                self.worker.finished.connect(self.worker.deleteLater)
+                self.thread.finished.connect(self.thread.deleteLater)
 
-                # Запускаем алгоритм
-                clusters_manager.run_algorithm()
+                self.thread.started.connect(self.worker.run)
+                self.thread.start()
 
-                # Выводим информацию в модель
-                model = clusters_manager.get_model()
-
-                clusters_list = self.window.findChild(QObject, 'clustersList')
-                if clusters_list:
-                    clusters_list.setProperty('clusters', model)
-                else:
-                    print("Элемент с objectName 'clustersList' не найден")
-
-                result_amount_text = self.window.findChild(QObject, 'resultAmountText')
-                if result_amount_text:
-                    result_amount_text.setProperty('text', f'Получено {len(clusters_manager.clusters)} результатов')
-                else:
-                    print("Элемент с objectName 'resultAmountText' не найден")
-
-                # Отображаем график кластеров
-                clusters_image = self.window.findChild(QObject, 'clustersImage')
-                if clusters_image:
-                    clusters_image.setProperty('visible', True)
-                    clusters_image.setProperty('headerVisible', False)
-                    clusters_image.setProperty('source',
-                                               f'plots_images/clusters_result.png?cacheBust={time()}')
-                else:
-                    print("Элемент 'clustersImage' не найден!")
-            else:
-                print("Кнопка 'runClustersButton' не найдена!")
+            #     # Создаем менеджера кластеров
+            #     clusters_manager = ClustersManager(self.frontend_parent.filtered_op_list, algorithm, vars)
+            #
+            #     print()
+            #     print('=================================')
+            #     print('Запускаем кластерный анализ...')
+            #     print('Алгоритм:', clusters_manager.algorithm)
+            #     print('Пара переменных:', clusters_manager.vars)
+            #     print('=================================')
+            #     print()
+            #
+            #     # Запускаем алгоритм
+            #     clusters_manager.run_algorithm()
+            #
+            #     # Выводим информацию в модель
+            #     model = clusters_manager.get_model()
+            #
+            #     clusters_list = self.window.findChild(QObject, 'clustersList')
+            #     if clusters_list:
+            #         clusters_list.setProperty('clusters', model)
+            #     else:
+            #         print("Элемент с objectName 'clustersList' не найден")
+            #
+            #     result_amount_text = self.window.findChild(QObject, 'resultAmountText')
+            #     if result_amount_text:
+            #         result_amount_text.setProperty('text', f'Получено {len(clusters_manager.clusters)} результатов')
+            #     else:
+            #         print("Элемент с objectName 'resultAmountText' не найден")
+            #
+            #     # Отображаем график кластеров
+            #     clusters_image = self.window.findChild(QObject, 'clustersImage')
+            #     if clusters_image:
+            #         clusters_image.setProperty('visible', True)
+            #         clusters_image.setProperty('headerVisible', False)
+            #         clusters_image.setProperty('source',
+            #                                    f'plots_images/clusters_result.png?cacheBust={time()}')
+            #     else:
+            #         print("Элемент 'clustersImage' не найден!")
+            # else:
+            #     print("Кнопка 'runClustersButton' не найдена!")
         except Exception as e:
             print("Ошибка при запуске кластерного анализа, возможно:", e)
             try:
@@ -241,11 +287,44 @@ class ClustersWindow(QObject):
                 if clusters_image:
                     clusters_image.setProperty('visible', False)
                     clusters_image.setProperty('headerVisible', True)
-                    clusters_image.setProperty('headerText', 'Не удалось провести кластерный анализ<br>Вероятно, недостаточно данных')
+                    clusters_image.setProperty('headerText',
+                                               'Не удалось провести кластерный анализ<br>Вероятно, недостаточно данных')
                 else:
                     print("Элемент 'clustersImage' не найден!")
             except Exception as e:
                 print("Ошибка при выводе сообщения пользователю (вероятно, окно закрыто):", e)
+
+    def _show_message(self, message):
+        clusters_image = self.window.findChild(QObject, 'clustersImage')
+        if clusters_image:
+            clusters_image.setProperty('visible', False)
+            clusters_image.setProperty('headerVisible', True)
+            clusters_image.setProperty('headerText', message)
+        else:
+            print("Элемент 'clustersImage' не найден!")
+
+    def _on_clusters_ready(self, model):
+        clusters_list = self.window.findChild(QObject, 'clustersList')
+        if clusters_list:
+            clusters_list.setProperty('clusters', model)
+        else:
+            print("Элемент с objectName 'clustersList' не найден")
+
+        result_amount_text = self.window.findChild(QObject, 'resultAmountText')
+        if result_amount_text:
+            result_amount_text.setProperty('text', f'Получено {len(model)} результатов')
+        else:
+            print("Элемент с objectName 'resultAmountText' не найден")
+
+        # Отображаем график кластеров
+        clusters_image = self.window.findChild(QObject, 'clustersImage')
+        if clusters_image:
+            clusters_image.setProperty('visible', True)
+            clusters_image.setProperty('headerVisible', False)
+            clusters_image.setProperty('source',
+                                       f'plots_images/clusters_result.png?cacheBust={time()}')
+        else:
+            print("Элемент 'clustersImage' не найден!")
 
     @Slot()
     def on_cancel_cluster_choice_button_clicked(self):
