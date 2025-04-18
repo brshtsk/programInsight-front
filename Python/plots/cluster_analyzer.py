@@ -1,6 +1,6 @@
 import numpy as np
-from .base_plot_config import BasePlotConfig # Точка, так как каталог тот же
-from cluster_templates import Templates # ToDo: разобраться с импортами
+from .base_plot_config import BasePlotConfig  # Точка, так как каталог тот же
+from cluster_templates import Templates  # ToDo: разобраться с импортами
 from sklearn.cluster import KMeans, MeanShift, DBSCAN, estimate_bandwidth
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.neighbors import NearestNeighbors
@@ -38,7 +38,7 @@ class ClusterAnalyzer(BasePlotConfig):
 
         # Формируем список цветов для каждой точки
         colors = [color_mapping[label] for label in self.clusters[mask]]
-        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=colors, alpha=0.7, edgecolor="black")
+        ax.scatter(X_filtered[:, 0], X_filtered[:, 1], c=colors, s=120, alpha=0.8, edgecolor="black")
         return fig
 
     def _cluster_data(self, method, params=None):
