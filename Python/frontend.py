@@ -20,6 +20,7 @@ class Frontend(QObject):
     unique_values: UniqueValues  # Явно указываем тип атрибута
     mainWindowClosed = Signal()  # Сигнал, который будет испускаться при закрытии главного окна
     modelChanged = Signal()  # Сигнал, который будет испускаться при изменении модели
+    notByClustersModelChanged = Signal()  # Сигнал, который будет испускаться, если модель изменена не по кластерам
 
     def __init__(self, engine):
         super().__init__()
@@ -42,6 +43,8 @@ class Frontend(QObject):
 
     def setup_models(self):
         try:
+            print("Обновление моделей...")
+
             # Получаем данные для модели
             op_model_data, statistics_model_data, self.filtered_op_list, self.statistics = ModelDataManagement.get_op_model_data(
                 self.op_list, self.settings,
@@ -73,6 +76,14 @@ class Frontend(QObject):
 
             # Сигнализируем об изменении модели
             self.modelChanged.emit()
+
+            if self.settings.filter_by_cluster:
+                # Если был применен фильтр по кластеру, то в будущем его быть не должно
+                self.settings.filter_by_cluster = False
+                self.settings.cluster_urls = []
+            else:
+                # Сигнализируем об изменении модели, если фильтр не по кластерам
+                self.notByClustersModelChanged.emit()
         except Exception as e:
             print("Ошибка при создании моделей! Модели не изменены. Текст ошибки:", e)
 
@@ -127,7 +138,6 @@ class Frontend(QObject):
         if self.dashboard_window is None or self.dashboard_window.window is None:
             print('Кнопка дашбордов нажата!')
             self.dashboard_window = DashboardsWindow(self.engine, self)
-            self.clusters_window.updateModels.connect(self.setup_models)
         else:
             try:
                 self.search_settings_window.window.show()
@@ -141,6 +151,7 @@ class Frontend(QObject):
         if self.clusters_window is None or self.clusters_window.window is None:
             print('Кнопка кластеров нажата!')
             self.clusters_window = ClustersWindow(self.engine, self)
+            self.clusters_window.updateModels.connect(self.setup_models)
         else:
             try:
                 self.clusters_window.window.show()

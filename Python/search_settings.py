@@ -42,6 +42,9 @@ class Settings:
 
         self.attendance = None  # Форма обучения (None/"Очная"/"Заочная"/...)
 
+        self.filter_by_cluster = False  # Фильтровать по кластерам
+        self.cluster_urls = []  # Список URL-адресов кластеров, которые нужно отобразить
+
     def price_range_is_ok(self):
         return self.min_price <= self.max_price
 

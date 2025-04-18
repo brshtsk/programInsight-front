@@ -1,6 +1,6 @@
 import numpy as np
 from .base_plot_config import BasePlotConfig  # Точка, так как каталог тот же
-from cluster_templates import Templates  # ToDo: разобраться с импортами
+from clusters_templates import Templates  # ToDo: разобраться с импортами
 from sklearn.cluster import KMeans, MeanShift, DBSCAN, estimate_bandwidth
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.neighbors import NearestNeighbors

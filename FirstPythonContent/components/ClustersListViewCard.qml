@@ -65,15 +65,12 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onPressed: {
-            // Если событие произошло в области opNameContainerFlickable, передаём его дальше
-            if (mouse.x >= opNameContainerFlickable.x &&
-                mouse.x <= opNameContainerFlickable.x + opNameContainerFlickable.width &&
-                mouse.y >= opNameContainerFlickable.y &&
-                mouse.y <= opNameContainerFlickable.y + opNameContainerFlickable.height &&
-                opNameText.width > opNameContainerFlickable.width) {
-                mouse.accepted = false
-            }
+
+        onClicked: {
+            // Если событие не было обработано Flickable'ом, то кликаем по карточке
+            clusterHandler.handleCardClicked(
+                modelData.clusterNameText
+            )
         }
     }
 }

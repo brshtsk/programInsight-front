@@ -3,6 +3,7 @@ from PySide6.QtQml import QQmlComponent
 from utils import Utils
 from clusters_manager import ClustersManager
 from time import time
+from cluster_card_handler import ClusterHandler
 
 
 class ClustersWindow(QObject):
@@ -15,11 +16,13 @@ class ClustersWindow(QObject):
         self.component = None
         self.window = None
         self.new_exam_window = None
+        self.clusters = []  # Список объектов кластеров
+        self.clusterHandler = ClusterHandler(engine, frontend_parent, self)
 
         self.load_window()
 
         self.frontend_parent.mainWindowClosed.connect(self.on_main_window_closed)
-        self.frontend_parent.modelChanged.connect(self.on_model_changed)
+        self.frontend_parent.notByClustersModelChanged.connect(self.on_model_changed)
 
     def load_window(self):
         clusters_qml_path = Utils.resource_path('FirstPythonContent/Clusters.qml')
@@ -37,6 +40,10 @@ class ClustersWindow(QObject):
             print("Ошибка при загрузке Clusters.qml:", self.component.errorString())
 
     def connect_signals(self):
+        # Регистрируем обработчик в QML, чтобы обращаться к нему по имени "clusterHandler"
+        context = self.engine.rootContext()
+        context.setContextProperty("clusterHandler", self.clusterHandler)
+
         # Выбор алгоритма кластеризации
         algotirhm_type_combobox = self.window.findChild(QObject, 'algorithmTypeComboBox')
         if algotirhm_type_combobox:
@@ -67,6 +74,13 @@ class ClustersWindow(QObject):
             print("Кнопка 'runClustersButton' не найдена!")
 
     def set_properties(self):
+        # Пока кластеров нет
+        self.clusters = []
+
+        if self.window is None:
+            print("Окно кластеров закрыто, не могу обновить его свойства")
+            return
+
         # Доступные пары переменных
         pair_combobox = self.window.findChild(QObject, "pairComboBox")
         if pair_combobox:
@@ -148,7 +162,7 @@ class ClustersWindow(QObject):
 
     class ClusterThreadWorker(QObject):
         started = Signal()
-        finished = Signal(list)  # вернёт модель кластеров
+        finished = Signal(list, list)  # вернёт модель кластеров
 
         def __init__(self, data, algorithm, vars):
             super().__init__()
@@ -172,10 +186,13 @@ class ClustersWindow(QObject):
 
                 clusters_manager.run_algorithm()
                 model = clusters_manager.get_model()
+                self.finished.emit(model, clusters_manager.clusters)
+                return
             except Exception as e:
                 print("Ошибка в кластерном анализе, возможно:", e)
                 model = []
-            self.finished.emit(model)
+                self.finished.emit(model, [])
+                return
 
     @Slot()
     def on_run_clusters_button_clicked(self):
@@ -263,7 +280,9 @@ class ClustersWindow(QObject):
         else:
             print("Элемент 'clustersImage' не найден!")
 
-    def _on_clusters_ready(self, model):
+    def _on_clusters_ready(self, model, clusters):
+        self.clusters = clusters
+
         # Если модель пустая, то произошла ошибка
         if not model:
             print("Ошибка при получении модели кластеров")
@@ -297,12 +316,18 @@ class ClustersWindow(QObject):
         else:
             print("Элемент 'clustersImage' не найден!")
 
+    def _cancel_cluster_choice(self):
+        # Отменяем фильтр по кластерам
+        self.frontend_parent.settings.filter_by_cluster = False
+        self.frontend_parent.settings.cluster_urls = []
+        # Обновляем модель
+        self.updateModels.emit()
+
     @Slot()
     def on_cancel_cluster_choice_button_clicked(self):
         cancel_cluster_choice_button = self.window.findChild(QObject, 'cancelClusterChoiceButton')
         if cancel_cluster_choice_button:
-            # ToDo: работа с выбором/отменой кластеров
-            pass
+            self._cancel_cluster_choice()
         else:
             print("Кнопка 'cancelClusterChoiceButton' не найдена!")
 
@@ -317,3 +342,5 @@ class ClustersWindow(QObject):
     def on_window_closed(self):
         print("Окно кластеров закрыто (либо пользователем, либо программно)")
         self.window = None
+        # Отменяем фильтр по кластерам
+        self._cancel_cluster_choice()

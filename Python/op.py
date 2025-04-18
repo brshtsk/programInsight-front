@@ -215,6 +215,17 @@ class Op:
         :param unique_values:
         :return:
         """
+        if self.op_type not in settings.qualifications:
+            return False
+
+        if settings.attendance:
+            if settings.attendance not in self.attendance:
+                return False
+
+        if settings.filter_by_cluster:
+            if self.url not in settings.cluster_urls:
+                return False
+
         if settings.city_name:
             if settings.city_name.lower() != self.city.lower():
                 return False
@@ -235,13 +246,6 @@ class Op:
                 # Если совпадения нет, то проверяем, вдруг это часть названия.
                 if settings.university_name.lower() not in self.university.lower():
                     return False
-
-        if self.op_type not in settings.qualifications:
-            return False
-
-        if settings.attendance:
-            if settings.attendance not in self.attendance:
-                return False
 
         if settings.filter_by_score:
             if not self.exams_amount:

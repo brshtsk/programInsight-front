@@ -3,7 +3,7 @@ from plots.cluster_analyzer import ClusterAnalyzer
 from data_converter import DataConverter
 from op import Op
 from utils import Utils
-from cluster_templates import ClusterTemplate, Templates
+from clusters_templates import ClusterTemplate, Templates
 
 
 class Cluster:
