@@ -63,19 +63,56 @@ Rectangle {
         radius: 10
 
         Text {
-            id: qualificationTypeSettingsText
+            id: infoText
+            objectName: "infoText"
             x: 10
-            y: 10
+            y: 8
             width: 280
             height: 40
             text: "Экспортируйте ОП<br>по вашим настройкам поиска"
             color: "#373737"
             font.pixelSize: 18
             horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            verticalAlignment: Text.AlignTop
             textFormat: Text.RichText
             font.family: Constants.font.family
             font.styleName: "SemiBold"
+        }
+
+        Flickable {
+            id: pathTextFlickable
+            objectName: "pathTextFlickable"
+            x: 10
+            y: 30
+            width: parent.width - 20
+            height: 20
+            clip: true
+
+            // если текст уже помещается — ширина контейнера, иначе — реальная ширина текста
+            contentWidth: pathText.implicitWidth > width ? pathText.implicitWidth : width
+            contentHeight: height
+            flickableDirection: Flickable.HorizontalFlick
+            visible: false
+
+            Text {
+                id: pathText
+                objectName: "pathText"
+                height: 20
+                text: "C/////"
+                color: "#373737"
+                font.pixelSize: 18
+                font.family: Constants.font.family
+                font.styleName: "SemiBold"
+                textFormat: Text.RichText
+                verticalAlignment: Text.AlignTop
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            // появится лишь если текст не влазит
+            ScrollBar.horizontal: ScrollBar {
+                policy: ScrollBar.Auto // можно заменить на Always, чтобы всегда была полоса
+            }
         }
 
         Item {
@@ -153,14 +190,13 @@ Rectangle {
     }
 
     Button {
-        id: dashboardButton
+        id: exportButton
         x: 20
         y: 200
         width: 300
         height: 30
-        text: "Запустить анализ!"
         font.pixelSize: 18
-        objectName: "dashboardButton"
+        objectName: "exportButton"
         font.styleName: "SemiBold"
         font.family: Constants.font.family
         contentItem: Text {
@@ -168,8 +204,8 @@ Rectangle {
             text: "Экспортировать"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            scale: dashboardButton.hovered ? 1.05 : 1.0
-            font: dashboardButton.font
+            scale: exportButton.hovered ? 1.05 : 1.0
+            font: exportButton.font
             Behavior {
                 NumberAnimation {
                     duration: 100
@@ -177,9 +213,9 @@ Rectangle {
             }
         }
         background: Rectangle {
-            color: dashboardButton.pressed ? "#7dd96b" : "#53b93f"
+            color: exportButton.pressed ? "#7dd96b" : "#53b93f"
             radius: 10
-            scale: dashboardButton.hovered ? 1.05 : 1.0
+            scale: exportButton.hovered ? 1.05 : 1.0
             Behavior {
                 NumberAnimation {
                     duration: 100

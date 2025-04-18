@@ -14,6 +14,7 @@ from data_converter import DataConverter
 from plots.graph_builder import GraphBuilder
 import os
 from time import time
+from export_window import ExportWindow
 
 
 class Frontend(QObject):
@@ -36,6 +37,7 @@ class Frontend(QObject):
         self.search_settings_window = None  # Ссылка на окно настроек
         self.dashboard_window = None  # Ссылка на окно дашбордов
         self.clusters_window = None  # Ссылка на окно кластеров
+        self.export_window = None  # Ссылка на окно экспорта
         self.pyHandler = PyHandler(engine, self)  # Создаем экземпляр обработчика (для объектов в ListView)
 
         self.setup_models()
@@ -115,6 +117,13 @@ class Frontend(QObject):
         else:
             print('Кнопка кластеров не найдена!')
 
+        # Кнопка экспорта
+        export_button = root_object.findChild(QObject, 'exportButton')
+        if export_button:
+            export_button.clicked.connect(self.export_button_clicked)
+        else:
+            print('Кнопка экспорта не найдена!')
+
         # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
         root_object.windowClosed.connect(self.on_main_window_closed)
 
@@ -156,6 +165,18 @@ class Frontend(QObject):
                 self.clusters_window.window.raise_()
             except Exception as e:
                 print("Окно кластеров уже открыто:", e)
+
+    @Slot()
+    def export_button_clicked(self):
+        # Если ссылка на окно отсутствует или само окно закрыто, создаём новое окно
+        if self.export_window is None or self.export_window.window is None:
+            print('Кнопка экспорта нажата!')
+            self.export_window = ExportWindow(self.engine, self)
+        else:
+            try:
+                self.export_window.window.raise_()
+            except Exception as e:
+                print("Окно экспорта уже открыто:", e)
 
     def update_price_plot(self):
         """
