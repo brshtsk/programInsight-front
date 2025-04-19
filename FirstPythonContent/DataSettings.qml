@@ -6,6 +6,12 @@ Window {
     width: dataSettingsScreen.width
     height: dataSettingsScreen.height
 
+    // Фиксированные размеры
+    minimumWidth: width
+    maximumWidth: width
+    minimumHeight: height
+    maximumHeight: height
+
     visible: true
     title: "DataSettings"
 

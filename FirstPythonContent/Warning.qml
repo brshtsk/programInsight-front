@@ -6,6 +6,12 @@ Window {
     width: warningScreen.width
     height: warningScreen.height
 
+    // Фиксированные размеры
+    minimumWidth: width
+    maximumWidth: width
+    minimumHeight: height
+    maximumHeight: height
+
     visible: true
     title: "Warning"
 

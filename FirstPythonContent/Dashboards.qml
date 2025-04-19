@@ -6,6 +6,12 @@ Window {
     width: dashboardsScreen.width
     height: dashboardsScreen.height
 
+    // Фиксированные размеры
+    minimumWidth: width
+    maximumWidth: width
+    minimumHeight: height
+    maximumHeight: height
+
     visible: true
     title: "Dashboards"
 

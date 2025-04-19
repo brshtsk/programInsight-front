@@ -6,6 +6,12 @@ Window {
     width: examPropertiesScreen.width
     height: examPropertiesScreen.height
 
+    // Фиксированные размеры
+    minimumWidth: width
+    maximumWidth: width
+    minimumHeight: height
+    maximumHeight: height
+
     visible: true
     title: "NewExam"
 

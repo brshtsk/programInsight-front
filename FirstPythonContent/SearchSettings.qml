@@ -6,6 +6,12 @@ Window {
     width: settingsScreen.width
     height: settingsScreen.height
 
+    // Фиксированные размеры
+    minimumWidth: width
+    maximumWidth: width
+    minimumHeight: height
+    maximumHeight: height
+
     visible: true
     title: "Settings"
 
