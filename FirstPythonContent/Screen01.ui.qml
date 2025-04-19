@@ -398,7 +398,8 @@ Rectangle {
             height: 80
 
             Button {
-                id: favouriteButton
+                id: infoButton
+                objectName: "infoButton"
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 width: 40
@@ -427,6 +428,31 @@ Rectangle {
                     ColorAnimation {
                         duration: 200
                     }
+                }
+
+                onClicked: overlay.visible = !overlay.visible
+            }
+
+            Rectangle {
+                id: overlay
+                anchors.verticalCenter: infoButton.verticalCenter
+                x: 50
+                visible: false
+                z: 999 // чтобы быть наверху
+                height: 55
+                width: 190
+                color: "#dde9db"
+                radius: 10
+
+                Text {
+                    x: 10
+                    y: 10
+                    color: "#373737"
+                    text: "Версия: 2.0<br>Авторы: brshtsk & nolookshot"
+                    font.pixelSize: 14
+                    font.styleName: "Condensed SemiBold"
+                    textFormat: Text.RichText
+                    font.family: Constants.font.family
                 }
             }
 
