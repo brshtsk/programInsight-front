@@ -11,6 +11,7 @@ from update_data.import_data import DataImporter
 
 class UserCabinetWindow(QObject):
     newExamParentClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна ЛК
+    addExamFailed = Signal()  # Сигнал для уведомления New Exam Window об ошибке при добавлении экзамена
 
     def __init__(self, engine, unique_values: UniqueValues, frontend_parent):
         super().__init__()
@@ -106,6 +107,7 @@ class UserCabinetWindow(QObject):
             self.update_exams_list()
         except Exception as e:
             print(f"Ошибка при добавлении экзамена {exam.name} в список:", e)
+            self.addExamFailed.emit()
 
     @Slot()
     def update_exams_list(self):

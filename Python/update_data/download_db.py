@@ -1,7 +1,17 @@
 import requests
+from utils import Utils
 
 
 class Downloader:
+    @staticmethod
+    def download_from_source_url(output_path):
+        with open(Utils.resource_path('Python/source_url.txt'), 'r') as f:
+            source_url = f.read().strip()
+        if source_url.startswith('https://github.com'):
+            Downloader.download_from_github(source_url, output_path)
+        if source_url.startswith('https://disk.yandex.ru/'):
+            Downloader.download_from_yadisk(source_url, output_path)
+
     @staticmethod
     def download_from_github(share_url, output_path):
         share_url = share_url.replace('github.com', 'raw.githubusercontent.com').replace('blob/', '')

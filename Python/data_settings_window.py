@@ -43,9 +43,7 @@ class DataSettingsWindow(QObject):
         self.inform("Загрузка данных...")
         try:
             path = Utils.resource_path('Python/data_sci_programs.json')
-            Downloader.download_from_github(
-                "https://github.com/Egor1025/data-sci-analytics/blob/main/data/data-sci-programs.json",
-                path)
+            Downloader.download_from_source_url(path)
             print("Данные загружены по пути:", path)
             self.inform("Данные загружены!<br>Перезапустите приложение")
         except Exception as e:

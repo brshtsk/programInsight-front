@@ -153,11 +153,21 @@ class GraphBuilder:
         return GraphBuilder.build_kde_layout(prices, title, 'Стоимость, тыс. руб')
 
     @staticmethod
-    def points_kde(df):
+    def budget_points_kde(df):
         title = 'Распределение проходных баллов ЕГЭ\n'
         points = df.apply(
             lambda row: row['Проходной балл на бюджет'] / row['Кол-во экзаменов']
             if row['Проходной балл на бюджет'] is not None and row['Кол-во экзаменов'] > 0 else None,
+            axis=1
+        ).dropna()
+        return GraphBuilder.build_kde_layout(points, title, 'Баллы', 'white')
+
+    @staticmethod
+    def paid_points_kde(df):
+        title = 'Распределение проходных баллов ЕГЭ\n'
+        points = df.apply(
+            lambda row: row['Проходной балл на платное'] / row['Кол-во экзаменов']
+            if row['Проходной балл на платное'] is not None and row['Кол-во экзаменов'] > 0 else None,
             axis=1
         ).dropna()
         return GraphBuilder.build_kde_layout(points, title, 'Баллы', 'white')

@@ -180,7 +180,10 @@ class DashboardsWindow(QObject):
         try:
             output_path = Utils.resource_path('FirstPythonContent/plots_images/score_kde.png')
             os.makedirs(output_path.parent, exist_ok=True)
-            fig = GraphBuilder.points_kde(df)
+            if self.frontend_parent.settings.show_op_only_with_budget:
+                fig = GraphBuilder.budget_points_kde(df)
+            else:
+                fig = GraphBuilder.paid_points_kde(df)
             fig.savefig(output_path, bbox_inches='tight')
             self.update_score_kde()
         except Exception as e:

@@ -19,6 +19,7 @@ class NewExamWindow(QObject):
         self.load_window()
 
         self.parent_window.newExamParentClosed.connect(self.on_search_settings_closed)
+        self.parent_window.addExamFailed.connect(self.show_warning_window)
 
     def load_window(self):
         exam_card_path = Utils.resource_path('FirstPythonContent/NewExamProperties.qml')

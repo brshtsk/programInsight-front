@@ -46,12 +46,12 @@ class ClustersManager:
 
         if self.algorithm == "Автоматически":
             n = len(df)
-            if n < 100:
-                self.algorithm = "K-Means"
-            elif n < 500:
+            if n < 200:
+                self.algorithm = "DBSCAN"
+            elif n < 3000:
                 self.algorithm = "Mean Shift"
             else:
-                self.algorithm = "DBSCAN"
+                self.algorithm = "K-Means"
 
         if self.algorithm == "K-Means":
             clusters_dict = self.analyzer.kmeans_cluster_data()

@@ -11,6 +11,7 @@ from update_data.import_data import DataImporter
 class SearchSettingsWindow(QObject):
     updateModels = Signal()  # Сигнал для уведомления Frontend об изменениях
     newExamParentClosed = Signal()  # Сигнал для уведомления New Exam Window о закрытии окна настроек
+    addExamFailed = Signal()  # Сигнал для уведомления New Exam Window об ошибке при добавлении экзамена
 
     def __init__(self, engine, settings: Settings, unique_values: UniqueValues, frontend_parent):
         super().__init__()
@@ -334,6 +335,7 @@ class SearchSettingsWindow(QObject):
             self.updateModels.emit()  # Уведомляем Frontend об изменениях
         except Exception as e:
             print(f"Ошибка при добавлении экзамена {exam.name} в список:", e)
+            self.addExamFailed.emit()
 
     @Slot()
     def update_exams_list(self):
