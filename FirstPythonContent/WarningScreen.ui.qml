@@ -22,9 +22,9 @@ Rectangle {
     }
 
     Button {
-        id: saveProfileExamsButton
-        objectName: "saveProfileExamsButton"
-        x: 10
+        id: okButton
+        objectName: "okButton"
+        x: 15
         y: 55
         width: 50
         height: 20
@@ -34,8 +34,8 @@ Rectangle {
         font.styleName: "SemiBold"
 
         contentItem: Text {
-            scale: saveProfileExamsButton.hovered ? 1.05 : 1.0
-            font: saveProfileExamsButton.font
+            scale: okButton.hovered ? 1.05 : 1.0
+            font: okButton.font
             color: "#53b93f"
             text: "Ок" // Белый цвет текста
             horizontalAlignment: Text.AlignHCenter
@@ -48,9 +48,9 @@ Rectangle {
         }
 
         background: Rectangle {
-            color: saveProfileExamsButton.pressed ? "#ededed" : "#ffffff"
+            color: okButton.pressed ? "#ededed" : "#ffffff"
             radius: 10
-            scale: saveProfileExamsButton.hovered ? 1.05 : 1.0
+            scale: okButton.hovered ? 1.05 : 1.0
             Behavior on scale {
                 NumberAnimation {
                     duration: 100

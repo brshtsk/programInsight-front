@@ -311,8 +311,6 @@ class ClustersWindow(QObject):
         self._show_clusters_plot()
 
     def _show_clusters_plot(self):
-        print(self.clusters_manager)
-
         # Отображаем график кластеров
         clusters_image = self.window.findChild(QObject, 'clustersImage')
         if clusters_image:

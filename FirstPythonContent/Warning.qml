@@ -1,0 +1,25 @@
+import QtQuick
+import QtQuick.Window
+import FirstPython
+
+Window {
+    width: warningScreen.width
+    height: warningScreen.height
+
+    visible: true
+    title: "Warning"
+
+    signal windowClosed()  // Пользовательский сигнал закрытия
+
+    // Отслеживаем изменение свойства visible:
+    onVisibleChanged: {
+        if (!visible) {
+            windowClosed()
+        }
+    }
+
+    WarningScreen {
+        id: warningScreen
+    }
+
+}

@@ -6,7 +6,8 @@ from exam import Exam
 
 
 class NewExamWindow(QObject):
-    examCreated = Signal(Exam)  # Сигнал, который будет испускаться при создании нового экзамена
+    examCreated = Signal(Exam)  # Сигнал, который будет отправляться при создании нового экзамена
+    newExamWindowClosed = Signal()  # Сигнал, который будет отправляться при закрытии этого окна
 
     def __init__(self, engine, unique_values: UniqueValues, parent_window):
         super().__init__()
@@ -38,6 +39,7 @@ class NewExamWindow(QObject):
     def on_window_closed(self):
         """Слот, вызываемый при закрытии окна, чтобы очистить ссылку."""
         print("Окно NewExamProperties закрыто (либо пользователем, либо программно)")
+        self.newExamWindowClosed.emit()
         self.window = None
 
     @Slot()
@@ -223,3 +225,28 @@ class NewExamWindow(QObject):
             self.examCreated.emit(new_exam)
         except Exception as e:
             print("Ошибка при создании экзамена:", e)
+            self.show_warning_window()
+
+    # Python
+    def show_warning_window(self):
+        """
+        Создает и отображает окно предупреждения с заданным сообщением.
+        """
+        warning_path = Utils.resource_path('FirstPythonContent/Warning.qml')
+        component = QQmlComponent(self.engine, QUrl.fromLocalFile(str(warning_path)))
+        if component.status() == QQmlComponent.Ready:
+            window = component.create()
+            if window:
+                window.show()
+                # Закрываем, если закрыто NewExamWindow (подключаем сигнал)
+                self.newExamWindowClosed.connect(window.close)
+                # Кнопка "Ок" (закрыть окно)
+                ok_button = window.findChild(QObject, 'okButton')
+                if ok_button:
+                    ok_button.clicked.connect(window.close)
+                else:
+                    print("Кнопка 'okButton' не найдена!")
+            else:
+                print("Не удалось создать окно Warning.qml")
+        else:
+            print("Ошибка при загрузке Warning.qml:", component.errorString())

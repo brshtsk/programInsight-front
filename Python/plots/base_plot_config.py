@@ -3,6 +3,7 @@ from matplotlib.figure import Figure
 
 PRICE = 'Стоимость (в год)'
 BUDGET_PTS = 'Проходной балл на бюджет'
+PAID_PTS = 'Проходной балл на платное'
 
 
 class BasePlotConfig:
@@ -19,6 +20,8 @@ class BasePlotConfig:
         df[PRICE] /= 1000
         df[BUDGET_PTS] = df[BUDGET_PTS] / df[exams_num]
         df[BUDGET_PTS] = df[BUDGET_PTS].mask(df[BUDGET_PTS] > 103)
+        df[PAID_PTS] = df[PAID_PTS] / df[exams_num]
+        df[PAID_PTS] = df[PAID_PTS].mask(df[PAID_PTS] > 103)
         df['Срок обучения'] = df['Срок обучения'].apply(
             lambda x: np.mean(x) if isinstance(x, list) and len(x) > 0 else np.nan
         )

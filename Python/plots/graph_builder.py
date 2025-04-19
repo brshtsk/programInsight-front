@@ -194,7 +194,7 @@ class GraphBuilder:
             ax.annotate(
                 uni,
                 xy=(row['Стоимость (в год)'], row[score_type]),  # точка данных
-                xytext=(10, 0),  # смещение подписи: 5 пунктов вправо
+                xytext=(10, 0),  # смещение подписи: 10 пунктов вправо
                 textcoords='offset points',  # единицы смещения — точки экрана
                 ha='left', va='center',
                 fontsize=14,
