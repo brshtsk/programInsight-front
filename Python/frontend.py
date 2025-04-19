@@ -62,7 +62,7 @@ class Frontend(QObject):
             root_object = self.engine.rootObjects()[0]
             amount_text = root_object.findChild(QObject, 'resultAmountText')
             if amount_text:
-                amount_text.setProperty('text', f'Получено {len(op_model_data)} результатов')
+                amount_text.setProperty('text', f'{len(op_model_data)} результатов')
             else:
                 print("Элемент с objectName 'resultAmountText' не найден")
 
@@ -84,10 +84,12 @@ class Frontend(QObject):
             self.modelChanged.emit()
 
             if self.settings.filter_by_cluster:
+                self.show_cluster_info()
                 # Если был применен фильтр по кластеру, то в будущем его быть не должно
                 self.settings.filter_by_cluster = False
                 self.settings.cluster_urls = []
             else:
+                self.hide_cluster_info()
                 # Сигнализируем об изменении модели, если фильтр не по кластерам
                 self.notByClustersModelChanged.emit()
         except Exception as e:
@@ -149,6 +151,43 @@ class Frontend(QObject):
 
         # Подключаем событие закрытия главного окна к слоту on_main_window_closed.
         root_object.windowClosed.connect(self.on_main_window_closed)
+
+    @Slot()
+    def show_cluster_info(self):
+        """
+        Отображает информацию о кластере в главном окне.
+        """
+        chosen_cluster = self.clusters_window.chosen_cluster
+        name = chosen_cluster.name
+        rgb_background = chosen_cluster.rgb_background
+        rgb_text_color = chosen_cluster.rgb_text_color
+
+        window = self.engine.rootObjects()[0]
+        chosen_cluster_rectangle = window.findChild(QObject, 'chosenClusterRectangle')
+        if chosen_cluster_rectangle:
+            chosen_cluster_rectangle.setProperty('visible', True)
+            chosen_cluster_rectangle.setProperty('color', rgb_background)
+        else:
+            print("Элемент 'chosenClusterRectangle' не найден")
+
+        chosen_cluster_name_text = window.findChild(QObject, 'chosenClusterNameText')
+        if chosen_cluster_name_text:
+            chosen_cluster_name_text.setProperty('text', name)
+            chosen_cluster_name_text.setProperty('color', rgb_text_color)
+        else:
+            print("Элемент 'chosenClusterNameText' не найден")
+
+    @Slot()
+    def hide_cluster_info(self):
+        """
+        Скрывает информацию о кластере в главном окне.
+        """
+        window = self.engine.rootObjects()[0]
+        chosen_cluster_rectangle = window.findChild(QObject, 'chosenClusterRectangle')
+        if chosen_cluster_rectangle:
+            chosen_cluster_rectangle.setProperty('visible', False)
+        else:
+            print("Элемент 'chosenClusterRectangle' не найден")
 
     @Slot()
     def search_button_clicked(self):

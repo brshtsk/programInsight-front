@@ -367,17 +367,50 @@ Rectangle {
                     anchors.top: parent.top
                 }
 
-                Text {
-                    id: resultAmountText
-                    objectName: "resultAmountText"
-                    color: "#373737"
-                    text: "Получено 009 результатов"
+                Item {
+                    id: resultsInfoItem
                     anchors.left: parent.left
-                    font.pixelSize: 18
-                    textFormat: Text.RichText
-                    font.family: Constants.font.family
-                    font.styleName: "Condensed SemiBold"
                     anchors.bottom: parent.bottom
+                    height: 22
+                    width: resultAmountText.width + 30 + chosenClusterNameText.width
+
+                    Text {
+                        id: resultAmountText
+                        objectName: "resultAmountText"
+                        color: "#373737"
+                        text: "Получено 009 результатов"
+                        anchors.left: parent.left
+                        font.pixelSize: 18
+                        textFormat: Text.RichText
+                        font.family: Constants.font.family
+                        font.styleName: "Condensed SemiBold"
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Rectangle {
+                        id: chosenClusterRectangle
+                        objectName: "chosenClusterRectangle"
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: chosenClusterNameText.width + 20
+                        height: 25
+                        color: "#ffffff"
+                        radius: 10
+                        visible: false
+                        Text {
+                            id: chosenClusterNameText
+                            objectName: "chosenClusterNameText"
+                            color: "#000000"
+                            text: "Розовый кластер"
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.styleName: "SemiBold"
+                            font.family: Constants.font.family
+                        }
+                    }
                 }
             }
         }

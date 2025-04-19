@@ -25,6 +25,8 @@ class ClusterHandler(QObject):
             # В настройках задаем фильтр по кластеру
             self.frontend_parent.settings.filter_by_cluster = True
             self.frontend_parent.settings.cluster_urls = cluster.op_urls
+            # Сохраняем выбранный кластер в clusters_window
+            self.clusters_window.chosen_cluster = cluster
             # Обновляем модель
             self.clusters_window.updateModels.emit()
             # Выделим выбранный кластер

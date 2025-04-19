@@ -1,7 +1,7 @@
 from PySide6.QtCore import QObject, Slot, Signal, QThread
 from PySide6.QtQml import QQmlComponent
 from utils import Utils
-from clusters_manager import ClustersManager
+from clusters_manager import ClustersManager, Cluster
 from time import time
 from cluster_card_handler import ClusterHandler
 
@@ -19,6 +19,7 @@ class ClustersWindow(QObject):
         self.clusters = []  # Список объектов кластеров
         self.clusters_manager = None  # Экземпляр класса ClustersManager
         self.clusterHandler = ClusterHandler(engine, frontend_parent, self)
+        self.chosen_cluster = None  # Выбранный кластер
 
         self.load_window()
 
