@@ -6,6 +6,10 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import silhouette_score
 
+# Чтобы Nuitka сгенерировал зависимость от этих C-расширений:
+import sklearn.neighbors._quad_tree
+import sklearn.tree._partitioner
+
 
 class ClusterAnalyzer(BasePlotConfig):
     """

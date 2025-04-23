@@ -7,6 +7,10 @@ from autogen.settings import url, import_paths
 from frontend import Frontend
 from utils import Utils
 
+# Чтобы Nuitka сгенерировал зависимость от этих C-расширений:
+import sklearn.neighbors._quad_tree
+import sklearn.tree._partitioner
+
 if __name__ == '__main__':
     # Кнопки не в стиле Windows
     os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
