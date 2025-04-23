@@ -481,7 +481,7 @@ Rectangle {
                     x: 10
                     y: 10
                     color: "#373737"
-                    text: "Версия: 2.0<br>Авторы: brshtsk & nolookshot"
+                    text: "Версия: 2.1<br>Авторы: brshtsk & nolookshot"
                     font.pixelSize: 14
                     font.styleName: "Condensed SemiBold"
                     textFormat: Text.RichText
